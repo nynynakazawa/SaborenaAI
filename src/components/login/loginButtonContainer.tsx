@@ -1,39 +1,62 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
+const StyledText = styled(Text)
+const StyledTouchableOpacity = styled(TouchableOpacity);;
 
-const LoginButtonContainer = () => {
+const LoginButtonContainer = ({
+    isVisibleLoginModal,
+    setIsVisibleLoginModal
+  }:
+  {
+    isVisibleLoginModal: boolean
+    setIsVisibleLoginModal: any
+  }) => {
+  
+  const displayLoginModal = () => {
+    setIsVisibleLoginModal(true);
+  }
   return (
-    <StyledView className="relative flex-1">
-      <StyledView className="absolute top-[60vh] w-screen flex-1 items-center">
+    <StyledView className="relative flex-1 z-10">
+      <StyledView className="absolute z-10 top-[60vh] w-screen flex-1 items-center">
         {/* サインアップ */}
-        <StyledView className="flex h-[60px] w-[66vw] items-center justify-center rounded-full bg-[#fff]">
+        <StyledTouchableOpacity
+          onPress={() => console.log("サインアップ")}
+          className="flex h-[60px] w-[66vw] items-center justify-center rounded-full bg-[#fff]">
           <StyledText className="text-[16px] text-[#E04B36]">
             アカウント作成
           </StyledText>
-        </StyledView>
+        </StyledTouchableOpacity>
+
         {/* OR罫線 */}
         <StyledView className="my-[30px] flex flex-row items-center">
           <StyledView className="h-[2px] w-[30vw] bg-[#fff]"></StyledView>
           <StyledText className="px-[10px] text-[#fff]"> OR </StyledText>
           <StyledView className="h-[2px] w-[30vw] bg-[#fff]"></StyledView>
         </StyledView>
+
         {/* サインイン */}
-        <StyledView className="flex h-[60px] w-[66vw] items-center justify-center rounded-full border-2 border-[#fff]">
-          <StyledText className="text-[16px] text-[#fff]">ログイン</StyledText>
-        </StyledView>
+        <StyledTouchableOpacity
+          onPress={() => setIsVisibleLoginModal(true)}
+          className="flex h-[60px] w-[66vw] items-center justify-center rounded-full border-2 border-[#fff]">
+          <StyledText className="text-[16px] text-[#fff]">
+            ログイン
+          </StyledText>
+        </StyledTouchableOpacity>
       </StyledView>
-      {/* 利用規約 */}
-      <StyledView className="absolute h-screen w-screen flex-1 items-center">
+      <StyledTouchableOpacity
+        onPress={() => console.log("利用規約")}
+        className="absolute h-screen w-screen flex-1 items-center"
+      >
         <StyledText className="absolute bottom-[5vh] text-[#fff]">
-          利用規約, プライバシーポリシー
+          利用規約
         </StyledText>
-      </StyledView>
+      </StyledTouchableOpacity>
     </StyledView>
-  );
-};
+
+  )
+}
 
 export default LoginButtonContainer;
