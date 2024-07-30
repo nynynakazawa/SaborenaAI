@@ -8,7 +8,7 @@ const StyledImage = styled(Image);
 
 const LoginLogo = () => {
   return (
-    <StyledView className="relative flex-1">
+    <StyledView className="relative flex-1 z-10">
       <StyledView className="absolute top-[26vh] w-screen flex-1 items-center">
         <StyledImage
           source={require("../../../assets/logo/icon.png")}
