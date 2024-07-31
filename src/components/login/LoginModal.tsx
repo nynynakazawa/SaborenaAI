@@ -11,7 +11,10 @@ import {
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { auth } from "../../firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useRouter } from "expo-router";
 
 const StyledView = styled(View);
@@ -24,7 +27,6 @@ const LoginModal = ({
 }: {
   setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
@@ -37,13 +39,13 @@ const LoginModal = ({
       "keyboardDidShow",
       (e) => {
         setKeyboardHeight(e.endCoordinates.height);
-      }
+      },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
         setKeyboardHeight(0);
-      }
+      },
     );
 
     return () => {
@@ -92,10 +94,15 @@ const LoginModal = ({
               />
             </StyledView>
 
-            {/* Password */}
+            {/* パスワード */}
             <StyledView className="w-full">
-              <StyledView className="flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px] mb-[6px]">
-                <Icon name="lock" size={30} color="#fff" className="mr-[10px]" />
+              <StyledView className="mb-[6px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
+                <Icon
+                  name="lock"
+                  size={30}
+                  color="#fff"
+                  className="mr-[10px]"
+                />
                 <StyledTextInput
                   onChangeText={setPassword}
                   secureTextEntry={!isVisiblePassword}
@@ -115,8 +122,9 @@ const LoginModal = ({
                 </TouchableOpacity>
               </StyledView>
               <StyledText
-                className={`mb-[24px] text-[12px] ml-[4px] text-[#fff] ${!isError && "opacity-0"}`}
-              >※ ユーザーが存在しません
+                className={`mb-[24px] ml-[4px] text-[12px] text-[#fff] ${!isError && "opacity-0"}`}
+              >
+                ※ ユーザーが存在しません
               </StyledText>
             </StyledView>
           </StyledView>
@@ -127,17 +135,16 @@ const LoginModal = ({
             <StyledTouchableOpacity
               onPress={() => console.log("パスワード再設定")}
             >
-              <StyledText className="text-[#1d4ed8] underline">こちら</StyledText>
+              <StyledText className="text-[#1d4ed8] underline">
+                こちら
+              </StyledText>
             </StyledTouchableOpacity>
           </StyledText>
 
           {/* ログインボタン */}
           <StyledTouchableOpacity
             onPress={handleLogin}
-            className={
-              `absolute bottom-[8vh] right-[10vw] flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#fff]
-              ${!(password && email) && "opacity-30"}`
-            }
+            className={`absolute bottom-[8vh] right-[10vw] flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#fff] ${!(password && email) && "opacity-30"}`}
           >
             <StyledText className="text-[16px] text-[#E04B36]">
               ログイン

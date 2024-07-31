@@ -14,30 +14,28 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 const LoginPage = () => {
-  const [isVisibleLoginModal, setIsVisibleLoginModal] = useState<boolean>(false);
-  const [isVisibleSignUpScreen, setIsVisibleSignUpScreen] = useState<boolean>(false);
+  const [isVisibleLoginModal, setIsVisibleLoginModal] =
+    useState<boolean>(false);
+  const [isVisibleSignUpScreen, setIsVisibleSignUpScreen] =
+    useState<boolean>(false);
 
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
   return (
     <Container style={{ flex: 1 }}>
       <LoginLogo />
-      {!isVisibleLoginModal && !isVisibleSignUpScreen &&
+      {!isVisibleLoginModal && !isVisibleSignUpScreen && (
         <LoginButtonContainer
           setIsVisibleLoginModal={setIsVisibleLoginModal}
           setIsVisibleSignUpScreen={setIsVisibleSignUpScreen}
         />
-      }
-      {isVisibleLoginModal &&
-        <LoginModal
-          setIsVisibleLoginModal={setIsVisibleLoginModal}
-        />
-      }
-      {isVisibleSignUpScreen &&
-        <SignUpScreen
-          setIsVisibleSignUpScreen={setIsVisibleSignUpScreen}
-        />
-      }
+      )}
+      {isVisibleLoginModal && (
+        <LoginModal setIsVisibleLoginModal={setIsVisibleLoginModal} />
+      )}
+      {isVisibleSignUpScreen && (
+        <SignUpScreen setIsVisibleSignUpScreen={setIsVisibleSignUpScreen} />
+      )}
       <LoginBackground />
     </Container>
   );
