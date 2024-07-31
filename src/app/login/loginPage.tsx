@@ -22,12 +22,10 @@ const LoginPage = () => {
       <LoginLogo />
       {!isVisibleLoginModal ? (
         <LoginButtonContainer
-          isVisibleLoginModal={isVisibleLoginModal}
           setIsVisibleLoginModal={setIsVisibleLoginModal}
         />
       ) : (
         <LoginModal
-          isVisibleLoginModal={isVisibleLoginModal}
           setIsVisibleLoginModal={setIsVisibleLoginModal}
         />
       )}

@@ -7,11 +7,9 @@ const StyledText = styled(Text)
 const StyledTouchableOpacity = styled(TouchableOpacity);;
 
 const LoginButtonContainer = ({
-    isVisibleLoginModal,
     setIsVisibleLoginModal
   }:
   {
-    isVisibleLoginModal: boolean
     setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
   
