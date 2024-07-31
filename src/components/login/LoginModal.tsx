@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -10,63 +18,91 @@ const StyledTextInput = styled(TextInput);
 
 const LoginModal = ({
   isVisibleLoginModal,
-  setIsVisibleLoginModal
-}:
-  {
-    isVisibleLoginModal: boolean
-    setIsVisibleLoginModal: any
-  }) => {
-
+  setIsVisibleLoginModal,
+}: {
+  isVisibleLoginModal: boolean;
+  setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
+  const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      (e) => {
+        setKeyboardHeight(e.endCoordinates.height);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardHeight(0);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
   const handleLogin = () => {
     console.log("Login");
   };
 
   return (
-
-    <StyledView className="relative flex-1 z-40">
+    <StyledView className="relative z-40 flex-1">
       <StyledView
-        className="absolute z-40 h-screen w-screen flex-1 items-center"
+        className={`absolute z-40 h-screen w-screen flex-1 items-center ${keyboardHeight > 0 && "top-[-38vh]"}`}
       >
         {/* クローズボタン */}
         <StyledTouchableOpacity
           onPress={() => setIsVisibleLoginModal(false)}
-          className="absolute z-40 w-screen h-[62vh] top-0"
+          className="absolute top-0 z-40 h-[62vh] w-screen bg-[#2529ff] opacity-80"
         ></StyledTouchableOpacity>
         {/* 赤色オーバーレイ */}
-        <StyledView className="absolute w-screen h-[38vh] bg-[#ff3e25] bottom-0 opacity-80"></StyledView>
+        <StyledView className="absolute bottom-[-62vh] h-[100vh] w-screen bg-[#ff3e25] opacity-80"></StyledView>
 
         {/* ログインフォームコンテイナー */}
-        <StyledView className="absolute w-screen h-[38vh] bottom-0 px-8 py-4">
-          <StyledView className="w-[70vw] flex-1 items-center mt-[30px]">
+        <StyledView className="absolute bottom-0 flex h-[38vh] w-screen items-center px-8 py-4">
+          <StyledView className="mt-[30px] w-[90%] flex-1 items-center">
             {/* Email */}
-            <StyledView className="border-b-2 border-[#fff] w-full pb-[10px] mb-[12px] flex flex-row items-center">
+            <StyledView className="mb-[12px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
               <Icon name="email" size={30} color="#fff" className="mr-[10px]" />
-              <StyledTextInput
+              <TextInput
                 onChangeText={setEmail}
                 placeholder="email"
                 placeholderTextColor="#ffb9b9"
-                className="text-[#fff] text-[16px] pl-[12px] w-full py-[6px]"
+                className="w-full py-[6px] pl-[12px] text-[16px] text-[#fff]"
               />
             </StyledView>
 
             {/* Password */}
-            <StyledView className="border-b-2 border-[#fff] w-full pb-[10px] flex flex-row items-center">
+            <StyledView className="flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
               <Icon name="lock" size={30} color="#fff" className="mr-[10px]" />
               <StyledTextInput
                 onChangeText={setPassword}
-                secureTextEntry={true}
+                secureTextEntry={!isVisiblePassword}
                 placeholder="password"
                 placeholderTextColor="#ffb9b9"
-                className="text-[#fff] text-[16px] pl-[12px] w-full py-[6px]"
+                className="w-[72%] py-[6px] pl-[12px] text-[16px] text-[#fff]"
               />
+              <TouchableOpacity
+                onPress={() => setIsVisiblePassword(!isVisiblePassword)}
+                className="ml-[10px]"
+              >
+                <Icon
+                  name={isVisiblePassword ? "visibility" : "visibility-off"}
+                  size={30}
+                  color="#fff"
+                />
+              </TouchableOpacity>
             </StyledView>
           </StyledView>
 
           {/* パスワードを忘れた方は */}
-          <StyledText className="text-white absolute bottom-[4vh] left-[6vw]">
+          <StyledText className="absolute bottom-[4vh] left-[6vw] text-white">
             パスワードを忘れた方は
             <StyledText className="text-[#1d4ed8] underline">こちら</StyledText>
           </StyledText>
@@ -74,14 +110,15 @@ const LoginModal = ({
           {/* ログインボタン */}
           <StyledTouchableOpacity
             onPress={handleLogin}
-            className="absolute bottom-[8vh] right-[10vw] w-[100px] h-[48px] rounded-lg bg-[#fff] flex items-center justify-center"
+            className="absolute bottom-[8vh] right-[10vw] flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#fff]"
           >
-            <StyledText className="text-[#E04B36] text-[16px]">ログイン</StyledText>
+            <StyledText className="text-[16px] text-[#E04B36]">
+              ログイン
+            </StyledText>
           </StyledTouchableOpacity>
         </StyledView>
       </StyledView>
     </StyledView>
-
   );
 };
 
