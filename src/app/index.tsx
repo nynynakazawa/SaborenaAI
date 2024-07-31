@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styled } from "nativewind";
-import LoginPage from "./login/loginPage";
+import LoginPage from "./loginPage";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

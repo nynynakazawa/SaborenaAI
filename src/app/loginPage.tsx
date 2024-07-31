@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Text, View, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styled } from "nativewind";
-import LoginBackground from "../../components/login/loginBackground";
-import LoginLogo from "../../components/login/loginLogo";
-import LoginButtonContainer from "../../components/login/loginButtonContainer";
-import LoginModal from "../../components/login/LoginModal";
-import SignUpScreen from "../../components/login/signUpScreen";
+import LoginBackground from "../components/login/loginBackground";
+import LoginLogo from "../components/login/loginLogo";
+import LoginButtonContainer from "../components/login/loginButtonContainer";
+import LoginModal from "../components/login/loginModal";
+import SignUpScreen from "../components/login/signUpScreen";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
