@@ -3,6 +3,7 @@ import { Platform, Text, TextInput, TouchableOpacity, View } from "react-native"
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import TermModal from "./TermModal";
 
 const StyledView = styled(View)
 const StyledText = styled(Text)
@@ -31,6 +32,7 @@ const SignUpScreen = ({
     return pattern.test(password);
   }
 
+  const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
   const isValid: boolean = (email.trim() != "" && password.trim() != "") && (password == passwordAgain) && (isOver18 && isAgreeTerms) && isValiedPassword(password);
 
   return (
@@ -137,7 +139,7 @@ const SignUpScreen = ({
                 onPress={(isChecked: boolean) => setIsAgreeTerms(isChecked)}
               />
               <StyledTouchableOpacity
-                onPress={() => console.log("利用規約")}
+                onPress={() => setIsVisibleTermModal(true)}
                 className="absolute right-0"
               >
                 <StyledText className="text-[#1d4ed8]">
@@ -152,7 +154,7 @@ const SignUpScreen = ({
           onPress={handleSignUp}
           className={
             `absolute bottom-[12vh] right-[10vw] flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#E04B36]
-            ${!isValid && "opacity-60"}`
+            ${!isValid && "opacity-30"}`
           }
           disabled={!isValid}
         >
@@ -160,6 +162,11 @@ const SignUpScreen = ({
             新規登録
           </StyledText>
         </StyledTouchableOpacity>
+
+        <TermModal
+          visible={isVisibleTermModal}
+          onClose={() => setIsVisibleTermModal(false)}
+        />
 
         <StyledView className="absolute w-screen h-[20px] bg-[#E3422F] bottom-0"></StyledView>
       </StyledView>

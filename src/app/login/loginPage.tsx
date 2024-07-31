@@ -33,11 +33,11 @@ const LoginPage = () => {
           setIsVisibleLoginModal={setIsVisibleLoginModal}
         />
       }
-      {/* {isVisibleSignUpScreen &&
-      } */}
-      <SignUpScreen
-        setIsVisibleSignUpScreen={setIsVisibleSignUpScreen}
-      />
+      {isVisibleSignUpScreen &&
+        <SignUpScreen
+          setIsVisibleSignUpScreen={setIsVisibleSignUpScreen}
+        />
+      }
       <LoginBackground />
     </Container>
   );

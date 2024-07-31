@@ -1,20 +1,23 @@
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
+import TermModal from "./TermModal";
 
 const StyledView = styled(View);
-const StyledText = styled(Text)
+const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const LoginButtonContainer = ({
-    setIsVisibleLoginModal,
-    setIsVisibleSignUpScreen
-  }:
+  setIsVisibleLoginModal,
+  setIsVisibleSignUpScreen
+}:
   {
     setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
     setIsVisibleSignUpScreen: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
-  
+
+  const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
+
   return (
     <StyledView className="relative flex-1 z-10">
       <StyledView className="absolute z-10 top-[60vh] w-screen flex-1 items-center">
@@ -43,17 +46,24 @@ const LoginButtonContainer = ({
           </StyledText>
         </StyledTouchableOpacity>
       </StyledView>
+
+      {/* 利用規約 */}
       <StyledTouchableOpacity
-        onPress={() => console.log("利用規約")}
+        onPress={() => setIsVisibleTermModal(true)}
         className="absolute h-screen w-screen flex-1 items-center"
       >
         <StyledText className="absolute bottom-[5vh] text-[#fff]">
           利用規約
         </StyledText>
       </StyledTouchableOpacity>
-    </StyledView>
 
-  )
+      <TermModal
+        visible={isVisibleTermModal}
+        onClose={() => setIsVisibleTermModal(false)}
+      />
+
+    </StyledView>
+  );
 }
 
 export default LoginButtonContainer;
