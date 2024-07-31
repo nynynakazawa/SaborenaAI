@@ -21,18 +21,18 @@ const TermModal = ({ visible, onClose }: TermModalProps) => {
       onRequestClose={onClose}
     >
       <StyledTouchableOpacity
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        className="flex-1 items-center justify-center"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
         onPress={onClose}
       >
         <StyledTouchableOpacity
           activeOpacity={1}
-          className="w-[80%] bg-[#fff] rounded-lg p-[20px]"
+          className="w-[80%] rounded-lg bg-[#fff] p-[20px]"
         >
           <StyledText>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat. Duis aute irure dolor in
             reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in

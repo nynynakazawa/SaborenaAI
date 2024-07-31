@@ -9,22 +9,21 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const LoginButtonContainer = ({
   setIsVisibleLoginModal,
-  setIsVisibleSignUpScreen
-}:
-  {
-    setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsVisibleSignUpScreen: React.Dispatch<React.SetStateAction<boolean>>;
-  }) => {
-
+  setIsVisibleSignUpScreen,
+}: {
+  setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisibleSignUpScreen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
 
   return (
-    <StyledView className="relative flex-1 z-10">
-      <StyledView className="absolute z-10 top-[60vh] w-screen flex-1 items-center">
+    <StyledView className="relative z-10 flex-1">
+      <StyledView className="absolute top-[60vh] z-10 w-screen flex-1 items-center">
         {/* サインアップ */}
         <StyledTouchableOpacity
           onPress={() => setIsVisibleSignUpScreen(true)}
-          className="flex h-[60px] w-[66vw] items-center justify-center rounded-full bg-[#fff]">
+          className="flex h-[60px] w-[66vw] items-center justify-center rounded-full bg-[#fff]"
+        >
           <StyledText className="text-[16px] text-[#E04B36]">
             アカウント作成
           </StyledText>
@@ -40,10 +39,9 @@ const LoginButtonContainer = ({
         {/* サインイン */}
         <StyledTouchableOpacity
           onPress={() => setIsVisibleLoginModal(true)}
-          className="flex h-[60px] w-[66vw] items-center justify-center rounded-full border-2 border-[#fff]">
-          <StyledText className="text-[16px] text-[#fff]">
-            ログイン
-          </StyledText>
+          className="flex h-[60px] w-[66vw] items-center justify-center rounded-full border-2 border-[#fff]"
+        >
+          <StyledText className="text-[16px] text-[#fff]">ログイン</StyledText>
         </StyledTouchableOpacity>
       </StyledView>
 
@@ -61,9 +59,8 @@ const LoginButtonContainer = ({
         visible={isVisibleTermModal}
         onClose={() => setIsVisibleTermModal(false)}
       />
-
     </StyledView>
   );
-}
+};
 
 export default LoginButtonContainer;
