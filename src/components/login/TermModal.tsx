@@ -1,0 +1,53 @@
+import React from "react";
+import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { styled } from "nativewind";
+
+const StyledView = styled(View);
+const StyledText = styled(Text);
+const StyledTouchableOpacity = styled(TouchableOpacity);
+const StyledScrollView = styled(ScrollView);
+
+type TermModalProps = {
+  visible: boolean;
+  onClose: () => void;
+};
+
+const TermModal = ({ visible, onClose }: TermModalProps) => {
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}
+    >
+      <StyledTouchableOpacity
+        className="flex-1 justify-center items-center"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        onPress={onClose}
+      >
+        <StyledTouchableOpacity
+          activeOpacity={1}
+          className="w-[80%] bg-[#fff] rounded-lg p-[20px]"
+        >
+          <StyledText>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </StyledText>
+          <StyledTouchableOpacity
+            onPress={onClose}
+            className="mt-[20px] items-center"
+          >
+            <StyledText>閉じる</StyledText>
+          </StyledTouchableOpacity>
+        </StyledTouchableOpacity>
+      </StyledTouchableOpacity>
+    </Modal>
+  );
+};
+
+export default TermModal;
