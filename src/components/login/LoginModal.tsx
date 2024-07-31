@@ -62,15 +62,15 @@ const LoginModal = ({
         {/* 赤色オーバーレイ */}
         <StyledView className="absolute bottom-[-62vh] h-[100vh] w-screen bg-[#ff3e25] opacity-80"></StyledView>
 
-        {/* ログインフォームコンテイナー */}
+        {/* ログインフォーム */}
         <StyledView className="absolute bottom-0 flex h-[38vh] w-screen items-center px-8 py-4">
           <StyledView className="mt-[30px] w-[90%] flex-1 items-center">
-            {/* Email */}
+            {/* メールアドレス */}
             <StyledView className="mb-[12px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
               <Icon name="email" size={30} color="#fff" className="mr-[10px]" />
-              <TextInput
+              <StyledTextInput
                 onChangeText={setEmail}
-                placeholder="email"
+                placeholder="メールアドレス"
                 placeholderTextColor="#ffb9b9"
                 className="w-full py-[6px] pl-[12px] text-[16px] text-[#fff]"
               />
@@ -82,7 +82,7 @@ const LoginModal = ({
               <StyledTextInput
                 onChangeText={setPassword}
                 secureTextEntry={!isVisiblePassword}
-                placeholder="password"
+                placeholder="パスワード"
                 placeholderTextColor="#ffb9b9"
                 className="w-[72%] py-[6px] pl-[12px] text-[16px] text-[#fff]"
               />

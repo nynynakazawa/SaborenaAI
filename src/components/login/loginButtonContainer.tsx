@@ -4,24 +4,23 @@ import { styled } from "nativewind";
 
 const StyledView = styled(View);
 const StyledText = styled(Text)
-const StyledTouchableOpacity = styled(TouchableOpacity);;
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const LoginButtonContainer = ({
-    setIsVisibleLoginModal
+    setIsVisibleLoginModal,
+    setIsVisibleSignUpScreen
   }:
   {
     setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsVisibleSignUpScreen: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
   
-  const displayLoginModal = () => {
-    setIsVisibleLoginModal(true);
-  }
   return (
     <StyledView className="relative flex-1 z-10">
       <StyledView className="absolute z-10 top-[60vh] w-screen flex-1 items-center">
         {/* サインアップ */}
         <StyledTouchableOpacity
-          onPress={() => console.log("サインアップ")}
+          onPress={() => setIsVisibleSignUpScreen(true)}
           className="flex h-[60px] w-[66vw] items-center justify-center rounded-full bg-[#fff]">
           <StyledText className="text-[16px] text-[#E04B36]">
             アカウント作成
