@@ -17,10 +17,8 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
 const LoginModal = ({
-  isVisibleLoginModal,
   setIsVisibleLoginModal,
 }: {
-  isVisibleLoginModal: boolean;
   setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [email, setEmail] = useState<string>("");
@@ -59,7 +57,7 @@ const LoginModal = ({
         {/* クローズボタン */}
         <StyledTouchableOpacity
           onPress={() => setIsVisibleLoginModal(false)}
-          className="absolute top-0 z-40 h-[62vh] w-screen bg-[#2529ff] opacity-80"
+          className="absolute top-0 z-40 h-[62vh] w-screen"
         ></StyledTouchableOpacity>
         {/* 赤色オーバーレイ */}
         <StyledView className="absolute bottom-[-62vh] h-[100vh] w-screen bg-[#ff3e25] opacity-80"></StyledView>
