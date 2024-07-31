@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styled } from "nativewind";
@@ -15,22 +15,24 @@ const StyledImage = styled(Image);
 const LoginPage = () => {
   const [isVisibleLoginModal, setIsVisibleLoginModal] = useState<boolean>(false);
 
+  const Container = Platform.OS === "android" ? SafeAreaView : View;
+
   return (
-    <View>
+    <Container style={{ flex: 1 }}>
       <LoginLogo />
-      {!isVisibleLoginModal ?
-        <LoginButtonContainer 
+      {!isVisibleLoginModal ? (
+        <LoginButtonContainer
           isVisibleLoginModal={isVisibleLoginModal}
           setIsVisibleLoginModal={setIsVisibleLoginModal}
-        /> 
-        :
+        />
+      ) : (
         <LoginModal
           isVisibleLoginModal={isVisibleLoginModal}
           setIsVisibleLoginModal={setIsVisibleLoginModal}
         />
-      }
+      )}
       <LoginBackground />
-    </View>
+    </Container>
   );
 };
 

@@ -12,7 +12,7 @@ const LoginButtonContainer = ({
   }:
   {
     isVisibleLoginModal: boolean
-    setIsVisibleLoginModal: any
+    setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
   
   const displayLoginModal = () => {
