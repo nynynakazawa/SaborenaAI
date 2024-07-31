@@ -4,6 +4,9 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import TermModal from "./TermModal";
+import { auth } from "../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "expo-router";
 
 const StyledView = styled(View)
 const StyledText = styled(Text)
@@ -15,9 +18,16 @@ const SignUpScreen = ({
 }: {
   setIsVisibleSignUpScreen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  // サインアップ処理
   const handleSignUp = () => {
-    // サインアップ処理
-    console.log("SignUp");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        router.push("/firstSettingPage");
+        console.log("🎉sign up success")
+      })
+      .catch(() => {
+        setIsError(true);
+      });
   };
 
   const [email, setEmail] = useState<string>("");
@@ -27,6 +37,9 @@ const SignUpScreen = ({
   const [isVisiblePasswordAgain, setIsVisiblePasswordAgain] = useState<boolean>(false);
   const [isOver18, setIsOver18] = useState<boolean>(false);
   const [isAgreeTerms, setIsAgreeTerms] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const router = useRouter();
+
   function isValiedPassword(password: string) {
     const pattern = /^[A-Za-z@]{8,}$/;
     return pattern.test(password);
@@ -86,7 +99,8 @@ const SignUpScreen = ({
             </StyledView>
             <StyledText
               className={`ml-[4px] text-[12px] text-[#FF0000] mb-[18px] ${!(password && !isValiedPassword(password)) && "opacity-0"}`}
-            >※ 英文字8文字以上である必要があります</StyledText>
+            >※ 英文字8文字以上である必要があります
+            </StyledText>
           </StyledView>
 
           {/* もう一度入力 */}
@@ -114,7 +128,8 @@ const SignUpScreen = ({
             </StyledView>
             <StyledText
               className={`mb-[24px] text-[12px] ml-[4px] text-[#FF0000] ${!(password && passwordAgain && passwordAgain != password) && "opacity-0"}`}
-            >※ 一致しません</StyledText>
+            >※ 一致しません
+            </StyledText>
           </StyledView>
 
           {/* チェックボックス */}
@@ -147,6 +162,9 @@ const SignUpScreen = ({
                 </StyledText>
               </StyledTouchableOpacity>
             </StyledView>
+          <StyledText className={`text-[#ff0000] ${!isError && "opacity-0"}`}>
+            登録に失敗しました
+          </StyledText>
           </StyledView>
         </StyledView>
         {/* ログインボタン */}
