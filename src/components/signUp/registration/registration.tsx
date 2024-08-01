@@ -166,6 +166,8 @@ const Registration = ({
         scene={scene}
         setScene={setScene}
         isValid={isValid}
+        email={""} 
+        password={""}
       ></TransitionButton>
     </StyledView>
   );

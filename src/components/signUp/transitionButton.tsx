@@ -10,10 +10,14 @@ const TransitionButton = ({
   scene,
   setScene,
   isValid,
+  email,
+  password,
 }: {
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
   isValid: boolean;
+  email: string;
+  password: string,
 }) => {
   const handleNext = () => {
     setScene((prev) => prev + 1);

@@ -87,7 +87,12 @@ const FirstSetting_step1 = ({
         />
       </StyledView>
 
-      <TransitionButton scene={scene} setScene={setScene} isValid={isValid} />
+      <TransitionButton
+        scene={scene}
+        setScene={setScene}
+        isValid={isValid}
+        email={""}
+        password={""} />
     </StyledView>
   );
 };

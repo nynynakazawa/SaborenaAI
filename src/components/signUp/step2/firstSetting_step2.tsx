@@ -34,7 +34,7 @@ const FirstSetting_step2 = ({
 
       <ImageCaution />
 
-      <TransitionButton scene={scene} setScene={setScene} isValid={isValid} />
+      <TransitionButton scene={scene} setScene={setScene} isValid={isValid} email={""} password={""} />
     </StyledView>
   );
 };
