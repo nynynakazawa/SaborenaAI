@@ -13,7 +13,7 @@ const NameInput = ({
   setName: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
-    <StyledView className="mx-auto w-[80vw]">
+    <StyledView className="mx-auto w-[90vw]">
       <StyledView className="flex flex-row items-center">
         <Icon
           name="drive-file-rename-outline"
@@ -30,7 +30,8 @@ const NameInput = ({
           onChangeText={setName}
           placeholder="あだ名など"
           placeholderTextColor="#ccc"
-          className="w-[58vw] border-b-2 border-[#333] py-[6px] pl-[12px] text-[16px] text-[#fff]"
+          maxLength={8}
+          className="w-full border-b-2 border-[#333] py-[6px] pl-[12px] text-[16px] text-[#333]"
         />
       </StyledView>
     </StyledView>

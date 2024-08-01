@@ -9,10 +9,11 @@ import {
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import TermModal from "./TermModal";
-import { auth } from "../../firebase";
+import TermModal from "../../login/termModal";
+import { auth } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import TransitionButton from "../transitionButton";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -20,9 +21,19 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
 const SignUpScreen = ({
-  setIsVisibleSignUpScreen,
-}: {
-  setIsVisibleSignUpScreen: React.Dispatch<React.SetStateAction<boolean>>;
+  scene,
+  setScene,
+  email,
+  setEmail,
+  password,
+  setPassword,
+}:{
+  scene: number;
+  setScene: React.Dispatch<React.SetStateAction<number>>;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   // サインアップ処理
   const handleSignUp = () => {
@@ -36,8 +47,6 @@ const SignUpScreen = ({
       });
   };
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
   const [passwordAgain, setPasswordAgain] = useState<string>("");
   const [isVisiblePasswordAgain, setIsVisiblePasswordAgain] =
@@ -46,13 +55,13 @@ const SignUpScreen = ({
   const [isAgreeTerms, setIsAgreeTerms] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
-
+  
+  const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
+  // バリデーションチェック
   function isValiedPassword(password: string) {
     const pattern = /^[A-Za-z@]{8,}$/;
     return pattern.test(password);
   }
-
-  const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
   const isValid: boolean =
     email.trim() != "" &&
     password.trim() != "" &&
@@ -62,11 +71,11 @@ const SignUpScreen = ({
     isValiedPassword(password);
 
   return (
-    <StyledView className="relative z-50 flex-1">
+    <StyledView>
       <StyledView className="relative h-screen w-screen bg-[#fff]">
         {/* バックボタン */}
         <StyledTouchableOpacity
-          onPress={() => setIsVisibleSignUpScreen(false)}
+          onPress={() => router.push("/loginPage")}
           className={`${Platform.OS === "ios" && "mt-[50px]"} h-[70px]`}
         >
           <StyledView className="mx-auto flex h-full w-[90vw] flex-row items-center">
@@ -191,22 +200,18 @@ const SignUpScreen = ({
             </StyledText>
           </StyledView>
         </StyledView>
-        {/* ログインボタン */}
-        <StyledTouchableOpacity
-          onPress={handleSignUp}
-          className={`absolute bottom-[12vh] right-[10vw] flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#E04B36] ${!isValid && "opacity-30"}`}
-          disabled={!isValid}
-        >
-          <StyledText className="text-[16px] text-[#fff]">新規登録</StyledText>
-        </StyledTouchableOpacity>
 
         <TermModal
           visible={isVisibleTermModal}
           onClose={() => setIsVisibleTermModal(false)}
         />
-
-        <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#E3422F]"></StyledView>
       </StyledView>
+
+      <TransitionButton
+        scene={scene}
+        setScene={setScene}
+        isValid={true}
+      ></TransitionButton>
     </StyledView>
   );
 };
