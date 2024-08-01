@@ -22,9 +22,7 @@ const LoginPage = () => {
     <Container style={{ flex: 1 }}>
       <LoginLogo />
       {!isVisibleLoginModal && (
-        <LoginButtonContainer
-          setIsVisibleLoginModal={setIsVisibleLoginModal}
-        />
+        <LoginButtonContainer setIsVisibleLoginModal={setIsVisibleLoginModal} />
       )}
       {isVisibleLoginModal && (
         <LoginModal setIsVisibleLoginModal={setIsVisibleLoginModal} />

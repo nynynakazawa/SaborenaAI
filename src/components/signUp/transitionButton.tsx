@@ -20,15 +20,12 @@ const TransitionButton = ({
   };
 
   return (
-    <StyledView className="flex-1 items-center w-screen absolute bottom-[8vh]">
-      <StyledView className="flex flex-row w-[75vw] mx-auto justify-between mb-4">
+    <StyledView className="absolute bottom-[8vh] w-screen flex-1 items-center">
+      <StyledView className="mx-auto mb-4 flex w-[75vw] flex-row justify-between">
         {/* prevボタン */}
         <StyledTouchableOpacity
           onPress={() => setScene((prev) => prev - 1)}
-          className={
-            `flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#3685e0]
-            ${scene == 0 && "opacity-0"}`
-          }
+          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#3685e0] ${scene == 0 && "opacity-0"}`}
         >
           <StyledText className="text-[16px] text-[#fff]">戻る</StyledText>
         </StyledTouchableOpacity>

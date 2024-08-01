@@ -20,14 +20,14 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
-const SignUpScreen = ({
+const Registration = ({
   scene,
   setScene,
   email,
   setEmail,
   password,
   setPassword,
-}:{
+}: {
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
   email: string;
@@ -55,7 +55,7 @@ const SignUpScreen = ({
   const [isAgreeTerms, setIsAgreeTerms] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
-  
+
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
   // バリデーションチェック
   function isValiedPassword(password: string) {
@@ -141,6 +141,7 @@ const SignUpScreen = ({
               <StyledTextInput
                 onChangeText={setPasswordAgain}
                 secureTextEntry={!isVisiblePasswordAgain}
+                value={password}
                 placeholder="パスワード"
                 placeholderTextColor="#ccc"
                 className="w-[72%] pb-[2px] pl-[12px] pt-[6px] text-[16px] text-[#333]"
@@ -216,4 +217,4 @@ const SignUpScreen = ({
   );
 };
 
-export default SignUpScreen;
+export default Registration;
