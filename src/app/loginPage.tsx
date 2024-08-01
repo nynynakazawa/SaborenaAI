@@ -27,7 +27,7 @@ const LoginPage = () => {
         <LoginButtonContainer setIsVisibleLoginModal={setIsVisibleLoginModal} />
       )}
       {isVisibleLoginModal && (
-        <LoginModal 
+        <LoginModal
           email={email}
           setEmail={setEmail}
           password={password}

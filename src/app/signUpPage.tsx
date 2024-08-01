@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FirstSetting_step1 from "../components/signUp/step1/firstSetting_step1";
 import FirstSetting_step2 from "../components/signUp/step2/firstSetting_step2";
 import Registration from "../components/signUp/registration/registration";
+import FirstSetting_step3 from "../components/signUp/step3/firstSetting_step3";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -31,6 +32,11 @@ const FirstSetting = () => {
 
   // FirsetSetting_Step2
   const [image, setImage] = useState<string | null>(null);
+
+  // FirsetSetting_Step3
+  const [selfIntroduction, setSelfIntroduction] = useState<string>("");
+  const [selectedWork, setSelectedWork] = useState<string>("未設定");
+  const [selectedGoal, setSelectedGoal] = useState<string>("未設定");
 
   return (
     <Container style={{ flex: 1 }}>
@@ -74,6 +80,20 @@ const FirstSetting = () => {
           setImage={setImage}
           scene={scene}
           setScene={setScene}
+        />
+      )}
+      {scene == 3 && (
+        <FirstSetting_step3
+          selfIntroduction={selfIntroduction}
+          setSelfIntroduction={setSelfIntroduction}
+          selectedWork={selectedWork}
+          setSelectedWork={setSelectedWork}
+          selectedGoal={selectedGoal}
+          setSelectedGoal={setSelectedGoal}
+          scene={scene}
+          setScene={setScene}
+          email={email}
+          password={password}
         />
       )}
 
