@@ -25,12 +25,18 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
 const LoginModal = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
   setIsVisibleLoginModal,
 }: {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
   setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();

@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import TermModal from "../../login/termModal";
 import { auth } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import TransitionButton from "../transitionButton";
 import EmailInput from "../../../layout/form/emailInput";
 import PasswordInput from "../../../layout/form/passwordInput";
@@ -29,6 +29,12 @@ const Registration = ({
   setEmail,
   password,
   setPassword,
+  passwordAgain,
+  setPasswordAgain,
+  isOver18,
+  setIsOver18,
+  isAgreeTerms,
+  setIsAgreeTerms,
 }: {
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
@@ -36,6 +42,12 @@ const Registration = ({
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
+  passwordAgain: string;
+  setPasswordAgain: React.Dispatch<React.SetStateAction<string>>;
+  isOver18: boolean;
+  setIsOver18: React.Dispatch<React.SetStateAction<boolean>>;
+  isAgreeTerms: boolean;
+  setIsAgreeTerms: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // サインアップ処理
   const handleSignUp = () => {
@@ -49,12 +61,6 @@ const Registration = ({
       });
   };
 
-  const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
-  const [passwordAgain, setPasswordAgain] = useState<string>("");
-  const [isVisiblePasswordAgain, setIsVisiblePasswordAgain] =
-    useState<boolean>(false);
-  const [isOver18, setIsOver18] = useState<boolean>(false);
-  const [isAgreeTerms, setIsAgreeTerms] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
 

@@ -78,7 +78,7 @@ const FirstSetting_step1 = ({
       >
         <NameInput name={name} setName={setName} />
         <BirthInput birth={birth} setBirth={setBirth} />
-        <GenderInput setGender={setGender} />
+        <GenderInput gender={gender} setGender={setGender} />
         <ResidentialInput
           selectedPrefecture={selectedPrefecture}
           setSelectedPrefecture={setSelectedPrefecture}
