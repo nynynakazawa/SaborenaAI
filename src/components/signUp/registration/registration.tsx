@@ -14,6 +14,8 @@ import { auth } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useRouter } from "expo-router";
 import TransitionButton from "../transitionButton";
+import EmailInput from "../../../layout/form/emailInput";
+import PasswordInput from "../../../layout/form/passwordInput";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -62,6 +64,7 @@ const Registration = ({
     const pattern = /^[A-Za-z@]{8,}$/;
     return pattern.test(password);
   }
+
   const isValid: boolean =
     email.trim() != "" &&
     password.trim() != "" &&
@@ -92,81 +95,26 @@ const Registration = ({
         {/* サインアップフォーム */}
         <StyledView className="mx-auto mt-[10vh] w-[90%] flex-1 items-center">
           {/* メールアドレス */}
-          <StyledView className="mb-[56px] flex w-full flex-row items-center border-b-2 border-[#333] pb-[10px]">
-            <Icon name="email" size={30} color="#333" className="mr-[10px]" />
-            <StyledTextInput
-              onChangeText={setEmail}
-              placeholder="メールアドレス"
-              placeholderTextColor="#ccc"
-              className="w-full pb-[2px] pl-[12px] pt-[6px] text-[16px] text-[#333]"
-            />
+          <StyledView className="mb-[56px] w-full">
+            <EmailInput email={email} setEmail={setEmail} option={"black"} />
           </StyledView>
 
           {/* パスワード */}
           <StyledView className="w-full">
-            <StyledView className="mb-[6px] flex w-full flex-row items-center border-b-2 border-[#333] pb-[10px]">
-              <Icon name="lock" size={30} color="#333" className="mr-[10px]" />
-              <StyledTextInput
-                onChangeText={setPassword}
-                secureTextEntry={!isVisiblePassword}
-                placeholder="パスワード"
-                placeholderTextColor="#ccc"
-                className="w-[72%] pb-[2px] pl-[12px] pt-[6px] text-[16px] text-[#333]"
-              />
-              <TouchableOpacity
-                onPress={() => setIsVisiblePassword(!isVisiblePassword)}
-                className="ml-[10px]"
-              >
-                <Icon
-                  name={isVisiblePassword ? "visibility" : "visibility-off"}
-                  size={30}
-                  color="#333"
-                />
-              </TouchableOpacity>
-            </StyledView>
-            <StyledText
-              className={`mb-[18px] ml-[4px] text-[12px] text-[#FF0000] ${!(password && !isValiedPassword(password)) && "opacity-0"}`}
-            >
-              ※ 英文字8文字以上である必要があります
-            </StyledText>
+            <PasswordInput
+              password={password}
+              setPassword={setPassword}
+              option={"first"}
+              isValid={isValiedPassword(password)}
+            />
           </StyledView>
-
           {/* もう一度入力 */}
-          <StyledView className="w-full">
-            <StyledText className="mb-[6px] ml-[4px] text-[#333]">
-              もう一度パスワードを入力してください
-            </StyledText>
-            <StyledView className="mb-[6px] flex w-full flex-row items-center border-b-2 border-[#333] pb-[10px]">
-              <Icon name="lock" size={30} color="#333" className="mr-[10px]" />
-              <StyledTextInput
-                onChangeText={setPasswordAgain}
-                secureTextEntry={!isVisiblePasswordAgain}
-                value={password}
-                placeholder="パスワード"
-                placeholderTextColor="#ccc"
-                className="w-[72%] pb-[2px] pl-[12px] pt-[6px] text-[16px] text-[#333]"
-              />
-              <TouchableOpacity
-                onPress={() =>
-                  setIsVisiblePasswordAgain(!isVisiblePasswordAgain)
-                }
-                className="ml-[10px]"
-              >
-                <Icon
-                  name={
-                    isVisiblePasswordAgain ? "visibility" : "visibility-off"
-                  }
-                  size={30}
-                  color="#333"
-                />
-              </TouchableOpacity>
-            </StyledView>
-            <StyledText
-              className={`mb-[24px] ml-[4px] text-[12px] text-[#FF0000] ${!(password && passwordAgain && passwordAgain != password) && "opacity-0"}`}
-            >
-              ※ 一致しません
-            </StyledText>
-          </StyledView>
+          <PasswordInput
+            password={passwordAgain}
+            setPassword={setPasswordAgain}
+            option={"again"}
+            isValid={passwordAgain.trim() != "" && passwordAgain == password}
+          />
 
           {/* チェックボックス */}
           <StyledView className="mt-[20px] flex w-full gap-[22px]">
@@ -211,7 +159,7 @@ const Registration = ({
       <TransitionButton
         scene={scene}
         setScene={setScene}
-        isValid={true}
+        isValid={isValid}
       ></TransitionButton>
     </StyledView>
   );

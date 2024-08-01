@@ -13,7 +13,7 @@ const StyledText = styled(Text);
 const FirstSetting = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
-  const [scene, setScene] = useState<number>(2);
+  const [scene, setScene] = useState<number>(0);
   // SignUpScreen
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -25,6 +25,9 @@ const FirstSetting = () => {
   const [selectedPrefecture, setSelectedPrefecture] =
     useState<string>("未設定");
   const [selectedCity, setSelectedCity] = useState<string>("未設定");
+
+  // FirsetSetting_Step2
+  const [image, setImage] = useState<string | null>(null);
 
   return (
     <Container style={{ flex: 1 }}>
@@ -56,7 +59,14 @@ const FirstSetting = () => {
         />
       )}
       {/* step2 */}
-      {scene == 2 && <FirstSetting_step2 scene={scene} setScene={setScene} />}
+      {scene == 2 && (
+        <FirstSetting_step2
+          image={image}
+          setImage={setImage}
+          scene={scene}
+          setScene={setScene}
+        />
+      )}
 
       <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#E3422F]"></StyledView>
     </Container>

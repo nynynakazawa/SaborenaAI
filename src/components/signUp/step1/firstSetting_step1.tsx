@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
-import NameInput from "./nameInput";
-import BirthInput from "./birthInput";
-import GenderInput from "./genderInput";
-import ResidentialInput from "./residentialInput";
+import NameInput from "../../../layout/form/nameInput";
+import BirthInput from "../../../layout/form/birthInput";
+import GenderInput from "../../../layout/form/genderInput";
+import ResidentialInput from "../../../layout/form/residentialInput";
 import TransitionButton from "../transitionButton";
 import Header from "../../../layout/header/header";
 import ProgressBar from "../progressBar";
@@ -67,12 +67,15 @@ const FirstSetting_step1 = ({
     name.trim() != "" &&
     isValidDate(birth) &&
     gender.trim() != "" &&
-    selectedPrefecture != "-";
+    selectedPrefecture != "未設定";
+
   return (
     <StyledView className="h-screen">
       <Header />
       <ProgressBar percentage={100 / 3} text={String(scene)} />
-      <StyledView className="absolute top-[18vh] mt-[80px] w-screen">
+      <StyledView
+        className={`absolute mt-[80px] w-screen ${Platform.OS == "android" ? "top-[10vh]" : "top-[18vh]"}`}
+      >
         <NameInput name={name} setName={setName} />
         <BirthInput birth={birth} setBirth={setBirth} />
         <GenderInput setGender={setGender} />
