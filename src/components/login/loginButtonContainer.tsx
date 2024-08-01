@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-import TermModal from "./TermModal";
+import TermModal from "./termModal";
+import { Link, useRouter } from "expo-router";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -9,19 +10,18 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const LoginButtonContainer = ({
   setIsVisibleLoginModal,
-  setIsVisibleSignUpScreen,
 }: {
   setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsVisibleSignUpScreen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
+  const router = useRouter();
 
   return (
     <StyledView className="relative z-10 flex-1">
       <StyledView className="absolute top-[60vh] z-10 w-screen flex-1 items-center">
         {/* サインアップ */}
         <StyledTouchableOpacity
-          onPress={() => setIsVisibleSignUpScreen(true)}
+          onPress={() => router.push("/signUpPage")}
           className="flex h-[60px] w-[66vw] items-center justify-center rounded-full bg-[#fff]"
         >
           <StyledText className="text-[16px] text-[#E04B36]">

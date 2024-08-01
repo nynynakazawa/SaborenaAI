@@ -48,7 +48,7 @@ const BirthInput = ({
   };
 
   return (
-    <StyledView className="mx-auto mb-[12px] w-[80vw]">
+    <StyledView className="mx-auto mb-[12px] w-[90vw]">
       <StyledView className="mb-[12px] flex flex-row items-center">
         <Icon name="calendar" size={36} color="#333" className="mr-[10px]" />
         <StyledText className="text-[16px]">

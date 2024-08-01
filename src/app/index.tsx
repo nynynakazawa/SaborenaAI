@@ -15,7 +15,7 @@ const Index = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        router.push("/firstSettingPage");
+        router.push("/signUpPage");
       } else {
         router.push("/loginPage");
       }

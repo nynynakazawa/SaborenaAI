@@ -8,9 +8,9 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 const GenderInput = ({
-  setJender,
+  setGender,
 }: {
-  setJender: React.Dispatch<React.SetStateAction<string>>;
+  setGender: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const radioButtons = useMemo(() => ([
     {
@@ -36,14 +36,14 @@ const GenderInput = ({
     setSelectedId(id);
     const selectedButton = radioButtons.find(button => button.id === id);
     if (selectedButton) {
-      setJender(selectedButton.value);
+      setGender(selectedButton.value);
     }
   };
 
   return (
-    <StyledView className="mx-auto w-[80vw]">
+    <StyledView className="mx-auto w-[90vw]">
       <StyledView className="flex flex-row items-center mb-[12px]">
-        <Icon name="man" size={36} color="#333" className="mr-[10px]" />
+        <Icon name="man" size={36} color="#333" className="mr-[8px]" />
         <StyledText className="text-[16px]">
           性別(再設定不可)<StyledText className="text-[#f00]">*</StyledText>
         </StyledText>
