@@ -17,3 +17,8 @@ declare module "react-native-vector-icons/FontAwesome" {
   import { Icon } from "react-native-vector-icons/FontAwesome";
   export default Icon;
 }
+
+declare module "react-native-vector-icons/AntDesign" {
+  import { Icon } from "react-native-vector-icons/FontAwesome";
+  export default Icon;
+}

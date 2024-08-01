@@ -11,8 +11,45 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const prefectures: { [key: string]: string[] } = {
   "-": ["-"],
-  "東京都": ["非公開", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区", "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"],
-  "大阪府": ["非公開", "大阪市", "堺市", "東大阪市", "枚方市", "豊中市", "吹田市", "高槻市", "茨木市", "八尾市", "寝屋川市"],
+  東京都: [
+    "非公開",
+    "千代田区",
+    "中央区",
+    "港区",
+    "新宿区",
+    "文京区",
+    "台東区",
+    "墨田区",
+    "江東区",
+    "品川区",
+    "目黒区",
+    "大田区",
+    "世田谷区",
+    "渋谷区",
+    "中野区",
+    "杉並区",
+    "豊島区",
+    "北区",
+    "荒川区",
+    "板橋区",
+    "練馬区",
+    "足立区",
+    "葛飾区",
+    "江戸川区",
+  ],
+  大阪府: [
+    "非公開",
+    "大阪市",
+    "堺市",
+    "東大阪市",
+    "枚方市",
+    "豊中市",
+    "吹田市",
+    "高槻市",
+    "茨木市",
+    "八尾市",
+    "寝屋川市",
+  ],
   // 他の県と市も追加できます
 };
 
@@ -44,7 +81,7 @@ const ResidentialInput = ({
 
   return (
     <StyledView className="mx-auto w-[90vw]">
-      <StyledView className="flex flex-row items-center mb-[8px]">
+      <StyledView className="mb-[8px] flex flex-row items-center">
         <Icon
           name="map-marker"
           size={32}
@@ -56,17 +93,14 @@ const ResidentialInput = ({
         </StyledText>
       </StyledView>
 
-      <StyledTouchableOpacity
-        onPress={toggleModal}
-        activeOpacity={0.8}
-      >
-        <StyledView className="flex flex-row justify-around w-[58vw] border-b-2 border-[#333] py-[6px] pl-[12px] text-[16px] text-[#333]">
+      <StyledTouchableOpacity onPress={toggleModal} activeOpacity={0.8}>
+        <StyledView className="flex w-[58vw] flex-row justify-around border-b-2 border-[#333] py-[6px] pl-[12px] text-[16px] text-[#333]">
           <StyledText className="text-[16px]">{selectedPrefecture}</StyledText>
           <StyledText className="text-[16px]">{selectedCity}</StyledText>
         </StyledView>
       </StyledTouchableOpacity>
       <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
-        <StyledView className="bg-white p-5 rounded-lg items-center">
+        <StyledView className="items-center rounded-lg bg-white p-5">
           <StyledView className="w-full flex-row">
             <StyledView className="flex-1">
               <Picker
@@ -78,14 +112,20 @@ const ResidentialInput = ({
                 style={{ height: 180 } as ViewStyle}
               >
                 {Object.keys(prefectures).map((prefecture) => (
-                  <Picker.Item key={prefecture} label={prefecture} value={prefecture} />
+                  <Picker.Item
+                    key={prefecture}
+                    label={prefecture}
+                    value={prefecture}
+                  />
                 ))}
               </Picker>
             </StyledView>
-            <StyledView className="flex-1 ml-4">
+            <StyledView className="ml-4 flex-1">
               <Picker
                 selectedValue={selectedCity}
-                onValueChange={(itemValue: string) => setSelectedCity(itemValue)}
+                onValueChange={(itemValue: string) =>
+                  setSelectedCity(itemValue)
+                }
                 style={{ height: 180 } as ViewStyle}
               >
                 {prefectures[selectedPrefecture]?.map((city) => (
@@ -94,8 +134,13 @@ const ResidentialInput = ({
               </Picker>
             </StyledView>
           </StyledView>
-          <StyledTouchableOpacity onPress={toggleModal} className="bg-[#E06557] p-3 rounded-full mt-4">
-            <StyledText className="text-white text-center text-xl">決定</StyledText>
+          <StyledTouchableOpacity
+            onPress={toggleModal}
+            className="mt-4 rounded-full bg-[#E06557] p-3"
+          >
+            <StyledText className="text-center text-xl text-white">
+              決定
+            </StyledText>
           </StyledTouchableOpacity>
         </StyledView>
       </Modal>

@@ -13,14 +13,14 @@ const ProgressBar = ({
   text: string;
 }) => {
   return (
-    <StyledView className="w-[50vw] mx-auto mt-[2vh] p-2">
+    <StyledView className="mx-auto mt-[1vh] w-[50vw] p-2">
       <StyledView className="flex flex-row justify-between">
         <StyledText className="mb-2">基本情報の入力</StyledText>
         <StyledText className="mb-2">{text} / 3</StyledText>
       </StyledView>
-      <StyledView className="w-[50vw] h-[12px] bg-gray-300 rounded-full">
+      <StyledView className="h-[12px] w-[50vw] rounded-full bg-gray-300">
         <StyledView
-          className="h-full bg-[#E04B36] rounded-full"
+          className="h-full rounded-full bg-[#E04B36]"
           style={{ width: `${percentage}%` }}
         />
       </StyledView>

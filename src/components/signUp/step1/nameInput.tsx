@@ -8,8 +8,10 @@ const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 
 const NameInput = ({
+  name,
   setName,
 }: {
+  name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
@@ -28,6 +30,7 @@ const NameInput = ({
       <StyledView className="mb-[12px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
         <StyledTextInput
           onChangeText={setName}
+          value={name}
           placeholder="あだ名など"
           placeholderTextColor="#ccc"
           maxLength={8}

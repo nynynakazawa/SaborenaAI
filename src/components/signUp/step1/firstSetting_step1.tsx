@@ -1,5 +1,5 @@
-import React from "react"
-import { Text, View } from "react-native"
+import React from "react";
+import { Text, View } from "react-native";
 import { styled } from "nativewind";
 import NameInput from "./nameInput";
 import BirthInput from "./birthInput";
@@ -9,8 +9,8 @@ import TransitionButton from "../transitionButton";
 import Header from "../../../layout/header/header";
 import ProgressBar from "../progressBar";
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
 const FirstSetting_step1 = ({
   name,
@@ -50,7 +50,11 @@ const FirstSetting_step1 = ({
       return false;
     }
     const date = new Date(year, month, day);
-    if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+    if (
+      date.getFullYear() !== year ||
+      date.getMonth() !== month ||
+      date.getDate() !== day
+    ) {
       return false;
     }
     const now = new Date();
@@ -58,31 +62,31 @@ const FirstSetting_step1 = ({
       return false;
     }
     return true;
-  }
-  const isValid = name.trim() != "" && isValidDate(birth) && gender.trim() != "" && selectedPrefecture != "-"
+  };
+  const isValid =
+    name.trim() != "" &&
+    isValidDate(birth) &&
+    gender.trim() != "" &&
+    selectedPrefecture != "-";
   return (
     <StyledView className="h-screen">
       <Header />
       <ProgressBar percentage={100 / 3} text={String(scene)} />
-      <StyledView className="absolute top-[18vh] w-screen mt-[80px]">
-        <NameInput setName={setName} />
-        <BirthInput setBirth={setBirth} />
+      <StyledView className="absolute top-[18vh] mt-[80px] w-screen">
+        <NameInput name={name} setName={setName} />
+        <BirthInput birth={birth} setBirth={setBirth} />
         <GenderInput setGender={setGender} />
-        <ResidentialInput 
+        <ResidentialInput
           selectedPrefecture={selectedPrefecture}
           setSelectedPrefecture={setSelectedPrefecture}
           selectedCity={selectedCity}
           setSelectedCity={setSelectedCity}
         />
       </StyledView>
-      
-      <TransitionButton
-        scene={scene}
-        setScene={setScene}
-        isValid={isValid}
-      />
-    </StyledView>
-  )
-}
 
-export default FirstSetting_step1
+      <TransitionButton scene={scene} setScene={setScene} isValid={isValid} />
+    </StyledView>
+  );
+};
+
+export default FirstSetting_step1;
