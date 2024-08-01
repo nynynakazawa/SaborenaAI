@@ -13,6 +13,8 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 const LoginPage = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [isVisibleLoginModal, setIsVisibleLoginModal] =
     useState<boolean>(false);
 
@@ -25,7 +27,13 @@ const LoginPage = () => {
         <LoginButtonContainer setIsVisibleLoginModal={setIsVisibleLoginModal} />
       )}
       {isVisibleLoginModal && (
-        <LoginModal setIsVisibleLoginModal={setIsVisibleLoginModal} />
+        <LoginModal 
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          setIsVisibleLoginModal={setIsVisibleLoginModal}
+        />
       )}
       <LoginBackground />
     </Container>

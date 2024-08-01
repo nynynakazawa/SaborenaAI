@@ -14,9 +14,12 @@ const FirstSetting = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
   const [scene, setScene] = useState<number>(0);
-  // SignUpScreen
+  // Registation
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [passwordAgain, setPasswordAgain] = useState<string>("");
+  const [isOver18, setIsOver18] = useState<boolean>(false);
+  const [isAgreeTerms, setIsAgreeTerms] = useState<boolean>(false);
 
   // FirsetSetting_Step1
   const [name, setName] = useState<string>("");
@@ -39,6 +42,12 @@ const FirstSetting = () => {
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
+          passwordAgain={passwordAgain}
+          setPasswordAgain={setPasswordAgain}
+          isOver18={isOver18}
+          setIsOver18={setIsOver18}
+          isAgreeTerms={isAgreeTerms}
+          setIsAgreeTerms={setIsAgreeTerms}
         />
       )}
       {/* step1 */}

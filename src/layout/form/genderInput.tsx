@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Text, View } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -8,8 +8,10 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 const GenderInput = ({
+  gender,
   setGender,
 }: {
+  gender: string;
   setGender: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const radioButtons = useMemo(
@@ -34,6 +36,13 @@ const GenderInput = ({
   );
 
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const initialSelectedButton = radioButtons.find((button) => button.value === gender);
+    if (initialSelectedButton) {
+      setSelectedId(initialSelectedButton.id);
+    }
+  }, [gender, radioButtons]);
 
   const handlePress = (id: string) => {
     setSelectedId(id);
