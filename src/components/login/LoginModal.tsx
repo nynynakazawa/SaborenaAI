@@ -16,6 +16,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "expo-router";
+import EmailInput from "../../layout/form/emailInput";
+import PasswordInput from "../../layout/form/passwordInput";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -29,7 +31,6 @@ const LoginModal = ({
 }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
@@ -82,49 +83,21 @@ const LoginModal = ({
           className="absolute bottom-0 flex h-[38vh] w-screen items-center px-8 py-4"
           style={{ backgroundColor: "rgba(210, 63, 63, 0.9)" }}
         >
-          <StyledView className="mt-[30px] w-[90%] flex-1 items-center">
-            {/* メールアドレス */}
-            <StyledView className="mb-[12px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
-              <Icon name="email" size={30} color="#fff" className="mr-[10px]" />
-              <StyledTextInput
-                onChangeText={setEmail}
-                placeholder="メールアドレス"
-                placeholderTextColor="#ffb9b9"
-                className="w-full py-[6px] pl-[12px] text-[16px] text-[#fff]"
-              />
+          <StyledView className="mt-[30px] w-[80vw] flex-1 items-center">
+            <StyledView className="mb-[12px] w-full">
+              <EmailInput email={email} setEmail={setEmail} option={"login"} />
             </StyledView>
-
-            {/* パスワード */}
-            <StyledView className="w-full">
-              <StyledView className="mb-[6px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
-                <Icon
-                  name="lock"
-                  size={30}
-                  color="#fff"
-                  className="mr-[10px]"
+            <StyledView className="mb-[12px] w-full">
+              <StyledView className="w-full">
+                <PasswordInput
+                  password={password}
+                  setPassword={setPassword}
+                  option={"login"}
+                  isValid={true}
                 />
-                <StyledTextInput
-                  onChangeText={setPassword}
-                  secureTextEntry={!isVisiblePassword}
-                  placeholder="パスワード"
-                  placeholderTextColor="#ffb9b9"
-                  className="w-[72%] py-[6px] pl-[12px] text-[16px] text-[#fff]"
-                />
-                <TouchableOpacity
-                  onPress={() => setIsVisiblePassword(!isVisiblePassword)}
-                  className="ml-[10px]"
-                >
-                  <Icon
-                    name={isVisiblePassword ? "visibility" : "visibility-off"}
-                    size={30}
-                    color="#fff"
-                  />
-                </TouchableOpacity>
               </StyledView>
-              <StyledText
-                className={`mb-[24px] ml-[4px] text-[12px] text-[#fff] ${!isError && "opacity-0"}`}
-              >
-                ※ ユーザーが存在しません
+              <StyledText className={`text-[#fff] text-[12px] ${!isError &&"opacity-0"}`}>
+                ユーザーが存在しません
               </StyledText>
             </StyledView>
           </StyledView>
