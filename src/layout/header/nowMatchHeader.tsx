@@ -6,7 +6,7 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
-const Header = () => {
+const NowMatchHeader = () => {
   return (
     <StyledView
       className={`mx-auto flex h-[70px] w-[90vw] flex-row items-center ${Platform.OS === "ios" && "mt-[50px]"}`}
@@ -22,4 +22,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default NowMatchHeader;

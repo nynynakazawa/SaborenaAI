@@ -15,7 +15,6 @@ const EmailInput = ({
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   option: string;
 }) => {
-
   return (
     <StyledView className="w-full">
       <StyledView

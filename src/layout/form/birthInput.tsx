@@ -28,7 +28,7 @@ const BirthdayInput = ({
     }
   }, [year, month, day]);
 
-  const handleYearChange = (text : string) => {
+  const handleYearChange = (text: string) => {
     setYear(text);
     if (text.length === 4) {
       monthInputRef.current?.focus();
@@ -36,7 +36,7 @@ const BirthdayInput = ({
     setBirthday(`${text},${month},${day}`);
   };
 
-  const handleMonthChange = (text : string) => {
+  const handleMonthChange = (text: string) => {
     setMonth(text);
     if (text.length === 2) {
       dayInputRef.current?.focus();
@@ -44,7 +44,7 @@ const BirthdayInput = ({
     setBirthday(`${year},${text},${day}`);
   };
 
-  const handleDayChange = (text : string) => {
+  const handleDayChange = (text: string) => {
     setDay(text);
     setBirthday(`${year},${month},${text}`);
   };

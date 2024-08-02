@@ -33,7 +33,7 @@ const GoalInput = ({
   };
 
   return (
-    <StyledView className="mx-auto w-[90vw] mb-[12px] flex flex-row justify-between">
+    <StyledView className="mx-auto mb-[12px] flex w-[90vw] flex-row justify-between">
       <StyledView className="mb-[8px] flex flex-row items-center">
         <Icon
           name="target"
@@ -41,15 +41,21 @@ const GoalInput = ({
           color="#333"
           className="ml-[8px] mr-[16px]"
         />
-        <StyledText className="text-[16px]">
-          目的
-        </StyledText>
+        <StyledText className="text-[16px]">目的</StyledText>
       </StyledView>
-        <StyledTouchableOpacity onPress={toggleModal} activeOpacity={0.8} className="flex">
-          <StyledView className="flex flex-row justify-around border-b-2 border-[#333] p-[6px] px-[20px] text-[16px] text-[#333]">
-            <StyledText className={`text-[16px] text-[#333] ${selectedGoal == "未設定" && "text-[#ccc]"}`}>{selectedGoal}</StyledText>
-          </StyledView>
-        </StyledTouchableOpacity>
+      <StyledTouchableOpacity
+        onPress={toggleModal}
+        activeOpacity={0.8}
+        className="flex"
+      >
+        <StyledView className="flex flex-row justify-around border-b-2 border-[#333] p-[6px] px-[20px] text-[16px] text-[#333]">
+          <StyledText
+            className={`text-[16px] text-[#333] ${selectedGoal == "未設定" && "text-[#ccc]"}`}
+          >
+            {selectedGoal}
+          </StyledText>
+        </StyledView>
+      </StyledTouchableOpacity>
 
       <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
         <StyledView className="items-center rounded-lg bg-white p-5">

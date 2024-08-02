@@ -8,9 +8,7 @@ import {
 } from "react-native";
 import { styled } from "nativewind";
 import { auth, db } from "../../firebase";
-import {
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "expo-router";
 import EmailInput from "../../layout/signup/emailInput";
 import PasswordInput from "../../layout/signup/passwordInput";
@@ -60,7 +58,11 @@ const LoginModal = ({
   // ログイン処理
   const handleLogin = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const userRef = doc(db, "users", userCredential.user.uid);
       const userSnapshot = await getDoc(userRef);
 
@@ -70,7 +72,7 @@ const LoginModal = ({
         if (userData.private_info.emailVerified == true) {
           console.log("🎉login success");
           // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
-          if(userData.user_info?.name && true){
+          if (userData.user_info?.name && true) {
             router.push("/mapPage");
           } else {
             router.push({
@@ -89,7 +91,7 @@ const LoginModal = ({
       console.error("Error signing in with email and password:", error);
       setErrorMessage("ユーザーが存在しません");
     }
-  }
+  };
 
   return (
     <StyledView className="relative z-40 flex-1">
@@ -119,7 +121,9 @@ const LoginModal = ({
                   isValid={true}
                 />
               </StyledView>
-              <StyledText className={`text-[#fff] text-[12px] ${!errorMessage && "opacity-0"}`}>
+              <StyledText
+                className={`text-[12px] text-[#fff] ${!errorMessage && "opacity-0"}`}
+              >
                 {errorMessage}
               </StyledText>
             </StyledView>
@@ -129,9 +133,11 @@ const LoginModal = ({
           <StyledText className="absolute bottom-[4vh] left-[6vw] text-white">
             パスワードを忘れた方は
             <StyledTouchableOpacity
-              onPress={() => console.log("パスワード再設定")}
+              onPress={() => {
+                router.push("resettingPasswordPage");
+              }}
             >
-              <StyledText className="text-[#1d4ed8] underline translate-y-[4px]">
+              <StyledText className="translate-y-[4px] text-[#1d4ed8] underline">
                 こちら
               </StyledText>
             </StyledTouchableOpacity>
@@ -139,7 +145,7 @@ const LoginModal = ({
 
           {/* ログインボタン */}
           <StyledTouchableOpacity
-            onPress={handleLogin}
+            onPress={() => handleLogin()}
             className={`absolute bottom-[8vh] right-[10vw] flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#fff] ${!(password && email) && "opacity-30"}`}
           >
             <StyledText className="text-[16px] text-[#E04B36]">

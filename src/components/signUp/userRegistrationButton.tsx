@@ -25,24 +25,27 @@ const UserRegistationButton = ({
   selectedGoal,
   setScene,
 }: {
-  name: string,
-  email: string,
-  password: string,
-  birthday: string,
-  gender: string,
-  selectedPrefecture: string,
-  selectedCity: string,
-  image: string | null,
-  selfIntroduction: string,
-  selectedWork: string,
-  selectedGoal: string,
+  name: string;
+  email: string;
+  password: string;
+  birthday: string;
+  gender: string;
+  selectedPrefecture: string;
+  selectedCity: string;
+  image: string | null;
+  selfIntroduction: string;
+  selectedWork: string;
+  selectedGoal: string;
   setScene: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const router = useRouter();
 
   const uploadImage = async (uri: string) => {
     const storage = getStorage();
-    const storageRef = ref(storage, `images/${auth.currentUser?.uid}/${Date.now()}.jpg`);
+    const storageRef = ref(
+      storage,
+      `images/${auth.currentUser?.uid}/${Date.now()}.jpg`,
+    );
 
     const response = await fetch(uri);
     const blob = await response.blob();
@@ -79,7 +82,7 @@ const UserRegistationButton = ({
             selected_goal: selectedGoal,
           },
         },
-        { merge: true }
+        { merge: true },
       );
 
       router.push("/mapPage");

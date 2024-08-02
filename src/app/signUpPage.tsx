@@ -3,9 +3,9 @@ import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import CreateAccount from "../components/signUp/createAccount/createAccount";
 import FirstSetting_step1 from "../components/signUp/step1/firstSetting_step1";
 import FirstSetting_step2 from "../components/signUp/step2/firstSetting_step2";
-import Registration from "../components/signUp/createAccount/createAccount";
 import FirstSetting_step3 from "../components/signUp/step3/firstSetting_step3";
 import UserRegistationButton from "../components/signUp/userRegistrationButton";
 import { useGlobalSearchParams } from "expo-router";
@@ -16,7 +16,7 @@ const StyledText = styled(Text);
 const FirstSetting = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
-  const { isExitUser }  = useGlobalSearchParams();
+  const { isExitUser } = useGlobalSearchParams();
   useEffect(() => {
     if (isExitUser == "exit") {
       setScene(1);
@@ -24,7 +24,7 @@ const FirstSetting = () => {
   }, []);
 
   const [scene, setScene] = useState<number>(0);
-  // Registation
+  // CreateAccount
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordAgain, setPasswordAgain] = useState<string>("");
@@ -49,9 +49,9 @@ const FirstSetting = () => {
 
   return (
     <Container style={{ flex: 1 }}>
-      {/* Registration */}
+      {/* CreateAccount */}
       {scene == 0 && (
-        <Registration
+        <CreateAccount
           email={email}
           setEmail={setEmail}
           password={password}

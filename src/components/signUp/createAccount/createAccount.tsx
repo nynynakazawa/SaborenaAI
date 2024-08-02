@@ -13,17 +13,22 @@ import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import TermModal from "../../login/termModal";
 import { auth, db } from "../../../firebase";
-import { createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { useRouter } from "expo-router";
 import EmailInput from "../../../layout/signup/emailInput";
 import PasswordInput from "../../../layout/signup/passwordInput";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import PageBackHeader from "../../../layout/header/pageBackHeader";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const Registration = ({
+const CreateAccount = ({
   email,
   setEmail,
   password,
@@ -53,7 +58,10 @@ const Registration = ({
   const router = useRouter();
 
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
-  const [isVisibleWaitingVerificationModal, setIsVisibleWaitingVerificationModal] = useState<boolean>(false);
+  const [
+    isVisibleWaitingVerificationModal,
+    setIsVisibleWaitingVerificationModal,
+  ] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isSendingEmail, setIsSendingEmail] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(60);
@@ -105,7 +113,7 @@ const Registration = ({
           },
         });
       })
-      .catch(async() => {
+      .catch(async () => {
         // エラー発生時の処理
         const userRef = doc(db, "users", auth.currentUser?.uid || "");
         const userDoc = await getDoc(userRef);
@@ -113,7 +121,7 @@ const Registration = ({
 
         if (userData?.private_info?.emailVerified) {
           console.log("Email is verified.");
-          setErrorMessage("すでに登録されています")
+          setErrorMessage("すでに登録されています");
         } else {
           console.log("Email is not verified.");
           handleSendEmail();
@@ -162,20 +170,7 @@ const Registration = ({
     <StyledView>
       <StyledView className="relative h-screen w-screen bg-[#fff]">
         {/* バックボタン */}
-        <StyledTouchableOpacity
-          onPress={() => router.push("/loginPage")}
-          className={`${Platform.OS === "ios" && "mt-[50px]"} h-[70px]`}
-        >
-          <StyledView className="mx-auto flex h-full w-[90vw] flex-row items-center">
-            <Icon
-              name="chevron-left"
-              size={40}
-              color="#333"
-              className="mr-[10px]"
-            />
-            <StyledText className="text-[16px] text-[#333]">戻る</StyledText>
-          </StyledView>
-        </StyledTouchableOpacity>
+        <PageBackHeader />
 
         {/* サインアップフォーム */}
         <StyledView className="mx-auto mt-[10vh] w-[90%] flex-1 items-center">
@@ -231,7 +226,9 @@ const Registration = ({
                 <StyledText className="text-[#1d4ed8]">利用規約</StyledText>
               </StyledTouchableOpacity>
             </StyledView>
-            <StyledText className={`text-[#ff0000] ${!errorMessage && "opacity-0"}`}>
+            <StyledText
+              className={`text-[#ff0000] ${!errorMessage && "opacity-0"}`}
+            >
               {errorMessage}
             </StyledText>
           </StyledView>
@@ -247,11 +244,16 @@ const Registration = ({
       <StyledView className="absolute bottom-[8vh] w-screen flex-1 items-center">
         <StyledView className="mx-auto mb-4 flex w-[75vw] flex-row justify-end">
           <StyledTouchableOpacity
-            onPress={() => {handleSignUp(); setIsVisibleWaitingVerificationModal(true) }}
+            onPress={() => {
+              handleSignUp();
+              setIsVisibleWaitingVerificationModal(true);
+            }}
             className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#44e25f] ${!isValid && "opacity-30"}`}
             disabled={!isValid}
           >
-            <StyledText className="text-[16px] text-[#fff]">新規登録</StyledText>
+            <StyledText className="text-[16px] text-[#fff]">
+              新規登録
+            </StyledText>
           </StyledTouchableOpacity>
         </StyledView>
       </StyledView>
@@ -263,41 +265,46 @@ const Registration = ({
           transparent={true}
           visible={isVisibleWaitingVerificationModal}
         >
-          <StyledView className="flex-1 justify-center items-center"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
-            <StyledView className="bg-white p-6 rounded-md w-[80%] relative">
+          <StyledView
+            className="flex-1 items-center justify-center"
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          >
+            <StyledView className="relative w-[80%] rounded-md bg-white p-6">
               {/* モーダルの右上に閉じるボタンを追加 */}
               <StyledTouchableOpacity
                 onPress={() => setIsVisibleWaitingVerificationModal(false)}
-                className="absolute top-2 right-2"
+                className="absolute right-[8px] top-[8px]"
               >
                 <Icon name="close" size={24} color="#000" />
               </StyledTouchableOpacity>
 
-              <StyledText className="text-center text-lg font-bold mb-4">
+              <StyledText className="mb-[16px] text-center text-lg font-bold">
                 メール確認
               </StyledText>
-              <StyledText className="text-center mb-6">
-                {email}に確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。
+              <StyledText className="mb-[24px] text-center">
+                {email}
+                に確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。
               </StyledText>
 
               {/* メール再送信ボタン */}
               <StyledTouchableOpacity
                 onPress={() => handleSendEmail()}
-                className={`bg-[#57d0e0] p-3 rounded-md mb-3 ${isSendingEmail && "opacity-40"}`}
+                className={`mb-[12px] rounded-md bg-[#57d0e0] p-[12px] ${isSendingEmail && "opacity-70"}`}
                 disabled={isSendingEmail}
               >
-                <StyledText className={`text-[#fff] text-center`}>
-                  {isSendingEmail ? `再送信可能まで ${timer} 秒` : "メールを再送信"}
+                <StyledText className={`text-center text-[#fff]`}>
+                  {isSendingEmail
+                    ? `再送信可能まで ${timer} 秒`
+                    : "メールを再送信"}
                 </StyledText>
               </StyledTouchableOpacity>
 
               {/* リロードボタン */}
               <StyledTouchableOpacity
                 onPress={() => handleConfirm()}
-                className="bg-green-500 p-3 rounded-md"
+                className="rounded-md bg-[#44e25f] p-[12px]"
               >
-                <StyledText className="text-[#fff] text-center">
+                <StyledText className="text-center text-[#fff]">
                   メールを確認しました
                 </StyledText>
               </StyledTouchableOpacity>
@@ -309,4 +316,4 @@ const Registration = ({
   );
 };
 
-export default Registration;
+export default CreateAccount;

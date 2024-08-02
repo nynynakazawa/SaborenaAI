@@ -1,11 +1,11 @@
 import React from "react";
 import { Platform, View } from "react-native";
 import { styled } from "nativewind";
-import Header from "../../../layout/header/header";
 import ProgressBar from "../progressBar";
 import TransitionButton from "../transitionButton";
 import MainImageInput from "../../../layout/form/mainImageInput";
 import ImageCaution from "./imageCaution";
+import NowMatchHeader from "../../../layout/header/nowMatchHeader";
 
 const StyledView = styled(View);
 
@@ -23,7 +23,7 @@ const FirstSetting_step2 = ({
   const isValid: boolean = image != null;
   return (
     <StyledView className="h-screen">
-      <Header />
+      <NowMatchHeader />
       <ProgressBar percentage={200 / 3} text={String(2)} />
 
       <StyledView
