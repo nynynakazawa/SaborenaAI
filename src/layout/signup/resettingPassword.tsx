@@ -55,7 +55,7 @@ const ResettingPassword = () => {
         <StyledView className="mx-auto mt-[10vh] flex w-[90%]">
           <StyledView>
             <StyledText className="mb-[24px] border-b-2 border-[#ccc] pb-[12px] text-[18px] font-bold text-[#333]">
-              パスワード再設定
+              パスワード再発行
             </StyledText>
           </StyledView>
 
