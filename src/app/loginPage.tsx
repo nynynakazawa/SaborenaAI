@@ -6,7 +6,7 @@ import { styled } from "nativewind";
 import LoginBackground from "../components/login/loginBackground";
 import LoginLogo from "../components/login/loginLogo";
 import LoginButtonContainer from "../components/login/loginButtonContainer";
-import LoginModal from "../components/login/loginModal";
+import LoginModal from "../components/login/LoginModal";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
