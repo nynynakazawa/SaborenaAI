@@ -13,9 +13,11 @@ const Index = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        router.push("/loginPage");
+        // mapPage
+        router.push("/resettingPasswordPage");
       } else {
-        router.push("/loginPage");
+        // loginPage
+        router.push("/resettingPasswordPage");
       }
     });
     return () => unsubscribe();

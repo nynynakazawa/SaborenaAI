@@ -38,7 +38,9 @@ const GenderInput = ({
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    const initialSelectedButton = radioButtons.find((button) => button.value === gender);
+    const initialSelectedButton = radioButtons.find(
+      (button) => button.value === gender,
+    );
     if (initialSelectedButton) {
       setSelectedId(initialSelectedButton.id);
     }

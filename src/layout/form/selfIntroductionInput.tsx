@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Text, TextInput, View, TouchableOpacity, Keyboard } from "react-native";
+import {
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Keyboard,
+} from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -27,20 +33,21 @@ const SelfIntroductionInput = ({
 
   return (
     <StyledView className="mx-auto w-[90vw]">
-      <StyledView className="flex flex-row items-center justify-between mb-[6px]">
+      <StyledView className="mb-[6px] flex flex-row items-center justify-between">
         <StyledView className="flex flex-row items-center">
           <Icon name="face-man" size={38} color="#333" className="mr-[10px]" />
-          <StyledText className="text-[16px]">
-            自己紹介
-          </StyledText>
-          <StyledText className="text-[16px] ml-[12px] mt-[4px]">
+          <StyledText className="text-[16px]">自己紹介</StyledText>
+          <StyledText className="ml-[12px] mt-[4px] text-[16px]">
             {selfIntroduction.length} / 140
           </StyledText>
         </StyledView>
         <StyledView className="flex flex-row items-center">
           {inputFocused && (
-            <StyledTouchableOpacity onPress={handleSubmit} className="ml-[8px] p-2 bg-[#57d0e0] rounded-full">
-              <StyledText className="text-white text-[14px]">決定</StyledText>
+            <StyledTouchableOpacity
+              onPress={handleSubmit}
+              className="ml-[8px] rounded-full bg-[#57d0e0] p-2"
+            >
+              <StyledText className="text-[14px] text-white">決定</StyledText>
             </StyledTouchableOpacity>
           )}
         </StyledView>
@@ -54,7 +61,7 @@ const SelfIntroductionInput = ({
           maxLength={200}
           multiline
           textAlignVertical="top"
-          className="w-full border-2 p-4 rounded-lg h-[22vh] border-[#333] text-[16px] text-[#333]"
+          className="h-[22vh] w-full rounded-lg border-2 border-[#333] p-4 text-[16px] text-[#333]"
           onFocus={handleFocus}
           onBlur={handleBlur}
         />

@@ -17,7 +17,6 @@ const TransitionButton = ({
   setScene: React.Dispatch<React.SetStateAction<number>>;
   isValid: boolean;
 }) => {
-
   const handleNext = () => {
     setScene((prev) => prev + 1);
   };

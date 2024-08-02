@@ -46,14 +46,16 @@ const LoginButtonContainer = ({
       </StyledView>
 
       {/* 利用規約 */}
-      <StyledTouchableOpacity
-        onPress={() => setIsVisibleTermModal(true)}
-        className="absolute h-screen w-screen flex-1 items-center"
-      >
-        <StyledText className="absolute bottom-[5vh] text-[#fff]">
-          利用規約
-        </StyledText>
-      </StyledTouchableOpacity>
+      <StyledView className="absolute flex h-screen w-screen">
+        <StyledTouchableOpacity
+          onPress={() => setIsVisibleTermModal(true)}
+          className="absolute bottom-0 flex w-full items-center"
+        >
+          <StyledText className="absolute bottom-[5vh] text-[#fff]">
+            利用規約
+          </StyledText>
+        </StyledTouchableOpacity>
+      </StyledView>
 
       <TermModal
         visible={isVisibleTermModal}

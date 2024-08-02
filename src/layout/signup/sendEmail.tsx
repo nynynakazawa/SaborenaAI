@@ -7,16 +7,13 @@ import { auth } from "../../firebase"; // firebase.tsで初期化された認証
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-
-const SendMail= ({
+const SendMail = ({
   email,
   setScene,
-} :
-{
+}: {
   email: string;
   setScene: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-
   return (
     <StyledView className="h-screen">
       <StyledText>{email}に確認メールを送りました。</StyledText>
