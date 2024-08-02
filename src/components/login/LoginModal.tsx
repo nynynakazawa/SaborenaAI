@@ -4,25 +4,21 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView,
-  Platform,
   Keyboard,
 } from "react-native";
 import { styled } from "nativewind";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "expo-router";
-import EmailInput from "../../layout/form/emailInput";
-import PasswordInput from "../../layout/form/passwordInput";
+import EmailInput from "../../layout/signup/emailInput";
+import PasswordInput from "../../layout/signup/passwordInput";
+import { doc, getDoc } from "firebase/firestore";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
-const StyledTextInput = styled(TextInput);
 
 const LoginModal = ({
   email,
@@ -38,7 +34,7 @@ const LoginModal = ({
   setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
@@ -62,22 +58,43 @@ const LoginModal = ({
   }, []);
 
   // ログイン処理
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userRef = doc(db, "users", userCredential.user.uid);
+      const userSnapshot = await getDoc(userRef);
+
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
         // ログイン成功時
-        console.log("🎉login success");
-        router.push("/mapPage");
-      })
-      .catch(() => {
-        setIsError(true);
-      });
-  };
+        if (userData.private_info.emailVerified == true) {
+          console.log("🎉login success");
+          // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
+          if(userData.user_info?.name && true){
+            router.push("/mapPage");
+          } else {
+            router.push({
+              pathname: "/signupPage",
+              params: { isExitUser: "exit" },
+            });
+          }
+        } else {
+          setErrorMessage("メールアドレスが確認されていません");
+          auth.signOut();
+        }
+      } else {
+        setErrorMessage("ユーザー情報が見つかりません");
+      }
+    } catch (error) {
+      console.error("Error signing in with email and password:", error);
+      setErrorMessage("ユーザーが存在しません");
+    }
+  }
 
   return (
     <StyledView className="relative z-40 flex-1">
       <StyledView
-        className={`absolute z-40 h-screen w-screen flex-1 items-center ${keyboardHeight > 0 && "top-[-38vh]"}`}
+        className={`absolute z-40 h-screen w-screen flex-1 items-center ${keyboardHeight > 0 && "top-[-36vh]"}`}
       >
         {/* クローズボタン */}
         <StyledTouchableOpacity
@@ -90,11 +107,11 @@ const LoginModal = ({
           style={{ backgroundColor: "rgba(210, 63, 63, 0.9)" }}
         >
           <StyledView className="mt-[30px] w-[80vw] flex-1 items-center">
-            <StyledView className="mb-[12px] w-full">
+            <StyledView className="mb-[12px] w-[80vw]">
               <EmailInput email={email} setEmail={setEmail} option={"login"} />
             </StyledView>
-            <StyledView className="mb-[12px] w-full">
-              <StyledView className="w-full">
+            <StyledView className="mb-[12px] w-[80vw]">
+              <StyledView className="w-[80vw]">
                 <PasswordInput
                   password={password}
                   setPassword={setPassword}
@@ -102,8 +119,8 @@ const LoginModal = ({
                   isValid={true}
                 />
               </StyledView>
-              <StyledText className={`text-[#fff] text-[12px] ${!isError &&"opacity-0"}`}>
-                ユーザーが存在しません
+              <StyledText className={`text-[#fff] text-[12px] ${!errorMessage && "opacity-0"}`}>
+                {errorMessage}
               </StyledText>
             </StyledView>
           </StyledView>
@@ -114,7 +131,7 @@ const LoginModal = ({
             <StyledTouchableOpacity
               onPress={() => console.log("パスワード再設定")}
             >
-              <StyledText className="text-[#1d4ed8] underline">
+              <StyledText className="text-[#1d4ed8] underline translate-y-[4px]">
                 こちら
               </StyledText>
             </StyledTouchableOpacity>

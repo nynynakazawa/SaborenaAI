@@ -19,7 +19,7 @@ const EmailInput = ({
   return (
     <StyledView className="w-full">
       <StyledView
-        className={`flex w-full flex-row items-center border-b-2 pb-[10px] ${
+        className={`flex flex-row items-center border-b-2 pb-[10px] ${
           option === "login" ? "border-[#fff]" : "border-[#333]"
         }`}
       >
@@ -34,7 +34,7 @@ const EmailInput = ({
           value={email}
           placeholder="メールアドレス"
           placeholderTextColor={option === "login" ? "#ffb9b9" : "#ccc"}
-          className={`w-full pb-[2px] pl-[12px] pt-[6px] text-[16px] ${
+          className={`max-w-[80%] pb-[2px] pl-[12px] pt-[6px] text-[16px] ${
             option === "login" ? "text-[#fff]" : "text-[#333]"
           }`}
         />

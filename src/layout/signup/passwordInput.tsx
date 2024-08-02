@@ -23,7 +23,7 @@ const PasswordInput = ({
 
   const errorMessage =
     option === "first" && password && !isValid
-      ? "※ 英文字8文字以上である必要があります"
+      ? "※ 英数字8文字以上である必要があります"
       : option === "again" && password && !isValid
         ? "※ 一致しません"
         : "";
@@ -48,6 +48,7 @@ const PasswordInput = ({
             onChangeText={setPassword}
             secureTextEntry={!isVisiblePassword}
             placeholder="パスワード"
+            maxLength={30}
             placeholderTextColor={option === "login" ? "#ffb9b9" : "#ccc"}
             value={password}
             className={`w-[72%] py-[6px] pl-[12px] text-[16px] ${
@@ -87,6 +88,7 @@ const PasswordInput = ({
               secureTextEntry={!isVisiblePassword}
               value={password}
               placeholder="パスワード"
+              maxLength={30}
               placeholderTextColor="#ccc"
               className="w-[72%] pb-[2px] pl-[12px] pt-[6px] text-[16px] text-[#333]"
             />
