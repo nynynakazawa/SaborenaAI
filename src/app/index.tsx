@@ -14,10 +14,10 @@ const Index = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         // mapPage
-        router.push("/resettingPasswordPage");
+        router.push("/mapPage");
       } else {
         // loginPage
-        router.push("/resettingPasswordPage");
+        router.push("/loginPage");
       }
     });
     return () => unsubscribe();
