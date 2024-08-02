@@ -7,12 +7,12 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 
-const BirthInput = ({
-  birth,
-  setBirth,
+const BirthdayInput = ({
+  birthday,
+  setBirthday,
 }: {
-  birth: string;
-  setBirth: React.Dispatch<React.SetStateAction<string>>;
+  birthday: string;
+  setBirthday: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [year, setYear] = useState<string>("");
   const [month, setMonth] = useState<string>("");
@@ -28,25 +28,25 @@ const BirthInput = ({
     }
   }, [year, month, day]);
 
-  const handleYearChange = (text: string) => {
+  const handleYearChange = (text : string) => {
     setYear(text);
     if (text.length === 4) {
       monthInputRef.current?.focus();
     }
-    setBirth(text + month + day);
+    setBirthday(`${text},${month},${day}`);
   };
 
-  const handleMonthChange = (text: string) => {
+  const handleMonthChange = (text : string) => {
     setMonth(text);
     if (text.length === 2) {
       dayInputRef.current?.focus();
     }
-    setBirth(year + text + day);
+    setBirthday(`${year},${text},${day}`);
   };
 
-  const handleDayChange = (text: string) => {
+  const handleDayChange = (text : string) => {
     setDay(text);
-    setBirth(year + month + text);
+    setBirthday(`${year},${month},${text}`);
   };
 
   return (
@@ -59,7 +59,7 @@ const BirthInput = ({
       </StyledView>
       <StyledView className="mb-[12px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
         <StyledTextInput
-          value={birth.substring(0, 4)}
+          value={year}
           onChangeText={handleYearChange}
           placeholder="YYYY"
           keyboardType="numeric"
@@ -70,7 +70,7 @@ const BirthInput = ({
         />
         <StyledText className="px-[4px]">年</StyledText>
         <StyledTextInput
-          value={birth.substring(4, 6)}
+          value={month}
           onChangeText={handleMonthChange}
           placeholder="MM"
           keyboardType="numeric"
@@ -82,7 +82,7 @@ const BirthInput = ({
         />
         <StyledText className="px-[4px]">月</StyledText>
         <StyledTextInput
-          value={birth.substring(6, 8)}
+          value={day}
           onChangeText={handleDayChange}
           placeholder="DD"
           keyboardType="numeric"
@@ -98,4 +98,4 @@ const BirthInput = ({
   );
 };
 
-export default BirthInput;
+export default BirthdayInput;

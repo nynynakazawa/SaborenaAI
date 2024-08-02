@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import FirstSetting_step1 from "../components/signUp/step1/firstSetting_step1";
 import FirstSetting_step2 from "../components/signUp/step2/firstSetting_step2";
-import Registration from "../components/signUp/registration/registration";
+import Registration from "../components/signUp/createAccount/createAccount";
 import FirstSetting_step3 from "../components/signUp/step3/firstSetting_step3";
+import UserRegistationButton from "../components/signUp/userRegistrationButton";
+import { useGlobalSearchParams } from "expo-router";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
 const FirstSetting = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
+
+  const { isExitUser }  = useGlobalSearchParams();
+  useEffect(() => {
+    if (isExitUser == "exit") {
+      setScene(1);
+    }
+  }, []);
 
   const [scene, setScene] = useState<number>(0);
   // Registation
@@ -24,7 +33,7 @@ const FirstSetting = () => {
 
   // FirsetSetting_Step1
   const [name, setName] = useState<string>("");
-  const [birth, setBirth] = useState<string>("");
+  const [birthday, setBirthday] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [selectedPrefecture, setSelectedPrefecture] =
     useState<string>("未設定");
@@ -40,10 +49,9 @@ const FirstSetting = () => {
 
   return (
     <Container style={{ flex: 1 }}>
+      {/* Registration */}
       {scene == 0 && (
         <Registration
-          scene={scene}
-          setScene={setScene}
           email={email}
           setEmail={setEmail}
           password={password}
@@ -54,6 +62,8 @@ const FirstSetting = () => {
           setIsOver18={setIsOver18}
           isAgreeTerms={isAgreeTerms}
           setIsAgreeTerms={setIsAgreeTerms}
+          scene={scene}
+          setScene={setScene}
         />
       )}
       {/* step1 */}
@@ -61,8 +71,8 @@ const FirstSetting = () => {
         <FirstSetting_step1
           name={name}
           setName={setName}
-          birth={birth}
-          setBirth={setBirth}
+          birthday={birthday}
+          setBirthday={setBirthday}
           gender={gender}
           setGender={setGender}
           selectedPrefecture={selectedPrefecture}
@@ -83,18 +93,34 @@ const FirstSetting = () => {
         />
       )}
       {scene == 3 && (
-        <FirstSetting_step3
-          selfIntroduction={selfIntroduction}
-          setSelfIntroduction={setSelfIntroduction}
-          selectedWork={selectedWork}
-          setSelectedWork={setSelectedWork}
-          selectedGoal={selectedGoal}
-          setSelectedGoal={setSelectedGoal}
-          scene={scene}
-          setScene={setScene}
-          email={email}
-          password={password}
-        />
+        <StyledView>
+          <FirstSetting_step3
+            selfIntroduction={selfIntroduction}
+            setSelfIntroduction={setSelfIntroduction}
+            selectedWork={selectedWork}
+            setSelectedWork={setSelectedWork}
+            selectedGoal={selectedGoal}
+            setSelectedGoal={setSelectedGoal}
+            scene={scene}
+            setScene={setScene}
+            email={email}
+            password={password}
+          />
+          <UserRegistationButton
+            name={name}
+            email={email}
+            password={password}
+            birthday={birthday}
+            image={image}
+            gender={gender}
+            selectedPrefecture={selectedPrefecture}
+            selectedCity={selectedCity}
+            selfIntroduction={selfIntroduction}
+            selectedWork={selectedWork}
+            selectedGoal={selectedGoal}
+            setScene={setScene}
+          />
+        </StyledView>
       )}
 
       <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#E3422F]"></StyledView>

@@ -39,7 +39,7 @@ const SelfIntroductionInput = ({
         </StyledView>
         <StyledView className="flex flex-row items-center">
           {inputFocused && (
-            <StyledTouchableOpacity onPress={handleSubmit} className="ml-[8px] p-2 bg-[#E06557] rounded-full">
+            <StyledTouchableOpacity onPress={handleSubmit} className="ml-[8px] p-2 bg-[#57d0e0] rounded-full">
               <StyledText className="text-white text-[14px]">決定</StyledText>
             </StyledTouchableOpacity>
           )}

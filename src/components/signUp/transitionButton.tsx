@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -10,15 +12,12 @@ const TransitionButton = ({
   scene,
   setScene,
   isValid,
-  email,
-  password,
 }: {
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
   isValid: boolean;
-  email: string;
-  password: string,
 }) => {
+
   const handleNext = () => {
     setScene((prev) => prev + 1);
   };
@@ -29,14 +28,14 @@ const TransitionButton = ({
         {/* prevボタン */}
         <StyledTouchableOpacity
           onPress={() => setScene((prev) => prev - 1)}
-          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#3685e0] ${scene == 0 && "opacity-0"}`}
+          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#E04B36] ${scene == 1 && "opacity-0"}`}
         >
           <StyledText className="text-[16px] text-[#fff]">戻る</StyledText>
         </StyledTouchableOpacity>
 
         <StyledTouchableOpacity
           onPress={handleNext}
-          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#E04B36] ${!isValid && "opacity-30"}`}
+          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#44e25f] ${!isValid && "opacity-30"}`}
           disabled={!isValid}
         >
           <StyledText className="text-[16px] text-[#fff]">次へ</StyledText>

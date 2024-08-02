@@ -3,7 +3,6 @@ import { Platform, Text, View } from "react-native"
 import { styled } from "nativewind";
 import Header from "../../../layout/header/header";
 import ProgressBar from "../progressBar";
-import TransitionButton from "../transitionButton";
 import SelfIntroductionInput from "../../../layout/form/selfIntroductionInput";
 import WorkInput from "../../../layout/form/workInput";
 import GoalInput from "../../../layout/form/goalInput";
@@ -19,10 +18,6 @@ const FirstSetting_step3 = (
     setSelectedWork,
     selectedGoal,
     setSelectedGoal,
-    scene,
-    setScene,
-    email,
-    password,
   }:
     {
       selfIntroduction: string;
@@ -59,12 +54,6 @@ const FirstSetting_step3 = (
         />
       </StyledView>
 
-      <TransitionButton
-        scene={scene}
-        setScene={setScene}
-        isValid={true}
-        email={email}
-        password={password} />
     </StyledView>
   )
 }

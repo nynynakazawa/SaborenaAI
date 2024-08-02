@@ -47,7 +47,7 @@ const GoalInput = ({
       </StyledView>
         <StyledTouchableOpacity onPress={toggleModal} activeOpacity={0.8} className="flex">
           <StyledView className="flex flex-row justify-around border-b-2 border-[#333] p-[6px] px-[20px] text-[16px] text-[#333]">
-            <StyledText className="text-[16px]">{selectedGoal}</StyledText>
+            <StyledText className={`text-[16px] text-[#333] ${selectedGoal == "未設定" && "text-[#ccc]"}`}>{selectedGoal}</StyledText>
           </StyledView>
         </StyledTouchableOpacity>
 
@@ -64,7 +64,7 @@ const GoalInput = ({
           </Picker>
           <StyledTouchableOpacity
             onPress={toggleModal}
-            className="mt-4 rounded-full bg-[#E06557] p-3"
+            className="mt-4 rounded-full bg-[#57d0e0] p-3"
           >
             <StyledText className="text-center text-xl text-white">
               決定

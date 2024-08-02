@@ -266,8 +266,8 @@ const ResidentialInput = ({
 
       <StyledTouchableOpacity onPress={toggleModal} activeOpacity={0.8}>
         <StyledView className="flex w-[58vw] flex-row justify-around border-b-2 border-[#333] py-[6px] pl-[12px] text-[16px] text-[#333]">
-          <StyledText className="text-[16px]">{selectedPrefecture}</StyledText>
-          <StyledText className="text-[16px]">{selectedCity}</StyledText>
+          <StyledText className={`text-[16px] text-[#333] ${selectedPrefecture == "未設定" && "text-[#ccc]"}`}>{selectedPrefecture}</StyledText>
+          <StyledText className={`text-[16px] text-[#333] ${selectedCity == "未設定" && "text-[#ccc]"}`}>{selectedCity}</StyledText>
         </StyledView>
       </StyledTouchableOpacity>
       <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
@@ -307,7 +307,7 @@ const ResidentialInput = ({
           </StyledView>
           <StyledTouchableOpacity
             onPress={toggleModal}
-            className="mt-4 rounded-full bg-[#E06557] p-3"
+            className="mt-4 rounded-full bg-[#57d0e0] p-3"
           >
             <StyledText className="text-center text-xl text-white">
               決定

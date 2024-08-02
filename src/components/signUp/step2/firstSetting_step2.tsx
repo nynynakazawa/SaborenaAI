@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Platform, Text, View } from "react-native";
+import React from "react";
+import { Platform, View } from "react-native";
 import { styled } from "nativewind";
 import Header from "../../../layout/header/header";
 import ProgressBar from "../progressBar";
@@ -34,7 +34,7 @@ const FirstSetting_step2 = ({
 
       <ImageCaution />
 
-      <TransitionButton scene={scene} setScene={setScene} isValid={isValid} email={""} password={""} />
+      <TransitionButton scene={scene} setScene={setScene} isValid={isValid} />
     </StyledView>
   );
 };
