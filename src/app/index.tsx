@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { styled } from "nativewind";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { useRouter } from "expo-router";
+import { doc, getDoc } from "firebase/firestore";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -10,20 +11,52 @@ const StyledText = styled(Text);
 const Index = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        // mapPage
-        router.push("/mapPage");
-      } else {
+  const handleFirstRouting = () => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      try {
+        if (user) {
+          // mapPage
+          const userRef = doc(db, "users", user.uid);
+          const userSnapshot = await getDoc(userRef);
+          if (userSnapshot.exists()) {
+            const userData = userSnapshot.data();
+            // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
+            if (userData.user_info?.name) {
+              router.push("/mapPage");
+            } else {
+              router.push({
+                pathname: "/signupPage",
+                params: { isExitUser: "exit" },
+              });
+            }
+          } else {
+            // loginPage
+            router.push("/loginPage");
+          }
+        } else {
+          // loginPage
+          router.push("/loginPage");
+        }
+      } catch (error) {
         // loginPage
         router.push("/loginPage");
+        console.error("Error fetching user data: ", error);
       }
     });
+
+    return unsubscribe;
+  };
+
+  useEffect(() => {
+    const unsubscribe = handleFirstRouting();
     return () => unsubscribe();
   }, []);
 
-  return <StyledView></StyledView>;
+  return (
+    <StyledView className="flex-1 justify-center items-center">
+      <StyledText></StyledText>
+    </StyledView>
+  );
 };
 
 export default Index;

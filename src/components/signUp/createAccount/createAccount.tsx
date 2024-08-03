@@ -140,7 +140,6 @@ const CreateAccount = ({
       }
     } catch (errorMessage: any) {
       console.log(errorMessage.message);
-      setIsSendingEmail(false);
     }
   };
 
