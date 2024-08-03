@@ -59,7 +59,7 @@ const BirthdayInput = ({
       </StyledView>
       <StyledView className="mb-[12px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
         <StyledTextInput
-          value={year}
+          value={birthday.split(",")[0]}
           onChangeText={handleYearChange}
           placeholder="YYYY"
           keyboardType="numeric"
@@ -70,7 +70,7 @@ const BirthdayInput = ({
         />
         <StyledText className="px-[4px]">年</StyledText>
         <StyledTextInput
-          value={month}
+          value={birthday.split(",")[1]}
           onChangeText={handleMonthChange}
           placeholder="MM"
           keyboardType="numeric"
@@ -82,7 +82,7 @@ const BirthdayInput = ({
         />
         <StyledText className="px-[4px]">月</StyledText>
         <StyledTextInput
-          value={day}
+          value={birthday.split(",")[2]}
           onChangeText={handleDayChange}
           placeholder="DD"
           keyboardType="numeric"
