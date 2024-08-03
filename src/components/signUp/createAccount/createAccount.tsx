@@ -105,7 +105,6 @@ const CreateAccount = ({
         const userRef = doc(db, "users", userCredential.user.uid);
         await setDoc(userRef, {
           private_info: {
-            password: password,
             email: email,
             verified_email: userCredential.user.emailVerified,
             createdAt: new Date(),
