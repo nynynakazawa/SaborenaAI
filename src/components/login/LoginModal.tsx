@@ -69,7 +69,7 @@ const LoginModal = ({
       if (userSnapshot.exists()) {
         const userData = userSnapshot.data();
         // ログイン成功時
-        if (userData.private_info.emailVerified == true) {
+        if (userData.private_info.email_verified == true) {
           console.log("🎉login success");
           // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
           if (userData.user_info?.name && true) {

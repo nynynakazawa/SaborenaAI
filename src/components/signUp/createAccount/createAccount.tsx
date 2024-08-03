@@ -55,7 +55,6 @@ const CreateAccount = ({
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const router = useRouter();
 
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
   const [
@@ -108,7 +107,7 @@ const CreateAccount = ({
           private_info: {
             password: password,
             email: email,
-            emailVerified: userCredential.user.emailVerified,
+            verified_email: userCredential.user.emailVerified,
             createdAt: new Date(),
           },
         });
@@ -119,7 +118,7 @@ const CreateAccount = ({
         const userDoc = await getDoc(userRef);
         const userData = userDoc.data();
 
-        if (userData?.private_info?.emailVerified) {
+        if (userData?.private_info?.email_verified) {
           console.log("Email is verified.");
           setErrorMessage("すでに登録されています");
         } else {
@@ -156,7 +155,7 @@ const CreateAccount = ({
           // Firestoreのユーザー情報を更新
           const userRef = doc(db, "users", user.uid);
           await updateDoc(userRef, {
-            "private_info.emailVerified": true,
+            "private_info.email_verified": true,
           });
           setScene((prev) => prev + 1);
           setIsVisibleWaitingVerificationModal(false);
