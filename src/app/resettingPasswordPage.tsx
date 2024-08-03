@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
-import ResettingPassword from "../layout/signup/resettingPassword";
+import ResettingPassword from "../layout/private_info/resettingPassword";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PageBackHeader from "../layout/header/pageBackHeader";
 

@@ -4,8 +4,8 @@ import { styled } from "nativewind";
 import NameInput from "../../../layout/form/nameInput";
 import GenderInput from "../../../layout/form/genderInput";
 import ResidentialInput from "../../../layout/form/residentialInput";
-import TransitionButton from "../../firstSetting/transitionButton";
-import ProgressBar from "../../firstSetting/progressBar";
+import TransitionButton from "../transitionButton";
+import ProgressBar from "../progressBar";
 import BirthdayInput from "../../../layout/form/birthInput";
 import NowMatchHeader from "../../../layout/header/nowMatchHeader";
 

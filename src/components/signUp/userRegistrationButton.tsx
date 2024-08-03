@@ -85,7 +85,7 @@ const UserRegistationButton = ({
         { merge: true },
       );
 
-      router.push("/mapPage");
+      router.push("/main/mainPage");
     } catch (error) {
       console.error("Error registering user:", error);
     }

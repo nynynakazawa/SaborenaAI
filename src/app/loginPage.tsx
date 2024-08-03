@@ -7,7 +7,7 @@ import LoginBackground from "../components/login/loginBackground";
 import LoginLogo from "../components/login/loginLogo";
 import LoginButtonContainer from "../components/login/loginButtonContainer";
 import LoginModal from "../components/login/loginModal";
-import ResettingPassword from "../layout/signup/resettingPassword";
+import ResettingPassword from "../layout/private_info/resettingPassword";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

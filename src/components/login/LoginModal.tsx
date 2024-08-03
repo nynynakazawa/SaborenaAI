@@ -10,8 +10,8 @@ import { styled } from "nativewind";
 import { auth, db } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "expo-router";
-import EmailInput from "../../layout/signup/emailInput";
-import PasswordInput from "../../layout/signup/passwordInput";
+import EmailInput from "../../layout/private_info/emailInput";
+import PasswordInput from "../../layout/private_info/passwordInput";
 import { doc, getDoc } from "firebase/firestore";
 
 const StyledView = styled(View);
@@ -73,7 +73,7 @@ const LoginModal = ({
           console.log("🎉login success");
           // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
           if (userData.user_info?.name && true) {
-            router.push("/mapPage");
+            router.push("/main/mainPage");
           } else {
             router.push({
               pathname: "/signupPage",

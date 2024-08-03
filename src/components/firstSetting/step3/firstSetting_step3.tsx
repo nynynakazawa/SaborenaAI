@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
-import ProgressBar from "../../firstSetting/progressBar";
+import ProgressBar from "../progressBar";
 import SelfIntroductionInput from "../../../layout/form/selfIntroductionInput";
 import WorkInput from "../../../layout/form/workInput";
 import GoalInput from "../../../layout/form/goalInput";

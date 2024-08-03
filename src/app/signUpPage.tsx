@@ -3,10 +3,10 @@ import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import CreateAccount from "../components/signUp/createAccount/createAccount";
-import FirstSetting_step1 from "../components/signUp/step1/firstSetting_step1";
-import FirstSetting_step2 from "../components/signUp/step2/firstSetting_step2";
-import FirstSetting_step3 from "../components/signUp/step3/firstSetting_step3";
+import CreateAccount from "../components/signUp/createAccount";
+import FirstSetting_step1 from "../components/firstSetting/step1/firstSetting_step1";
+import FirstSetting_step2 from "../components/firstSetting/step2/firstSetting_step2";
+import FirstSetting_step3 from "../components/firstSetting/step3/firstSetting_step3";
 import UserRegistationButton from "../components/signUp/userRegistrationButton";
 import { useGlobalSearchParams } from "expo-router";
 

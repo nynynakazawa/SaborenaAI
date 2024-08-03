@@ -11,18 +11,18 @@ import {
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import TermModal from "../../login/termModal";
-import { auth, db } from "../../../firebase";
+import TermModal from "../login/termModal";
+import { auth, db } from "../../firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   onAuthStateChanged,
 } from "firebase/auth";
 import { useRouter } from "expo-router";
-import EmailInput from "../../../layout/signup/emailInput";
-import PasswordInput from "../../../layout/signup/passwordInput";
+import EmailInput from "../../layout/private_info/emailInput";
+import PasswordInput from "../../layout/private_info/passwordInput";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import PageBackHeader from "../../../layout/header/pageBackHeader";
+import PageBackHeader from "../../layout/header/pageBackHeader";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -106,7 +106,7 @@ const CreateAccount = ({
         await setDoc(userRef, {
           private_info: {
             email: email,
-            verified_email: userCredential.user.emailVerified,
+            email_verified: userCredential.user.emailVerified,
             createdAt: new Date(),
           },
         });

@@ -1,10 +1,10 @@
 import React from "react";
 import { Platform, View } from "react-native";
 import { styled } from "nativewind";
-import ProgressBar from "../../firstSetting/progressBar";
-import TransitionButton from "../../firstSetting/transitionButton";
+import ProgressBar from "../progressBar";
+import TransitionButton from "../transitionButton";
 import MainImageInput from "../../../layout/form/mainImageInput";
-import ImageCaution from "../../firstSetting/step2/imageCaution";
+import ImageCaution from "./imageCaution";
 import NowMatchHeader from "../../../layout/header/nowMatchHeader";
 
 const StyledView = styled(View);
