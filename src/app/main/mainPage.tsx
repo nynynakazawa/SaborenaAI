@@ -10,7 +10,7 @@ import { UserData } from "../../types/userData";
 import MapScreen from "../../components/main/map/mapScreen";
 import LikeFromScreen from "../../components/main/likeFrom/likeFromScreen";
 import TalkListScreen from "../../components/main/talkList/talkListScreen";
-import MyProfileScreen from "../../components/main/myProfile/myProfileScreen";
+import MySettingScreen from "../../components/main/mySetting/mySettingScreen";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -37,24 +37,23 @@ const MapPage = () => {
     fetchMyUser();
   },[])
 
-  const [screen, setScreen] = useState<string>("mapScreen")
+  const [screen, setScreen] = useState<string>("mySettingScreen")
 
   return (
     <Container style={{ flex: 1 }}>
-      <StyledText>{screen}</StyledText>
       {screen == "mapScreen" &&
-        <MapScreen />
+        <MapScreen myUser={myUser} />
       }
       {screen == "likeFromScreen" &&
-        <LikeFromScreen />
+        <LikeFromScreen myUser={myUser} />
       }
       {screen == "talkListScreen" &&
-        <TalkListScreen />
+        <TalkListScreen myUser={myUser} />
       }
-      {screen == "myProfileScreen" &&
-        <MyProfileScreen />
+      {screen == "mySettingScreen" &&
+        <MySettingScreen myUser={myUser} />
       }
-      <BottomNavigation screen={screen} setScreen={setScreen} user={myUser}/>
+      <BottomNavigation screen={screen} setScreen={setScreen} myUser={myUser}/>
     </Container>
   );
 };

@@ -58,7 +58,7 @@ const SelfIntroductionInput = ({
           value={selfIntroduction}
           placeholder={`自己紹介をしよう\n■ 好きなもの\n・アニメ\n・野球\n・寿司\n誰でも大歓迎♪`}
           placeholderTextColor="#ccc"
-          maxLength={200}
+          maxLength={140}
           multiline
           textAlignVertical="top"
           className="h-[22vh] w-full rounded-lg border-2 border-[#333] p-4 text-[16px] text-[#333]"
