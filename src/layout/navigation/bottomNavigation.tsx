@@ -14,11 +14,11 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const BottomNavigation = ({
   screen,
   setScreen,
-  user,
+  myUser,
 }: {
   screen: string;
   setScreen: React.Dispatch<React.SetStateAction<string>>;
-  user: UserData | undefined;
+  myUser: UserData | undefined;
 }) => {
   const router = useRouter();
   return (
@@ -40,12 +40,12 @@ const BottomNavigation = ({
         </StyledTouchableOpacity>
 
           {/* mapScreen */}
-        <StyledTouchableOpacity onPress={() =>setScreen("myProfileScreen")}>
-          {user?.user_info?.imageUrl && (
+        <StyledTouchableOpacity onPress={() =>setScreen("mySettingScreen")}>
+          {myUser?.user_info?.imageUrl && (
             <StyledView className="relative">
-              <StyledView className={`absolute z-[120] top-0 left-0 w-[34px] h-[34px] bg-[#000] rounded-full ${!(screen == "myProfileScreen") ? "opacity-60" : "opacity-0"}`}></StyledView>
+              <StyledView className={`absolute z-[120] top-0 left-0 w-[34px] h-[34px] bg-[#000] rounded-full ${!(screen == "mySettingScreen") ? "opacity-60" : "opacity-0"}`}></StyledView>
               <StyledImage
-                source={{ uri: user.user_info.imageUrl }}
+                source={{ uri: myUser.user_info.imageUrl }}
                 style={{ width: 34, height: 34 }}
                 className="rounded-full"
               />
