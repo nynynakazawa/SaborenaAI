@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
-import BottomNavigation from "../../layout/navigation/bottomNavigation";
+import BottomNavigation from "../../components/main/navigation/bottomNavigation";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth, db } from "../../firebase";
 import { User } from "firebase/auth";
@@ -11,6 +11,8 @@ import MapScreen from "../../components/main/map/mapScreen";
 import LikeFromScreen from "../../components/main/likeFrom/likeFromScreen";
 import TalkListScreen from "../../components/main/talkList/talkListScreen";
 import MySettingScreen from "../../components/main/mySetting/mySettingScreen";
+import * as Location from "expo-location";
+import { LocationObjectCoords } from "expo-location";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -18,9 +20,7 @@ const StyledText = styled(Text);
 const MapPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
-  const [myUser, setMyUser] = useState<UserData>()
-
-  const fetchMyUser = async() => {
+  const fetchMyUser = async () => {
     const user = auth.currentUser as User;
     if (user) {
       const userRef = doc(db, "users", user.uid);
@@ -31,29 +31,40 @@ const MapPage = () => {
         console.log("No such document!");
       }
     }
-  }
+  };
 
-  useEffect(()=>{
+  const fetchLocation = async () => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  };
+  useEffect(() => {
     fetchMyUser();
-  },[])
+    fetchLocation();
+  }, []);
 
-  const [screen, setScreen] = useState<string>("mySettingScreen")
+  const [myUser, setMyUser] = useState<UserData | null>(null);
+  const [location, setLocation] = useState<Location.LocationObject | null>(
+    null,
+  );
+  const [screen, setScreen] = useState<string>("mapScreen");
 
   return (
     <Container style={{ flex: 1 }}>
-      {screen == "mapScreen" &&
-        <MapScreen myUser={myUser} />
-      }
-      {screen == "likeFromScreen" &&
-        <LikeFromScreen myUser={myUser} />
-      }
-      {screen == "talkListScreen" &&
-        <TalkListScreen myUser={myUser} />
-      }
-      {screen == "mySettingScreen" &&
-        <MySettingScreen myUser={myUser} />
-      }
-      <BottomNavigation screen={screen} setScreen={setScreen} myUser={myUser}/>
+      {screen == "mapScreen" && (
+        <MapScreen location={location} myUser={myUser} />
+      )}
+      {screen == "likeFromScreen" && <LikeFromScreen myUser={myUser} />}
+      {screen == "talkListScreen" && <TalkListScreen myUser={myUser} />}
+      {screen == "mySettingScreen" && <MySettingScreen myUser={myUser} />}
+      <BottomNavigation screen={screen} setScreen={setScreen} myUser={myUser} />
     </Container>
   );
 };

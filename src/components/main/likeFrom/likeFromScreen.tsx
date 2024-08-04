@@ -1,22 +1,17 @@
-import React from "react"
-import { Text, View } from "react-native"
+import React from "react";
+import { Text, View } from "react-native";
 import { styled } from "nativewind";
 import { UserData } from "../../../types/userData";
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
-const LikeFromScreen = ({
-  myUser
-}:
-{
-  myUser: UserData | undefined
-}) => {
+const LikeFromScreen = ({ myUser }: { myUser: UserData | null }) => {
   return (
     <StyledView>
       <StyledText>l</StyledText>
     </StyledView>
-  )
-}
+  );
+};
 
-export default LikeFromScreen
+export default LikeFromScreen;

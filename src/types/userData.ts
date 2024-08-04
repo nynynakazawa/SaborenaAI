@@ -16,7 +16,7 @@ export type UserData = {
     self_introduction?: string;
   };
   app_info?: {
-    membership_status?: 'free' | 'premium';
+    membership_status?: "free" | "premium";
     like_to?: {
       [key: string]: string[];
     };

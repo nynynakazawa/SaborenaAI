@@ -53,7 +53,7 @@ const Index = () => {
   }, []);
 
   return (
-    <StyledView className="flex-1 justify-center items-center">
+    <StyledView className="flex-1 items-center justify-center">
       <StyledText></StyledText>
     </StyledView>
   );
