@@ -50,14 +50,14 @@ const BirthdayInput = ({
   };
 
   return (
-    <StyledView className="mx-auto mb-[12px] w-[90vw]">
+    <StyledView className="mx-auto w-[90vw] mb-[24px]">
       <StyledView className="mb-[12px] flex flex-row items-center">
         <Icon name="calendar" size={36} color="#333" className="mr-[10px]" />
         <StyledText className="text-[16px]">
           生年月日<StyledText className="text-[#f00]">*</StyledText>
         </StyledText>
       </StyledView>
-      <StyledView className="mb-[12px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
+      <StyledView className="flex w-full flex-row items-center border-b-2 border-[#fff]">
         <StyledTextInput
           value={birthday.split(",")[0]}
           onChangeText={handleYearChange}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, TextInput, View } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -15,7 +15,7 @@ const NameInput = ({
   setName: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
-    <StyledView className="mx-auto w-[90vw]">
+    <StyledView className="mx-auto w-[90vw] mb-[24px]">
       <StyledView className="flex flex-row items-center">
         <Icon
           name="drive-file-rename-outline"
@@ -27,7 +27,7 @@ const NameInput = ({
           名前(8文字まで)<StyledText className="text-[#f00]">*</StyledText>
         </StyledText>
       </StyledView>
-      <StyledView className="mb-[12px] flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
+      <StyledView className="flex w-full flex-row items-center border-b-2 border-[#fff] pb-[10px]">
         <StyledTextInput
           onChangeText={setName}
           value={name}

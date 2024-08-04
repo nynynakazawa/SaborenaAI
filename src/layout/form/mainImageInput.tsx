@@ -49,7 +49,7 @@ const MainImageInput = ({
   };
 
   return (
-    <StyledView className="mx-auto w-[90vw]">
+    <StyledView className="mx-auto w-[90vw] mb-[24px]">
       <StyledView className="mb-[12px] flex flex-row items-center">
         <Icon name="image" size={36} color="#333" className="mr-[10px]" />
         <StyledText className="text-[16px]">
