@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { Image, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { UserData } from "../../../types/userData";
 import { Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import Animated, {
+  useSharedValue,
+  withSequence,
+  withSpring,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 const StyledView = styled(View);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const UserMarker = ({
   location,
@@ -29,6 +36,21 @@ const UserMarker = ({
     frameColor = "bg-[#79FF82]";
   }
 
+  const scale = useSharedValue(1);
+
+  const handlePress = () => {
+    scale.value = withSequence(
+      withSpring(0.8), // 小さくなる
+      withSpring(1), // 元の大きさに戻る
+    );
+  };
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
   return (
     <Marker
       coordinate={
@@ -42,23 +64,29 @@ const UserMarker = ({
               longitude: 0,
             }
       }
-      onPress={() =>setIsVisibleUserModal(!isVisibleUserModal)}
+      style={{ width: 52, height: 60, paddingBottom: 40 }}
+      onPress={() => {
+        setIsVisibleUserModal(!isVisibleUserModal);
+        handlePress();
+      }}
     >
-      <StyledView className="flex h-[60px] w-max">
-        <StyledView
-          className={`h-[52px] w-[52px] rounded-[10px] flex items-center justify-center ${frameColor}`}
-        >
-          <Image
-            source={{ uri: user?.user_info?.image_url }}
-            style={{ width: 42, height: 42, borderRadius: 10 }}
-          />
-        </StyledView>
-        <StyledView className="absolute bottom-[5px] z-[-5] flex w-full items-center">
+      <Animated.View style={[animatedStyle]}>
+        <StyledView className="flex h-[60px] w-max">
           <StyledView
-            className={`h-[20px] w-[20px] rotate-[45deg] ${frameColor}`}
-          />
+            className={`flex h-[52px] w-[52px] items-center justify-center rounded-[10px] ${frameColor}`}
+          >
+            <Image
+              source={{ uri: user?.user_info?.image_url }}
+              style={{ width: 42, height: 42, borderRadius: 10 }}
+            />
+          </StyledView>
+          <StyledView className="absolute bottom-[5px] z-[-5] flex w-full items-center">
+            <StyledView
+              className={`h-[20px] w-[20px] rotate-[45deg] ${frameColor}`}
+            />
+          </StyledView>
         </StyledView>
-      </StyledView>
+      </Animated.View>
     </Marker>
   );
 };

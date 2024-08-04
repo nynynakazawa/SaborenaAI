@@ -265,7 +265,7 @@ const CreateAccount = ({
             className="flex-1 items-center justify-center"
             style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
           >
-            <StyledView className="relative w-[80%] rounded-md bg-white p-6">
+            <StyledView className="relative w-[80%] rounded-md bg-white p-[24px]">
               {/* モーダルの右上に閉じるボタンを追加 */}
               <StyledTouchableOpacity
                 onPress={() => setIsVisibleWaitingVerificationModal(false)}

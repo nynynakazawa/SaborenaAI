@@ -13,7 +13,7 @@ type Birthday = {
   date: number;
 };
 
-const NameDisplayComponent = ({ myUser }: { myUser: UserData | null }) => {
+const NameDisplayComponent = ({ user }: { user: UserData | null }) => {
   function getAge(birthday: Birthday) {
     const today = new Date();
     const birthDate = new Date(
@@ -32,7 +32,7 @@ const NameDisplayComponent = ({ myUser }: { myUser: UserData | null }) => {
     return age;
   }
 
-  const birthday = myUser?.user_info?.birthday;
+  const birthday = user?.user_info?.birthday;
   const birthdayDic: Birthday | null = birthday
     ? {
         year: parseInt(birthday.split(",")[0]),
@@ -41,15 +41,15 @@ const NameDisplayComponent = ({ myUser }: { myUser: UserData | null }) => {
       }
     : null;
 
-  const gender: string = myUser?.user_info?.gender || "";
+  const gender: string = user?.user_info?.gender || "";
   const age: number = birthdayDic ? getAge(birthdayDic) : 0;
 
   return (
     <StyledView className="flex flex-row items-center">
       <StyledText className="ml-[6px] text-[16px] font-bold">
-        {myUser?.user_info?.name} ({age})
+        {user?.user_info?.name} ({age})
       </StyledText>
-      {gender != "male" && (
+      {gender == "male" && (
         <Icon
           name="gender-male"
           size={24}
@@ -57,7 +57,7 @@ const NameDisplayComponent = ({ myUser }: { myUser: UserData | null }) => {
           className="ml-[4px]"
         />
       )}
-      {gender != "female" && (
+      {gender == "female" && (
         <Icon
           name="gender-female"
           size={24}

@@ -5,6 +5,12 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import { UserData } from "../../../types/userData";
 import { useRouter } from "expo-router";
+import Animated, {
+  useSharedValue,
+  withSequence,
+  withSpring,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -21,6 +27,20 @@ const BottomNavigation = ({
   myUser: UserData | null;
 }) => {
   const router = useRouter();
+  const scale = useSharedValue(1);
+
+  const handlePress = () => {
+    scale.value = withSequence(
+      withSpring(0.8), // 小さくなる
+      withSpring(1), // 元の大きさに戻る
+    );
+  };
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
   return (
     <StyledView className="absolute bottom-0 z-[100] flex h-[80px] w-screen items-center justify-center bg-[#fff]">
       <StyledView className="flex w-[70vw] flex-row items-center justify-between">
