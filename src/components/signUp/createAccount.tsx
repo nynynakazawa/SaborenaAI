@@ -19,8 +19,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { useRouter } from "expo-router";
-import EmailInput from "../../layout/private_info/emailInput";
-import PasswordInput from "../../layout/private_info/passwordInput";
+import EmailInput from "../../layout/privateForm/emailInput";
+import PasswordInput from "../../layout/privateForm/passwordInput";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 
@@ -169,7 +169,7 @@ const CreateAccount = ({
         <PageBackHeader />
 
         {/* サインアップフォーム */}
-        <StyledView className="mx-auto mt-[10vh] w-[90%] flex-1 items-center">
+        <StyledView className="mx-auto mt-[10vh] w-[90vw] flex-1 items-center">
           {/* メールアドレス */}
           <StyledView className="mb-[56px] w-full">
             <EmailInput email={email} setEmail={setEmail} option={"black"} />

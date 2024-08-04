@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon from "react-native-vector-icons/Feather";
+
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -15,7 +16,7 @@ const GoalProfile = ({
     <StyledView className="mx-auto flex w-full flex-row items-center justify-between rounded-lg p-[8px]">
       <StyledView className="flex flex-row items-center">
         <Icon
-          name="work"
+          name="target"
           size={32}
           color="#333"
           className="ml-[8px] mr-[16px]"

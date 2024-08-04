@@ -37,6 +37,6 @@ export type UserData = {
     isGPS?: boolean;
     longitude?: number;
     latitude?: number;
-    winZone?: string;
+    what_now?: string;
   };
 };

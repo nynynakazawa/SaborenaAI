@@ -55,14 +55,14 @@ const GenderInput = ({
   };
 
   return (
-    <StyledView className="mx-auto w-[90vw]">
+    <StyledView className="mx-auto w-[90vw] mb-[24px]">
       <StyledView className="mb-[12px] flex flex-row items-center">
         <Icon name="man" size={36} color="#333" className="mr-[8px]" />
         <StyledText className="text-[16px]">
           性別(再設定不可)<StyledText className="text-[#f00]">*</StyledText>
         </StyledText>
       </StyledView>
-      <StyledView className="mb-[28px] flex">
+      <StyledView className="flex">
         <RadioGroup
           radioButtons={radioButtons}
           onPress={handlePress}
