@@ -36,7 +36,7 @@ const SelfIntroductionInput = ({
       <StyledView className="mb-[6px] flex flex-row items-center justify-between">
         <StyledView className="flex flex-row items-center">
           <Icon name="face-man" size={38} color="#333" className="mr-[10px]" />
-          <StyledText className="text-[16px]">自己紹介</StyledText>
+          <StyledText className="text-[16px] text-[#333]">自己紹介</StyledText>
           <StyledText className="ml-[12px] mt-[4px] text-[16px]">
             {selfIntroduction.length} / 140
           </StyledText>

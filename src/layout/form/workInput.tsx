@@ -48,7 +48,7 @@ const WorkInput = ({
         activeOpacity={0.8}
         className="flex"
       >
-        <StyledView className="flex flex-row justify-around border-b-2 border-[#333] p-[6px] px-[20px] text-[16px] text-[#333]">
+        <StyledView className="flex justify-around border-b-2 border-[#333] p-[6px] px-[20px] text-[16px] text-[#333]">
           <StyledText
             className={`text-[16px] text-[#333] ${selectedWork == "未設定" && "text-[#ccc]"}`}
           >

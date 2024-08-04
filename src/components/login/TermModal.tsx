@@ -25,10 +25,7 @@ const TermModal = ({ visible, onClose }: TermModalProps) => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
         onPress={onClose}
       >
-        <StyledTouchableOpacity
-          activeOpacity={1}
-          className="w-[80%] rounded-lg bg-[#fff] p-[20px]"
-        >
+        <StyledView className="w-[80%] rounded-lg bg-[#fff] p-[20px]">
           <StyledText>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -44,7 +41,7 @@ const TermModal = ({ visible, onClose }: TermModalProps) => {
           >
             <StyledText>閉じる</StyledText>
           </StyledTouchableOpacity>
-        </StyledTouchableOpacity>
+        </StyledView>
       </StyledTouchableOpacity>
     </Modal>
   );

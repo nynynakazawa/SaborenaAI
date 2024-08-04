@@ -13,10 +13,14 @@ import Modal from "react-native-modal";
 import { UserData } from "../../../types/userData";
 import { styled } from "nativewind";
 import UserMarker from "./userMarker";
+import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import UserModal from "../../../layout/userModal/userProfileModal";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const MapScreen = ({
   location,
@@ -28,7 +32,7 @@ const MapScreen = ({
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
 
   return (
-    <View style={styles.container}>
+    <StyledView>
       {location ? (
         <MapView
           style={styles.map}
@@ -47,19 +51,15 @@ const MapScreen = ({
           />
         </MapView>
       ) : (
-        <Text>waiting</Text>
+        <StyledText>waiting</StyledText>
       )}
 
-      <Modal isVisible={isVisibleUserModal}>
-        <View style={styles.modalContent}>
-          <Text>You are here!</Text>
-          <Button
-            title="Close"
-            onPress={() => setIsVisibleUserModal(!isVisibleUserModal)}
-          />
-        </View>
-      </Modal>
-    </View>
+      <UserModal
+        isVisibleUserModal={isVisibleUserModal}
+        setIsVisibleUserModal={setIsVisibleUserModal}
+        user={myUser}
+      />
+    </StyledView>
   );
 };
 
@@ -82,5 +82,4 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0, 0, 0, 0.1)",
   },
 });
-
 export default MapScreen;
