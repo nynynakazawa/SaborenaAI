@@ -18,31 +18,42 @@ const BottomNavigation = ({
 }: {
   screen: string;
   setScreen: React.Dispatch<React.SetStateAction<string>>;
-  myUser: UserData | undefined;
+  myUser: UserData | null;
 }) => {
   const router = useRouter();
   return (
-    <StyledView className="z-[100] absolute bottom-0 h-[80px] w-screen flex items-center justify-center">
-      <StyledView className="w-[70vw] flex flex-row justify-between items-center">
+    <StyledView className="absolute bottom-0 z-[100] flex h-[80px] w-screen items-center justify-center bg-[#fff]">
+      <StyledView className="flex w-[70vw] flex-row items-center justify-between">
         {/* map */}
         <StyledTouchableOpacity onPress={() => setScreen("mapScreen")}>
-          <FontAwesome name="map" size={26} color={`${screen == "mapScreen" ? "#45e645" : "#333"}`} />
+          <FontAwesome
+            name="map"
+            size={26}
+            color={`${screen == "mapScreen" ? "#45e645" : "#333"}`}
+          />
         </StyledTouchableOpacity>
 
         {/* likeFrom */}
         <StyledTouchableOpacity onPress={() => setScreen("likeFromScreen")}>
-          <Entypo name="heart" size={30} color={`${screen == "likeFromScreen" ? "#f91880" : "#333"}`} />
+          <Entypo
+            name="heart"
+            size={30}
+            color={`${screen == "likeFromScreen" ? "#f91880" : "#333"}`}
+          />
         </StyledTouchableOpacity>
 
         {/* messsageList */}
         <StyledTouchableOpacity onPress={() => setScreen("talkListScreen")}>
-          <Entypo name="mail" size={30} color={`${screen == "talkListScreen" ? "#1a8cd8" : "#333"}`} />
+          <Entypo
+            name="mail"
+            size={30}
+            color={`${screen == "talkListScreen" ? "#1a8cd8" : "#333"}`}
+          />
         </StyledTouchableOpacity>
 
         {/* mySettingScreen */}
         <StyledTouchableOpacity onPress={() => setScreen("mySettingScreen")}>
           <StyledView className="relative">
-            <StyledView className={`absolute z-[120] top-0 left-0 w-[34px] h-[34px] bg-[#000] rounded-full ${!(screen == "mySettingScreen") ? "opacity-60" : "opacity-0"}`}></StyledView>
             <StyledImage
               source={
                 myUser?.user_info?.image_url
@@ -50,7 +61,7 @@ const BottomNavigation = ({
                   : require("../../../../assets/logo/icon.png")
               }
               style={{ width: 34, height: 34 }}
-              className="rounded-full"
+              className={`rounded-full ${!(screen == "mySettingScreen") ? "opacity-60" : "opacity-100"}`}
             />
           </StyledView>
         </StyledTouchableOpacity>

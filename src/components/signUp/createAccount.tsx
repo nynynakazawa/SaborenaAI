@@ -55,7 +55,6 @@ const CreateAccount = ({
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
   const [
     isVisibleWaitingVerificationModal,
