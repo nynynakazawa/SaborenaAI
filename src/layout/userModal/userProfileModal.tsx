@@ -35,7 +35,7 @@ const UserModal = ({
     <Modal
       animationType="slide"
       transparent={true}
-      visible={true}
+      visible={isVisibleUserModal}
       onRequestClose={() => setIsVisibleUserModal(false)}
     >
       <StyledView

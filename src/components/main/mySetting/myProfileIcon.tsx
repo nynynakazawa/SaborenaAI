@@ -28,7 +28,7 @@ const MyProfileIcon = ({ myUser }: { myUser: UserData | null }) => {
           />
         </StyledView>
         <StyledView className="absolute bottom-[-50px] text-[16px]">
-          <NameDisplayComponent myUser={myUser} />
+          <NameDisplayComponent user={myUser} />
         </StyledView>
       </StyledView>
     </StyledTouchableOpacity>
