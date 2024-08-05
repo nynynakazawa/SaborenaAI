@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  Alert,
-  Platform,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Modal,
@@ -18,7 +15,6 @@ import {
   sendEmailVerification,
   onAuthStateChanged,
 } from "firebase/auth";
-import { useRouter } from "expo-router";
 import EmailInput from "../../layout/privateForm/emailInput";
 import PasswordInput from "../../layout/privateForm/passwordInput";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
@@ -107,6 +103,7 @@ const CreateAccount = ({
             email: email,
             email_verified: userCredential.user.emailVerified,
             createdAt: new Date(),
+            uid: userCredential.user.uid,
           },
         });
       })

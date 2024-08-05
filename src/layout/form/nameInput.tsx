@@ -15,7 +15,7 @@ const NameInput = ({
   setName: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
-    <StyledView className="mx-auto w-[90vw] mb-[24px]">
+    <StyledView className="mx-auto mb-[24px] w-[90vw]">
       <StyledView className="flex flex-row items-center">
         <Icon
           name="drive-file-rename-outline"

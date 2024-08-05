@@ -5,7 +5,7 @@ import BottomNavigation from "../../components/main/navigation/bottomNavigation"
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth, db } from "../../firebase";
 import { User } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { UserData } from "../../types/userData";
 import MapScreen from "../../components/main/map/mapScreen";
 import LikeFromScreen from "../../components/main/likeFrom/likeFromScreen";
@@ -20,16 +20,23 @@ const StyledText = styled(Text);
 const MapPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
+
   const fetchMyUser = async () => {
     const user = auth.currentUser as User;
     if (user) {
       const userRef = doc(db, "users", user.uid);
-      const userSnapshot = await getDoc(userRef);
-      if (userSnapshot.exists()) {
-        setMyUser(userSnapshot.data());
-      } else {
-        console.log("No such document!");
-      }
+
+      // リアルタイムでデータを取得する
+      const unsubscribe = onSnapshot(userRef, (doc) => {
+        if (doc.exists()) {
+          setMyUser(doc.data() as UserData);
+        } else {
+          console.log("No such document!");
+        }
+      });
+
+      // コンポーネントがアンマウントされたときにリスナーをクリーンアップ
+      return () => unsubscribe();
     }
   };
 

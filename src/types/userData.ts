@@ -4,6 +4,7 @@ export type UserData = {
     email?: string;
     email_verified?: boolean;
     verified_email?: boolean;
+    uid: string;
   };
   user_info?: {
     birthday?: string;
@@ -38,5 +39,6 @@ export type UserData = {
     longitude?: number;
     latitude?: number;
     what_now?: string;
+    uid?: string;
   };
 };

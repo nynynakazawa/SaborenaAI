@@ -7,32 +7,32 @@ import {
   Keyboard,
 } from "react-native";
 import { styled } from "nativewind";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/Entypo";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const SelfIntroductionProfile = ({
-  selfIntroduction,
+const WhatNowProfile = ({
+  whatNow,
 }: {
-  selfIntroduction: string | undefined;
+  whatNow: string | undefined;
 }) => {
 
   return (
-    <StyledView className="mx-auto mb-[12px] w-full">
+    <StyledView className="mx-auto mb-[24px] w-full">
       <StyledView className="flex flex-row items-center justify-between">
         <StyledView className="flex flex-row items-center mb-[12px]">
-          <Icon name="face-man" size={38} color="#333" className="mr-[10px]" />
-          <StyledText className="text-[16px] text-[#333]">自己紹介</StyledText>
+          <Icon name="message" size={36} color="#333" className="mr-[10px]" />
+          <StyledText className="text-[16px] text-[#333] mb-[8px]">いまなにしてる？</StyledText>
         </StyledView>
       </StyledView>
       <StyledText className="text-[16px] text-[#333]">
-        {selfIntroduction}
+        {whatNow}
       </StyledText>
     </StyledView>
   );
 };
 
-export default SelfIntroductionProfile;
+export default WhatNowProfile;
