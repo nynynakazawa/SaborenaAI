@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Keyboard, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { UserData } from "../../../types/userData";
+import { UserData } from "../../../types/userDataTypes";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 
@@ -11,7 +11,7 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
-const WhatNowInput = ({myUser} : {myUser : UserData | null}) => {
+const WhatNowInput = ({myUid} : {myUid : string}) => {
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -30,17 +30,15 @@ const WhatNowInput = ({myUser} : {myUser : UserData | null}) => {
 
   const handleSend = async() => {
     console.log("handleSend");
-    const userRef = doc(db, "users", myUser?.private_info?.uid || "");
+    const currentRef = doc(db, "current", myUid);
     await setDoc(
-      userRef,
+      currentRef,
       {
-        current_info: {
-          peopleCount: 1,
-          isGPS: false,
-          longitude: -1,
-          latitude: -1,
-          what_now: whatNow,
-        },
+        peopleCount: 1,
+        isGPS: false,
+        longitude: -1,
+        latitude: -1,
+        what_now: whatNow,
       },
       { merge: true },
     );

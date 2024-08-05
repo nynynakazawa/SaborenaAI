@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../../types/userData";
+import { UserData } from "../../../types/userDataTypes";
 import Icon from "react-native-vector-icons/Entypo";
 import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
 
@@ -10,12 +10,12 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const MyProfileIcon = ({ myUser }: { myUser: UserData | null }) => {
+const MyProfileIcon = ({ myUserData }: { myUserData: UserData | null }) => {
   return (
     <StyledTouchableOpacity className="flex items-center" activeOpacity={0.8}>
       <StyledView className="absolute">
         <StyledImage
-          source={{ uri: myUser?.user_info?.image_url }}
+          source={{ uri: myUserData?.image_url }}
           style={{ width: 100, height: 100 }}
           className="rounded-full"
         />
@@ -28,7 +28,7 @@ const MyProfileIcon = ({ myUser }: { myUser: UserData | null }) => {
           />
         </StyledView>
         <StyledView className="absolute bottom-[-50px] text-[16px]">
-          <NameDisplayComponent user={myUser} />
+          <NameDisplayComponent userData={myUserData} />
         </StyledView>
       </StyledView>
     </StyledTouchableOpacity>

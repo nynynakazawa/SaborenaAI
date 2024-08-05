@@ -97,23 +97,21 @@ const CreateAccount = ({
         setIsVisibleWaitingVerificationModal(true);
 
         // ユーザー情報をFirestoreに保存
-        const userRef = doc(db, "users", userCredential.user.uid);
+        const userRef = doc(db, "private", userCredential.user.uid);
         await setDoc(userRef, {
-          private_info: {
-            email: email,
-            email_verified: userCredential.user.emailVerified,
-            createdAt: new Date(),
-            uid: userCredential.user.uid,
-          },
+          email: email,
+          email_verified: userCredential.user.emailVerified,
+          createdAt: new Date(),
+          uid: userCredential.user.uid,
         });
       })
       .catch(async () => {
         // エラー発生時の処理
-        const userRef = doc(db, "users", auth.currentUser?.uid || "");
+        const userRef = doc(db, "user", auth.currentUser?.uid || "");
         const userDoc = await getDoc(userRef);
         const userData = userDoc.data();
 
-        if (userData?.private_info?.email_verified) {
+        if (userData?.email_verified) {
           console.log("Email is verified.");
           setErrorMessage("すでに登録されています");
         } else {
@@ -147,9 +145,9 @@ const CreateAccount = ({
         if (user.emailVerified) {
           console.log("Email verified!");
           // Firestoreのユーザー情報を更新
-          const userRef = doc(db, "users", user.uid);
-          await updateDoc(userRef, {
-            "private_info.email_verified": true,
+          const userRef = doc(db, "user", user.uid);
+          await setDoc(userRef, {
+            email_verified: true,
           });
           setScene((prev) => prev + 1);
           setIsVisibleWaitingVerificationModal(false);

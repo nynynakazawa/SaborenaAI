@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../../types/userData";
+import { CurrentData, UserData } from "../../../types/userDataTypes";
 import { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import Animated, {
@@ -16,16 +16,18 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const UserMarker = ({
   location,
-  user,
   isVisibleUserModal,
   setIsVisibleUserModal,
+  userData,
+  currentData,
 }: {
   location: Location.LocationObject | null;
-  user: UserData | null;
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
+  userData: UserData | null;
+  currentData: CurrentData | null;
 }) => {
-  const gender = user?.user_info?.gender;
+  const gender = userData?.gender;
   let frameColor;
 
   if (gender === "male") {
@@ -56,6 +58,7 @@ const UserMarker = ({
       coordinate={
         location
           ? {
+            // TODO: データベースから取得した値に置き換える
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
             }
@@ -76,7 +79,7 @@ const UserMarker = ({
             className={`flex h-[52px] w-[52px] items-center justify-center rounded-[10px] ${frameColor}`}
           >
             <Image
-              source={{ uri: user?.user_info?.image_url }}
+              source={{ uri: userData?.image_url }}
               style={{ width: 42, height: 42, borderRadius: 10 }}
             />
           </StyledView>

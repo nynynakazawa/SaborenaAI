@@ -10,7 +10,7 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import Modal from "react-native-modal";
-import { UserData } from "../../../types/userData";
+import { CurrentData, UserData } from "../../../types/userDataTypes";
 import { styled } from "nativewind";
 import UserMarker from "./userMarker";
 import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
@@ -25,10 +25,14 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const MapScreen = ({
   location,
-  myUser,
+  myUid,
+  myUserData,
+  myCurrentData,
 }: {
   location: Location.LocationObject | null;
-  myUser: UserData | null;
+  myUid: string,
+  myUserData: UserData | null;
+  myCurrentData: CurrentData | null;
 }) => {
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
 
@@ -48,18 +52,20 @@ const MapScreen = ({
             location={location}
             isVisibleUserModal={isVisibleUserModal}
             setIsVisibleUserModal={setIsVisibleUserModal}
-            user={myUser}
+            userData={myUserData}
+            currentData={myCurrentData}
           />
         </MapView>
       ) : (
         <StyledText>waiting</StyledText>
       )}
 
-      <WhatNowInput myUser={myUser}/>
+      <WhatNowInput myUid={myUid}/>
       <UserModal
         isVisibleUserModal={isVisibleUserModal}
         setIsVisibleUserModal={setIsVisibleUserModal}
-        user={myUser}
+        userData={myUserData}
+        currentData={myCurrentData}
       />
     </StyledView>
   );

@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../types/userData";
+import { CurrentData, UserData } from "../../types/userDataTypes";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import NameDisplayComponent from "../display/nameDisplayComponent";
 import TopProfile from "./topProfile";
@@ -26,11 +26,13 @@ const StyledScrollView = styled(ScrollView);
 const UserModal = ({
   isVisibleUserModal,
   setIsVisibleUserModal,
-  user,
+  userData,
+  currentData,
 }: {
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
-  user: UserData | null;
+  userData: UserData | null;
+  currentData: CurrentData | null;
 }) => {
   return (
     <Modal
@@ -53,13 +55,13 @@ const UserModal = ({
           </StyledTouchableOpacity>
 
           <StyledScrollView className="h-full w-full">
-              <TopProfile user={user} />
-              <WhatNowProfile whatNow={user?.current_info?.what_now} />
+              <TopProfile userData={userData} />
+              <WhatNowProfile whatNow={currentData?.what_now} />
               <SelfIntroductionProfile
-                selfIntroduction={user?.user_info?.self_introduction}
+                selfIntroduction={userData?.self_introduction}
               />
-              <WorkProfile selectedWork={user?.user_info?.selected_work} />
-              <GoalProfile selectedGoal={user?.user_info?.selected_goal} />
+              <WorkProfile selectedWork={userData?.selected_work} />
+              <GoalProfile selectedGoal={userData?.selected_goal} />
           </StyledScrollView>
         </StyledView>
       </StyledView>
