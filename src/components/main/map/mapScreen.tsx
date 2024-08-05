@@ -16,6 +16,7 @@ import UserMarker from "./userMarker";
 import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import UserModal from "../../../layout/userModal/userProfileModal";
+import WhatNowInput from "./whatNowInput";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -54,6 +55,7 @@ const MapScreen = ({
         <StyledText>waiting</StyledText>
       )}
 
+      <WhatNowInput myUser={myUser}/>
       <UserModal
         isVisibleUserModal={isVisibleUserModal}
         setIsVisibleUserModal={setIsVisibleUserModal}

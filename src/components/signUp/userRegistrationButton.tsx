@@ -92,7 +92,7 @@ const UserRegistationButton = ({
             isGPS: false,
             longitude: -1,
             latitude: -1,
-            what_now: "",
+            what_now: "こんにちは",
           },
         },
         { merge: true },

@@ -3,7 +3,6 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/Feather";
 
-
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
@@ -13,7 +12,7 @@ const GoalProfile = ({
   selectedGoal: string | undefined;
 }) => {
   return (
-    <StyledView className="mx-auto flex w-full flex-row items-center justify-between rounded-lg p-[8px]">
+    <StyledView className="mx-auto flex w-full flex-row items-center justify-between rounded-lg p-[8px] mb-[12px]">
       <StyledView className="flex flex-row items-center">
         <Icon
           name="target"

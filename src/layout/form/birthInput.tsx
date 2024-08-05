@@ -50,7 +50,7 @@ const BirthdayInput = ({
   };
 
   return (
-    <StyledView className="mx-auto w-[90vw] mb-[24px]">
+    <StyledView className="mx-auto mb-[24px] w-[90vw]">
       <StyledView className="mb-[12px] flex flex-row items-center">
         <Icon name="calendar" size={36} color="#333" className="mr-[10px]" />
         <StyledText className="text-[16px]">

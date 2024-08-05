@@ -15,6 +15,7 @@ import TopProfile from "./topProfile";
 import SelfIntroductionProfile from "./selfIntroductionProfile";
 import WorkProfile from "./workProfile";
 import GoalProfile from "./goalProfile";
+import WhatNowProfile from "./whatNowProfile";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -52,20 +53,13 @@ const UserModal = ({
           </StyledTouchableOpacity>
 
           <StyledScrollView className="h-full w-full">
-            <StyledView className="mb-[24px]">
               <TopProfile user={user} />
-            </StyledView>
-            <StyledView className="mb-[12px]">
+              <WhatNowProfile whatNow={user?.current_info?.what_now} />
               <SelfIntroductionProfile
                 selfIntroduction={user?.user_info?.self_introduction}
               />
-            </StyledView>
-            <StyledView className="mb-[12px]">
               <WorkProfile selectedWork={user?.user_info?.selected_work} />
-            </StyledView>
-            <StyledView className="mb-[12px]">
               <GoalProfile selectedGoal={user?.user_info?.selected_goal} />
-            </StyledView>
           </StyledScrollView>
         </StyledView>
       </StyledView>
