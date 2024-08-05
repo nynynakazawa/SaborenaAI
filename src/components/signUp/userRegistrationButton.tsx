@@ -67,26 +67,36 @@ const UserRegistationButton = ({
       if (image) {
         imageUrl = await uploadImage(image);
       }
-      const userRef = doc(db, "users", user.uid);
+      const userRef = doc(db, "user", user.uid);
       await setDoc(
         userRef,
         {
-          user_info: {
-            name: name,
-            gender: gender,
-            birthday: birthday,
-            selected_residential: `${selectedPrefecture},${selectedCity}`,
-            image_url: imageUrl,
-            self_introduction: selfIntroduction,
-            selected_work: selectedWork,
-            selected_goal: selectedGoal,
-          },
-          app_info: {
-            membership_status: "free",
-            like_to: [],
-            like_from: [],
-            talk_list: {},
-          },
+          name: name,
+          gender: gender,
+          birthday: birthday,
+          selected_residential: `${selectedPrefecture},${selectedCity}`,
+          image_url: imageUrl,
+          self_introduction: selfIntroduction,
+          selected_work: selectedWork,
+          selected_goal: selectedGoal,
+        },
+        { merge: true },
+      );
+      const appRef = doc(db, "app", user.uid);
+      await setDoc(
+        appRef,
+        {
+          like_to: [],
+          like_from: [],
+          talk_list: {},
+          membership_status: "free",
+        },
+        { merge: true },
+      );
+      const currentRef = doc(db, "current", user.uid);
+      await setDoc(
+        currentRef,
+        {
           current_info: {
             peopleCount: 1,
             isGPS: false,

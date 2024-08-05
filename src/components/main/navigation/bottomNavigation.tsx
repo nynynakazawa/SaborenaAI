@@ -3,7 +3,7 @@ import { Image, Text, TouchableOpacity, View, Keyboard, Dimensions } from "react
 import { styled } from "nativewind";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
-import { UserData } from "../../../types/userData";
+import { UserData } from "../../../types/userDataTypes";
 import { useRouter } from "expo-router";
 import Animated, {
   useSharedValue,
@@ -20,12 +20,13 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const BottomNavigation = ({
   screen,
   setScreen,
-  myUser,
+  myUserData,
 }: {
   screen: string;
   setScreen: React.Dispatch<React.SetStateAction<string>>;
-  myUser: UserData | null;
+  myUserData: UserData | null;
 }) => {
+
   const router = useRouter();
   const scale = useSharedValue(1);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
@@ -97,8 +98,8 @@ const BottomNavigation = ({
             <StyledView className="relative">
               <StyledImage
                 source={
-                  myUser?.user_info?.image_url
-                    ? { uri: myUser.user_info.image_url }
+                  myUserData?.image_url
+                    ? { uri: myUserData.image_url }
                     : require("../../../../assets/logo/icon.png")
                 }
                 style={{ width: 34, height: 34 }}

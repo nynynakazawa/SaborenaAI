@@ -11,8 +11,8 @@ const ImageCaution = () => {
   return (
     <StyledView className="absolute top-[64vh]">
       <StyledView className="flex w-screen flex-1 items-center justify-center">
-        <StyledView className="flex w-[80vw] flex-row items-center">
-          <StyledView className="mr-[12px] flex w-[30vw] items-center justify-center">
+        <StyledView className="flex w-[80vw] flex-row items-center justify-center">
+          <StyledView className="mr-[12px] flex w-[30vw] items-center justify-center mt-[12px]">
             <Icon
               name="checkcircle"
               size={22}
@@ -21,7 +21,7 @@ const ImageCaution = () => {
             />
             <StyledImage
               source={require("../../../../assets/login/109.jpg")}
-              className="mb-[26px] h-[100px] w-[100px] rounded-md"
+              className="mb-[26px] h-[80px] w-[80px] rounded-md"
             />
           </StyledView>
           <StyledView className="flex gap-[4px]">

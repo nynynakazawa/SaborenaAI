@@ -16,12 +16,12 @@ const Index = () => {
       try {
         if (user) {
           // mapPage
-          const userRef = doc(db, "users", user.uid);
+          const userRef = doc(db, "user", user.uid);
           const userSnapshot = await getDoc(userRef);
           if (userSnapshot.exists()) {
             const userData = userSnapshot.data();
             // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
-            if (userData.user_info?.name) {
+            if (userData.name) {
               router.push("/main/mainPage");
             } else {
               router.push({

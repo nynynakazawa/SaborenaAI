@@ -8,14 +8,14 @@ import {
   Button,
 } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../../types/userData";
+import { UserData } from "../../../types/userDataTypes";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledScrollView = styled(ScrollView);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const LikeFromScreen = ({ myUser }: { myUser: UserData | null }) => {
+const LikeFromScreen = ({ myUserData }: { myUserData: UserData | null }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (

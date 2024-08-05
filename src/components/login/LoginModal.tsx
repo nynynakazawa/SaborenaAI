@@ -63,16 +63,16 @@ const LoginModal = ({
         email,
         password,
       );
-      const userRef = doc(db, "users", userCredential.user.uid);
+      const userRef = doc(db, "user", userCredential.user.uid);
       const userSnapshot = await getDoc(userRef);
 
       if (userSnapshot.exists()) {
         const userData = userSnapshot.data();
         // ログイン成功時
-        if (userData.private_info.email_verified == true) {
+        if (userData?.email_verified == true) {
           console.log("🎉login success");
           // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
-          if (userData.user_info?.name && true) {
+          if (userData?.name && true) {
             router.push("/main/mainPage");
           } else {
             router.push({

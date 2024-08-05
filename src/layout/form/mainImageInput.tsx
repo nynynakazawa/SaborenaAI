@@ -36,7 +36,7 @@ const MainImageInput = ({
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4],
       quality: 1,
     });
 
@@ -64,10 +64,10 @@ const MainImageInput = ({
           {!(image == null) ? (
             <StyledImage
               source={{ uri: image ? image : "" }}
-              className="h-[60vw] w-[80vw] rounded-md"
+              className="h-[64vw] w-[64vw] rounded-md"
             />
           ) : (
-            <StyledView className="flex h-[60vw] w-[80vw] items-center justify-center rounded-md border-[4px] border-dotted border-[#8a8a8a] bg-[#cfcfcf]">
+            <StyledView className="flex h-[64vw] w-[64vw] items-center justify-center rounded-md border-[4px] border-dotted border-[#8a8a8a] bg-[#cfcfcf]">
               <Icon name="circle-with-plus" size={60} color="#fff" />
             </StyledView>
           )}

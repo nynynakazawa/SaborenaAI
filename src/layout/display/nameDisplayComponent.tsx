@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../types/userData";
+import { UserData } from "../../types/userDataTypes";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const StyledView = styled(View);
@@ -13,7 +13,7 @@ type Birthday = {
   date: number;
 };
 
-const NameDisplayComponent = ({ user }: { user: UserData | null }) => {
+const NameDisplayComponent = ({ userData }: { userData: UserData | null }) => {
   function getAge(birthday: Birthday) {
     const today = new Date();
     const birthDate = new Date(
@@ -32,7 +32,7 @@ const NameDisplayComponent = ({ user }: { user: UserData | null }) => {
     return age;
   }
 
-  const birthday = user?.user_info?.birthday;
+  const birthday = userData?.birthday;
   const birthdayDic: Birthday | null = birthday
     ? {
         year: parseInt(birthday.split(",")[0]),
@@ -41,13 +41,13 @@ const NameDisplayComponent = ({ user }: { user: UserData | null }) => {
       }
     : null;
 
-  const gender: string = user?.user_info?.gender || "";
+  const gender: string = userData?.gender || "";
   const age: number = birthdayDic ? getAge(birthdayDic) : 0;
 
   return (
     <StyledView className="flex flex-row items-center">
       <StyledText className="ml-[6px] text-[16px] font-bold">
-        {user?.user_info?.name} ({age})
+        {userData?.name} ({age})
       </StyledText>
       {gender == "male" && (
         <Icon
