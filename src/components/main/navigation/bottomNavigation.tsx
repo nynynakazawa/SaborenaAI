@@ -17,7 +17,7 @@ const BottomNavigation = ({ focused }: { focused: boolean }) => {
       <StyledImage
         source={{ uri: myUserData?.image_url }}
         style={{ width: 34, height: 34 }}
-        className={`rounded-full ${focused ? "opacity-60" : "opacity-100"}`}
+        className={`rounded-full ${focused ? "opacity-100" : "opacity-60"}`}
       />
     </StyledView>
   );
