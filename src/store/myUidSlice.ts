@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const myUidSlice = createSlice({
   name: "myUid",
-  initialState : {
-    value : "",
+  initialState: {
+    value: "",
   },
   reducers: {
     set: (state, action) => {

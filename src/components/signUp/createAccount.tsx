@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  Modal,
-} from "react-native";
+import { Text, TouchableOpacity, View, Modal } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -93,7 +88,7 @@ const CreateAccount = ({
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("🎉sign up success");
-        const date = new Date(); 
+        const date = new Date();
         handleSendEmail();
         setIsVisibleWaitingVerificationModal(true);
 
@@ -267,7 +262,7 @@ const CreateAccount = ({
                 onPress={() => setIsVisibleWaitingVerificationModal(false)}
                 className="absolute right-[8px] top-[8px]"
               >
-                <Icon name="close" size={24} color="#000" />
+                <Icon name="close" size={24} color="#f00" />
               </StyledTouchableOpacity>
 
               <StyledText className="mb-[16px] text-center text-lg font-bold">

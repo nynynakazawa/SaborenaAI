@@ -18,7 +18,7 @@ const MyProfileIcon = () => {
     <StyledTouchableOpacity className="flex items-center" activeOpacity={0.8}>
       <StyledView className="absolute">
         <StyledImage
-          source={{ uri: myUserData?.image_url }}
+          source={{ uri: myUserData?.image_url || "" }}
           style={{ width: 100, height: 100 }}
           className="rounded-full"
         />

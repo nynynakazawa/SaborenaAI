@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Platform, Text, View } from "react-native";
-import { styled } from "nativewind";
-import BottomNavigation from "../../components/main/navigation/bottomNavigation";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Tabs } from "expo-router";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Entypo from "react-native-vector-icons/Entypo";
 import { auth, db } from "../../firebase";
-import { User } from "firebase/auth";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
-import { AppData, CurrentData, PrivateData, UserData } from "../../types/userDataTypes";
-import MapScreen from "../../components/main/map/mapScreen";
-import LikeFromScreen from "../../components/main/likeFrom/likeFromScreen";
-import TalkListScreen from "../../components/main/talkList/talkListScreen";
-import MySettingScreen from "../../components/main/mySetting/mySettingScreen";
+import {
+  AppData,
+  CurrentData,
+  PrivateData,
+  UserData,
+} from "../../types/userDataTypes";
+import MapScreen from "./mapScreen";
+import LikeFromScreen from "./likeFromScreen";
+import TalkListScreen from "./talkListScreen";
+import MySettingScreen from "./mySettingScreen";
 import * as Location from "expo-location";
 import { set as setUserData } from "../../store/userDataSlice";
 import { set as setPrivateData } from "../../store/privateDataSlice";
@@ -20,13 +22,16 @@ import { set as setLocation } from "../../store/locationSlice";
 import { set as setMyUid } from "../../store/myUidSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
+import { useEffect } from "react";
+import { styled } from "nativewind";
+import { Image, Text, View } from "react-native";
+import BottomNavigation from "../../components/main/navigation/bottomNavigation";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
+const StyledImage = styled(Image);
 
-const MainPage = () => {
-  const Container = Platform.OS === "android" ? SafeAreaView : View;
-
+export default function Layout() {
   const fetchUserData = (uid: string, dispatch: Dispatch) => {
     const userRef = doc(db, "user", uid);
 
@@ -82,7 +87,7 @@ const MainPage = () => {
         fetchAppData(user.uid, dispatch),
         fetchCurrentData(user.uid, dispatch),
       ];
-      return () => unsubscribes.forEach(unsub => unsub());
+      return () => unsubscribes.forEach((unsub) => unsub());
     }
   };
 
@@ -101,26 +106,67 @@ const MainPage = () => {
     fetchMyUser(dispatch);
     fetchLocation();
   }, []);
-
-  const [screen, setScreen] = useState<string>("mapScreen");
-
   const dispatch = useDispatch();
-  const myUserData: UserData = useSelector((state: any) => state.userData.value);
-  const myAppData: AppData = useSelector((state: any) => state.appData.value);
-  const myCurrentData: CurrentData = useSelector((state: any) => state.currentData.value);
-  const myPrivateData: PrivateData = useSelector((state: any) => state.privateData.value);
-  const location: Location.LocationObject = useSelector((state: any) => state.location.value);
-  const myUid = useSelector((state: any) => state.myUid.value);
+
+  const myUserData: UserData = useSelector(
+    (state: any) => state.userData.value,
+  );
 
   return (
-    <Container style={{ flex: 1 }}>
-      {screen === "mapScreen" && <MapScreen />}
-      {screen === "likeFromScreen" && <LikeFromScreen/>}
-      {screen === "talkListScreen" && <TalkListScreen/>}
-      {screen === "mySettingScreen" && <MySettingScreen/>}
-      <BottomNavigation screen={screen} setScreen={setScreen}/>
-    </Container>
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          height: 80,
+        },
+        tabBarShowLabel: false,
+      }}
+    >
+      <Tabs.Screen
+        name="mapScreen"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome
+              name="map"
+              size={26}
+              color={focused ? "#45e645" : "#333"}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="likeFromScreen"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Entypo
+              name="heart"
+              size={30}
+              color={focused ? "#f91880" : "#333"}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="talkListScreen"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Entypo
+              name="mail"
+              size={30}
+              color={focused ? "#1a8cd8" : "#333"}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="mySettingScreen"
+        options={{
+          tabBarIcon: ({ focused }) => <BottomNavigation focused={focused} />,
+          headerShown: false,
+        }}
+      />
+    </Tabs>
   );
-};
-
-export default MainPage;
+}

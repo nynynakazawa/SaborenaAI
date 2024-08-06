@@ -19,11 +19,10 @@ const SelfIntroductionProfile = ({
 }: {
   selfIntroduction: string | undefined;
 }) => {
-
   return (
     <StyledView className="mx-auto mb-[12px] w-full">
       <StyledView className="flex flex-row items-center justify-between">
-        <StyledView className="flex flex-row items-center mb-[12px]">
+        <StyledView className="mb-[12px] flex flex-row items-center">
           <Icon name="face-man" size={38} color="#333" className="mr-[10px]" />
           <StyledText className="text-[16px] text-[#333]">自己紹介</StyledText>
         </StyledView>

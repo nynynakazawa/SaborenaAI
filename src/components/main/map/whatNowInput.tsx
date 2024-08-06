@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Keyboard, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  Platform,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { UserData } from "../../../types/userDataTypes";
@@ -28,23 +35,18 @@ const WhatNowInput = () => {
         setKeyboardHeight(0);
       },
     );
-  },[]);
+  }, []);
 
-  const handleSend = async() => {
-    console.log("handleSend");
+  const handleSend = async () => {
+    console.log("whatnow Send");
     const currentRef = doc(db, "current", myUid);
     await setDoc(
       currentRef,
       {
-        peopleCount: 1,
-        isGPS: false,
-        longitude: -1,
-        latitude: -1,
         what_now: whatNow,
       },
       { merge: true },
     );
-    console.log(whatNow);
     setIsSendingWhatNow(true);
     setWhatNow("");
   };
@@ -68,32 +70,40 @@ const WhatNowInput = () => {
     return () => clearInterval(countdown);
   }, [isSendingWhatNow, timer]);
 
-
   return (
-    <StyledView className={`absolute bottom-[20px] mb-[80px] flex h-[60px] w-screen items-center justify-center ${Platform.OS == "ios" ? keyboardHeight > 0 && "bottom-[36vh]" : keyboardHeight > 0 && "bottom-[36vh]" && "mb-0"}`}>
-      <StyledView className="shadow-2xl mx-auto flex h-full w-[90vw] flex-row items-center justify-center rounded-full bg-white">
+    <StyledView
+      className={`absolute bottom-[20px] flex h-[60px] w-screen items-center justify-center ${Platform.OS == "ios" ? keyboardHeight > 0 && "bottom-[36vh]" : keyboardHeight > 0 && "bottom-[36vh]" && "mb-0"}`}
+    >
+      <StyledView className="mx-auto flex h-full w-[90vw] flex-row items-center justify-center rounded-full bg-white shadow-2xl">
         <StyledView>
-          {isSendingWhatNow ? 
-            <StyledView className="h-full flex justify-center text-[16px] w-[60vw] text-[#aaa]">
-              <StyledText className="text-[16px] text-[#555]">再送信可能まで{timer}秒</StyledText>
+          {isSendingWhatNow ? (
+            <StyledView className="flex h-full w-[60vw] justify-center text-[16px] text-[#aaa]">
+              <StyledText className="text-[16px] text-[#555]">
+                再送信可能まで{timer}秒
+              </StyledText>
             </StyledView>
-          :
-            <StyledTextInput 
-              className="h-full text-[16px] w-[60vw] text-[#333]"
+          ) : (
+            <StyledTextInput
+              className="h-full w-[60vw] text-[16px] text-[#333]"
               onChangeText={setWhatNow}
               value={whatNow}
               placeholder="いまなにしてる？ (最大30文字)"
               maxLength={30}
               placeholderTextColor={"#ccc"}
             />
-          }
+          )}
         </StyledView>
         <StyledTouchableOpacity
           onPress={() => handleSend()}
-          className="border-l-2 pl-[12px] border-[#ccc] h-[40px]"
+          className="h-[40px] border-l-2 border-[#ccc] pl-[12px]"
           disabled={whatNow?.trim() == "" || isSendingWhatNow}
         >
-          <Icon name="send" size={34} color="#73BBFD" className={`translate-y-[2px] ${(whatNow.trim() == "" || isSendingWhatNow) && "opacity-30"}`} />
+          <Icon
+            name="send"
+            size={34}
+            color="#73BBFD"
+            className={`translate-y-[2px] ${(whatNow.trim() == "" || isSendingWhatNow) && "opacity-30"}`}
+          />
         </StyledTouchableOpacity>
       </StyledView>
     </StyledView>
