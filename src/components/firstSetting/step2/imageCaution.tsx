@@ -12,7 +12,7 @@ const ImageCaution = () => {
     <StyledView className="absolute top-[64vh]">
       <StyledView className="flex w-screen flex-1 items-center justify-center">
         <StyledView className="flex w-[80vw] flex-row items-center justify-center">
-          <StyledView className="mr-[12px] flex w-[30vw] items-center justify-center mt-[12px]">
+          <StyledView className="mr-[12px] mt-[12px] flex w-[30vw] items-center justify-center">
             <Icon
               name="checkcircle"
               size={22}

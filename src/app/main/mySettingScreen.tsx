@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Image, Platform, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../../types/userDataTypes";
-import MyProfileIcon from "./myProfileIcon";
-import NowMatchHeader from "../../../layout/header/nowMatchHeader";
+import { UserData } from "../../types/userDataTypes";
+import MyProfileIcon from "../../components/main/mySetting/myProfileIcon";
+import NowMatchHeader from "../../layout/header/nowMatchHeader";
 import { useSelector } from "react-redux";
 
 const StyledView = styled(View);

@@ -73,7 +73,7 @@ const LoginModal = ({
           console.log("🎉login success");
           // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
           if (userData?.name && true) {
-            router.push("/main/mainPage");
+            router.push("/main");
           } else {
             router.push({
               pathname: "/signupPage",

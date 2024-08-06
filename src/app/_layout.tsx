@@ -1,7 +1,7 @@
-import React from 'react';
-import { Slot } from 'expo-router';
-import { Provider } from 'react-redux';
-import store from '../store/store';
+import React from "react";
+import { Slot } from "expo-router";
+import { Provider } from "react-redux";
+import store from "../store/store";
 
 const Layout = () => {
   return (

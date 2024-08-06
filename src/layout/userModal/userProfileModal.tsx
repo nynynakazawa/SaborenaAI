@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   Modal,
@@ -32,7 +32,9 @@ const UserModal = ({
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const userData: UserData = useSelector((state: any) => state.userData.value);
-  const currentData: CurrentData = useSelector((state: any) => state.userData.value);
+  const currentData: CurrentData = useSelector(
+    (state: any) => state.currentData.value,
+  );
 
   return (
     <Modal
@@ -51,7 +53,7 @@ const UserModal = ({
             onPress={() => setIsVisibleUserModal(false)}
             className="absolute right-[8px] top-[8px]"
           >
-            <Icon name="close" size={24} color="#000" />
+            <Icon name="close" size={24} color="#f00" />
           </StyledTouchableOpacity>
 
           <StyledScrollView className="h-full w-full">

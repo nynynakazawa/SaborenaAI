@@ -55,7 +55,7 @@ const UserMarker = ({
       coordinate={
         location
           ? {
-            // TODO: データベースから取得した値に置き換える
+              // TODO: データベースから取得した値に置き換える
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
             }

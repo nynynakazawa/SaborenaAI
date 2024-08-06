@@ -11,7 +11,7 @@ const StyledText = styled(Text);
 
 const TopProfile = ({ userData }: { userData: UserData | null }) => {
   return (
-    <StyledView className="flex w-full flex-row items-center mb-[24px]">
+    <StyledView className="mb-[24px] flex w-full flex-row items-center">
       <StyledImage
         source={{ uri: userData?.image_url }}
         style={{ width: 140, height: 140 }}

@@ -24,7 +24,7 @@ const Index = () => {
             const userData = userSnapshot.data();
             // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
             if (userData.name) {
-              router.push("/main/mainPage");
+              router.push("/main");
             } else {
               router.push({
                 pathname: "/signupPage",
