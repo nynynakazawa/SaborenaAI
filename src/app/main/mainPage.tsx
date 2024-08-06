@@ -12,69 +12,76 @@ import LikeFromScreen from "../../components/main/likeFrom/likeFromScreen";
 import TalkListScreen from "../../components/main/talkList/talkListScreen";
 import MySettingScreen from "../../components/main/mySetting/mySettingScreen";
 import * as Location from "expo-location";
-import { LocationObjectCoords } from "expo-location";
+import { set as setUserData } from "../../store/userDataSlice";
+import { set as setPrivateData } from "../../store/privateDataSlice";
+import { set as setAppData } from "../../store/appDataSlice";
+import { set as setCurrentData } from "../../store/currentDataSlice";
+import { set as setLocation } from "../../store/locationSlice";
+import { set as setMyUid } from "../../store/myUidSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const MapPage = () => {
+const MainPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
-  const fetchUserData = (uid: string) => {
+  const fetchUserData = (uid: string, dispatch: Dispatch) => {
     const userRef = doc(db, "user", uid);
+
+    dispatch(setMyUid(uid));
     return onSnapshot(userRef, (doc) => {
       if (doc.exists()) {
-        setMyUserData(doc.data() as UserData);
+        dispatch(setUserData(doc.data()));
       } else {
         console.log("No such user data!");
       }
     });
   };
 
-  const fetchPrivateData = (uid: string) => {
+  const fetchPrivateData = (uid: string, dispatch: Dispatch) => {
     const privateRef = doc(db, "private", uid);
     return onSnapshot(privateRef, (doc) => {
       if (doc.exists()) {
-        setMyPrivateData(doc.data() as PrivateData);
+        dispatch(setPrivateData(doc.data()));
       } else {
         console.log("No such private data!");
       }
     });
   };
 
-  const fetchAppData = (uid: string) => {
+  const fetchAppData = (uid: string, dispatch: Dispatch) => {
     const appRef = doc(db, "app", uid);
     return onSnapshot(appRef, (doc) => {
       if (doc.exists()) {
-        setAppData(doc.data() as AppData);
+        dispatch(setAppData(doc.data()));
       } else {
         console.log("No such app data!");
       }
     });
   };
 
-  const fetchCurrentData = (uid: string) => {
+  const fetchCurrentData = (uid: string, dispatch: Dispatch) => {
     const currentRef = doc(db, "current", uid);
     return onSnapshot(currentRef, (doc) => {
       if (doc.exists()) {
-        setMyCurrentData(doc.data() as CurrentData);
+        dispatch(setCurrentData(doc.data()));
       } else {
         console.log("No such current data!");
       }
     });
   };
 
-  const fetchMyUser = async () => {
-    const user = auth.currentUser as User;
+  const fetchMyUser = async (dispatch: Dispatch) => {
+    const user = auth.currentUser;
     if (user) {
-      setMyUid(user.uid);
       const unsubscribes = [
-        fetchUserData(user.uid),
-        fetchPrivateData(user.uid),
-        fetchAppData(user.uid),
-        fetchCurrentData(user.uid),
-      ]
-      // コンポーネントがアンマウントされたときにリスナーをクリーンアップ
+        fetchUserData(user.uid, dispatch),
+        fetchPrivateData(user.uid, dispatch),
+        fetchAppData(user.uid, dispatch),
+        fetchCurrentData(user.uid, dispatch),
+      ];
       return () => unsubscribes.forEach(unsub => unsub());
     }
   };
@@ -87,39 +94,33 @@ const MapPage = () => {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    setLocation(location);
+    dispatch(setLocation(location));
   };
 
   useEffect(() => {
-    fetchMyUser();
+    fetchMyUser(dispatch);
     fetchLocation();
   }, []);
 
-  const [myUserData, setMyUserData] = useState<UserData | null>(null);
-  const [myPrivateData, setMyPrivateData] = useState<PrivateData | null>(null);
-  const [myAppData, setAppData] = useState<AppData | null>(null);
-  const [myCurrentData, setMyCurrentData] = useState<CurrentData | null>(null);
-  const [myUid, setMyUid] = useState<string>("");
-
-  const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [screen, setScreen] = useState<string>("mapScreen");
+
+  const dispatch = useDispatch();
+  const myUserData: UserData = useSelector((state: any) => state.userData.value);
+  const myAppData: AppData = useSelector((state: any) => state.appData.value);
+  const myCurrentData: CurrentData = useSelector((state: any) => state.currentData.value);
+  const myPrivateData: PrivateData = useSelector((state: any) => state.privateData.value);
+  const location: Location.LocationObject = useSelector((state: any) => state.location.value);
+  const myUid = useSelector((state: any) => state.myUid.value);
 
   return (
     <Container style={{ flex: 1 }}>
-      {screen === "mapScreen" && (
-        <MapScreen
-          location={location}
-          myUid={myUid} 
-          myUserData={myUserData} 
-          myCurrentData={myCurrentData}
-        />
-      )}
-      {screen === "likeFromScreen" && <LikeFromScreen myUserData={myUserData} />}
-      {screen === "talkListScreen" && <TalkListScreen myUserData={myUserData} />}
-      {screen === "mySettingScreen" && <MySettingScreen myUserData={myUserData} />}
-      <BottomNavigation screen={screen} setScreen={setScreen} myUserData={myUserData} />
+      {screen === "mapScreen" && <MapScreen />}
+      {screen === "likeFromScreen" && <LikeFromScreen/>}
+      {screen === "talkListScreen" && <TalkListScreen/>}
+      {screen === "mySettingScreen" && <MySettingScreen/>}
+      <BottomNavigation screen={screen} setScreen={setScreen}/>
     </Container>
   );
 };
 
-export default MapPage;
+export default MainPage;

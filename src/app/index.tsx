@@ -4,6 +4,8 @@ import { styled } from "nativewind";
 import { auth, db } from "../firebase";
 import { useRouter } from "expo-router";
 import { doc, getDoc } from "firebase/firestore";
+import { Provider } from "react-redux";
+import store from "../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

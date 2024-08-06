@@ -93,6 +93,7 @@ const CreateAccount = ({
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("🎉sign up success");
+        const date = new Date(); 
         handleSendEmail();
         setIsVisibleWaitingVerificationModal(true);
 
@@ -101,7 +102,7 @@ const CreateAccount = ({
         await setDoc(userRef, {
           email: email,
           email_verified: userCredential.user.emailVerified,
-          createdAt: new Date(),
+          createdAt: date.toISOString(),
           uid: userCredential.user.uid,
         });
       })

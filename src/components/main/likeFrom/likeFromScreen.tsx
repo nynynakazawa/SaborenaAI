@@ -15,7 +15,7 @@ const StyledText = styled(Text);
 const StyledScrollView = styled(ScrollView);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const LikeFromScreen = ({ myUserData }: { myUserData: UserData | null }) => {
+const LikeFromScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (

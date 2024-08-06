@@ -6,7 +6,7 @@ import { UserData } from "../../../types/userDataTypes";
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const TalkListScreen = ({ myUserData }: { myUserData: UserData | null }) => {
+const TalkListScreen = () => {
   return (
     <StyledView>
       <StyledText>taaaaaaaaaaaaaaaaaaaa</StyledText>

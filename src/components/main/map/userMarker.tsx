@@ -10,26 +10,23 @@ import Animated, {
   withSpring,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const UserMarker = ({
-  location,
   isVisibleUserModal,
   setIsVisibleUserModal,
-  userData,
-  currentData,
 }: {
-  location: Location.LocationObject | null;
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
-  userData: UserData | null;
-  currentData: CurrentData | null;
 }) => {
+  const location = useSelector((state: any) => state.location.value);
+  const userData = useSelector((state: any) => state.userData.value);
+
   const gender = userData?.gender;
   let frameColor;
-
   if (gender === "male") {
     frameColor = "bg-[#79C7FF]";
   } else if (gender === "female") {

@@ -17,24 +17,17 @@ import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import UserModal from "../../../layout/userModal/userProfileModal";
 import WhatNowInput from "./whatNowInput";
+import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const MapScreen = ({
-  location,
-  myUid,
-  myUserData,
-  myCurrentData,
-}: {
-  location: Location.LocationObject | null;
-  myUid: string,
-  myUserData: UserData | null;
-  myCurrentData: CurrentData | null;
-}) => {
+const MapScreen = () => {
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
+
+  const location: any = useSelector((state: any) => state.location.value);
 
   return (
     <StyledView>
@@ -49,23 +42,18 @@ const MapScreen = ({
           }}
         >
           <UserMarker
-            location={location}
             isVisibleUserModal={isVisibleUserModal}
             setIsVisibleUserModal={setIsVisibleUserModal}
-            userData={myUserData}
-            currentData={myCurrentData}
           />
         </MapView>
       ) : (
         <StyledText>waiting</StyledText>
       )}
 
-      <WhatNowInput myUid={myUid}/>
+      <WhatNowInput />
       <UserModal
         isVisibleUserModal={isVisibleUserModal}
         setIsVisibleUserModal={setIsVisibleUserModal}
-        userData={myUserData}
-        currentData={myCurrentData}
       />
     </StyledView>
   );

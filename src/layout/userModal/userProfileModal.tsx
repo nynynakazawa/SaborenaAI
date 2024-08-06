@@ -16,6 +16,7 @@ import SelfIntroductionProfile from "./selfIntroductionProfile";
 import WorkProfile from "./workProfile";
 import GoalProfile from "./goalProfile";
 import WhatNowProfile from "./whatNowProfile";
+import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -26,14 +27,13 @@ const StyledScrollView = styled(ScrollView);
 const UserModal = ({
   isVisibleUserModal,
   setIsVisibleUserModal,
-  userData,
-  currentData,
 }: {
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
-  userData: UserData | null;
-  currentData: CurrentData | null;
 }) => {
+  const userData: UserData = useSelector((state: any) => state.userData.value);
+  const currentData: CurrentData = useSelector((state: any) => state.userData.value);
+
   return (
     <Modal
       animationType="slide"
@@ -55,13 +55,13 @@ const UserModal = ({
           </StyledTouchableOpacity>
 
           <StyledScrollView className="h-full w-full">
-              <TopProfile userData={userData} />
-              <WhatNowProfile whatNow={currentData?.what_now} />
-              <SelfIntroductionProfile
-                selfIntroduction={userData?.self_introduction}
-              />
-              <WorkProfile selectedWork={userData?.selected_work} />
-              <GoalProfile selectedGoal={userData?.selected_goal} />
+            <TopProfile userData={userData} />
+            <WhatNowProfile whatNow={currentData?.what_now} />
+            <SelfIntroductionProfile
+              selfIntroduction={userData?.self_introduction}
+            />
+            <WorkProfile selectedWork={userData?.selected_work} />
+            <GoalProfile selectedGoal={userData?.selected_goal} />
           </StyledScrollView>
         </StyledView>
       </StyledView>

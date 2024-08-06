@@ -10,10 +10,10 @@ export type UserData = {
 };
 
 export type PrivateData = {
-  createdAt?: string;
+  createdAt?: any;
   email?: string;
   email_verified?: boolean;
-  uid: string;
+  uid?: string;
 };
 
 export type AppData = {

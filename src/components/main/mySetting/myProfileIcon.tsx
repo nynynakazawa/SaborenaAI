@@ -4,13 +4,16 @@ import { styled } from "nativewind";
 import { UserData } from "../../../types/userDataTypes";
 import Icon from "react-native-vector-icons/Entypo";
 import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
+import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const MyProfileIcon = ({ myUserData }: { myUserData: UserData | null }) => {
+const MyProfileIcon = () => {
+  const myUserData = useSelector((state: any) => state.userData.value);
+
   return (
     <StyledTouchableOpacity className="flex items-center" activeOpacity={0.8}>
       <StyledView className="absolute">

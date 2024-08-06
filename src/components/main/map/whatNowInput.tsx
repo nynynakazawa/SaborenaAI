@@ -5,13 +5,15 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { UserData } from "../../../types/userDataTypes";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
+import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
-const WhatNowInput = ({myUid} : {myUid : string}) => {
+const WhatNowInput = () => {
+  const myUid: string = useSelector((state: any) => state.myUid.value);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(

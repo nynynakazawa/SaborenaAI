@@ -11,6 +11,7 @@ import Animated, {
   withSpring,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -20,16 +21,14 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const BottomNavigation = ({
   screen,
   setScreen,
-  myUserData,
 }: {
   screen: string;
   setScreen: React.Dispatch<React.SetStateAction<string>>;
-  myUserData: UserData | null;
 }) => {
 
-  const router = useRouter();
   const scale = useSharedValue(1);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const myUserData = useSelector((state: any) => state.userData.value);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
