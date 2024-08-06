@@ -9,10 +9,9 @@ import {
 } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { UserData } from "../../../types/userDataTypes";
+import { useSelector } from "react-redux";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
-import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -21,21 +20,6 @@ const StyledTextInput = styled(TextInput);
 
 const WhatNowInput = () => {
   const myUid: string = useSelector((state: any) => state.myUid.value);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      (e) => {
-        setKeyboardHeight(e.endCoordinates.height);
-      },
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardHeight(0);
-      },
-    );
-  }, []);
 
   const handleSend = async () => {
     console.log("whatnow Send");
@@ -51,12 +35,37 @@ const WhatNowInput = () => {
     setWhatNow("");
   };
 
-  const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
+  let defaultKeyboardHeight = Platform.OS === "ios" ? 312 : 300;
+  const [keyboardHeight, setKeyboardHeight] = useState<number>(
+    defaultKeyboardHeight,
+  );
   const [isSendingWhatNow, setIsSendingWhatNow] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(60);
   const [whatNow, setWhatNow] = useState<string>("");
+  const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
 
-  // タイマーのロジック
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      (e) => {
+        defaultKeyboardHeight = e.endCoordinates.height;
+        setKeyboardHeight(e.endCoordinates.height);
+      },
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardHeight(defaultKeyboardHeight);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   useEffect(() => {
     let countdown: NodeJS.Timeout;
     if (isSendingWhatNow && timer > 0) {
@@ -72,9 +81,19 @@ const WhatNowInput = () => {
 
   return (
     <StyledView
-      className={`absolute bottom-[20px] flex h-[60px] w-screen items-center justify-center ${Platform.OS == "ios" ? keyboardHeight > 0 && "bottom-[36vh]" : keyboardHeight > 0 && "bottom-[36vh]" && "mb-0"}`}
+      className={
+        "absolute bottom-0 mb-[30px] flex h-[60px] w-screen items-center justify-center"
+      }
+      style={
+        Platform.OS == "ios" &&
+        isTextInputFocused && { bottom: keyboardHeight, marginBottom: -60 }
+      }
     >
-      <StyledView className="mx-auto flex h-full w-[90vw] flex-row items-center justify-center rounded-full bg-white shadow-2xl">
+      <StyledView
+        className={`mx-auto flex h-full w-[90vw] flex-row items-center justify-center rounded-full bg-white shadow-2xl ${
+          isTextInputFocused ? "border-2 border-blue-500" : ""
+        }`}
+      >
         <StyledView>
           {isSendingWhatNow ? (
             <StyledView className="flex h-full w-[60vw] justify-center text-[16px] text-[#aaa]">
@@ -90,6 +109,8 @@ const WhatNowInput = () => {
               placeholder="いまなにしてる？ (最大30文字)"
               maxLength={30}
               placeholderTextColor={"#ccc"}
+              onFocus={() => setIsTextInputFocused(true)}
+              onBlur={() => setIsTextInputFocused(false)}
             />
           )}
         </StyledView>
@@ -102,7 +123,9 @@ const WhatNowInput = () => {
             name="send"
             size={34}
             color="#73BBFD"
-            className={`translate-y-[2px] ${(whatNow.trim() == "" || isSendingWhatNow) && "opacity-30"}`}
+            className={`translate-y-[2px] ${
+              (whatNow.trim() == "" || isSendingWhatNow) && "opacity-30"
+            }`}
           />
         </StyledTouchableOpacity>
       </StyledView>

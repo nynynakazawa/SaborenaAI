@@ -9,10 +9,6 @@ import {
   PrivateData,
   UserData,
 } from "../../types/userDataTypes";
-import MapScreen from "./mapScreen";
-import LikeFromScreen from "./likeFromScreen";
-import TalkListScreen from "./talkListScreen";
-import MySettingScreen from "./mySettingScreen";
 import * as Location from "expo-location";
 import { set as setUserData } from "../../store/userDataSlice";
 import { set as setPrivateData } from "../../store/privateDataSlice";
@@ -22,7 +18,7 @@ import { set as setLocation } from "../../store/locationSlice";
 import { set as setMyUid } from "../../store/myUidSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "nativewind";
 import { Image, Text, View } from "react-native";
 import BottomNavigation from "../../components/main/navigation/bottomNavigation";
@@ -112,12 +108,11 @@ export default function Layout() {
     (state: any) => state.userData.value,
   );
 
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   return (
     <Tabs
       screenOptions={{
-        tabBarStyle: {
-          height: 80,
-        },
+        tabBarStyle: isKeyboardVisible ? { height: 0 } : { height: 80 },
         tabBarShowLabel: false,
       }}
     >

@@ -6,6 +6,7 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -18,6 +19,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import UserModal from "../../layout/userModal/userProfileModal";
 import WhatNowInput from "../../components/main/map/whatNowInput";
 import { useSelector } from "react-redux";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -25,12 +27,13 @@ const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const MapScreen = () => {
+  const Container = Platform.OS === "android" ? SafeAreaView : View;
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
 
   const location: any = useSelector((state: any) => state.location.value);
 
   return (
-    <StyledView>
+    <Container style={{ flex: 1 }}>
       {location ? (
         <MapView
           style={styles.map}
@@ -55,7 +58,7 @@ const MapScreen = () => {
         isVisibleUserModal={isVisibleUserModal}
         setIsVisibleUserModal={setIsVisibleUserModal}
       />
-    </StyledView>
+    </Container>
   );
 };
 

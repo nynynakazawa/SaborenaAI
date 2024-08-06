@@ -92,11 +92,11 @@ const LoginModal = ({
       setErrorMessage("ユーザーが存在しません");
     }
   };
-
   return (
     <StyledView className="relative z-40 flex-1">
       <StyledView
-        className={`absolute z-40 h-screen w-screen flex-1 items-center ${keyboardHeight > 0 && "top-[-36vh]"}`}
+        className={"absolute z-40 h-screen w-screen flex-1 items-center"}
+        style={{ top: -keyboardHeight }}
       >
         {/* クローズボタン */}
         <StyledTouchableOpacity

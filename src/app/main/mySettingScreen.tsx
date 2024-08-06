@@ -5,6 +5,7 @@ import { UserData } from "../../types/userDataTypes";
 import MyProfileIcon from "../../components/main/mySetting/myProfileIcon";
 import NowMatchHeader from "../../layout/header/nowMatchHeader";
 import { useSelector } from "react-redux";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -12,15 +13,17 @@ const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const MySettingScreen = () => {
+  const Container = Platform.OS === "android" ? SafeAreaView : View;
+
   return (
-    <StyledView>
+    <Container style={{ flex: 1 }}>
       <NowMatchHeader />
       <StyledView
         className={`absolute mt-[80px] flex w-screen items-center ${Platform.OS == "android" ? "top-[10vh]" : "top-[18vh]"}`}
       >
         <MyProfileIcon />
       </StyledView>
-    </StyledView>
+    </Container>
   );
 };
 
