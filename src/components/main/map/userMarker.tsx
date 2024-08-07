@@ -73,7 +73,7 @@ const UserMarker = ({
       <Animated.View style={[animatedStyle]}>
         <StyledView className="flex h-[60px] w-max">
           <StyledView
-            className={`flex h-[52px] w-[52px] items-center justify-center rounded-[10px] ${frameColor}`}
+            className={`flex h-[52px] w-[52px] items-center justify-center rounded-[14px] ${frameColor}`}
           >
             <Image
               source={{ uri: userData?.image_url }}

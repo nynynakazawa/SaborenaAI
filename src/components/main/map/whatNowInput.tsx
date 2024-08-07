@@ -21,6 +21,15 @@ const StyledTextInput = styled(TextInput);
 const WhatNowInput = () => {
   const myUid: string = useSelector((state: any) => state.myUid.value);
 
+  let defaultKeyboardHeight = Platform.OS === "ios" ? 312 : 300;
+  const [keyboardHeight, setKeyboardHeight] = useState<number>(
+    defaultKeyboardHeight,
+  );
+  const [isSendingWhatNow, setIsSendingWhatNow] = useState<boolean>(false);
+  const [timer, setTimer] = useState<number>(60);
+  const [whatNow, setWhatNow] = useState<string>("");
+  const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
+
   const handleSend = async () => {
     console.log("whatnow Send");
     const currentRef = doc(db, "current", myUid);
@@ -35,15 +44,6 @@ const WhatNowInput = () => {
     setWhatNow("");
   };
 
-  let defaultKeyboardHeight = Platform.OS === "ios" ? 312 : 300;
-  const [keyboardHeight, setKeyboardHeight] = useState<number>(
-    defaultKeyboardHeight,
-  );
-  const [isSendingWhatNow, setIsSendingWhatNow] = useState<boolean>(false);
-  const [timer, setTimer] = useState<number>(60);
-  const [whatNow, setWhatNow] = useState<string>("");
-  const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -56,7 +56,7 @@ const WhatNowInput = () => {
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        setKeyboardHeight(defaultKeyboardHeight);
+        setKeyboardHeight(100);
       },
     );
 
@@ -116,7 +116,7 @@ const WhatNowInput = () => {
         </StyledView>
         <StyledTouchableOpacity
           onPress={() => handleSend()}
-          className="h-[40px] border-l-2 border-[#ccc] pl-[12px]"
+          className="h-[40px] border-l-2 border-[#ccc] pl-[16px]"
           disabled={whatNow?.trim() == "" || isSendingWhatNow}
         >
           <Icon

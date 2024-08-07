@@ -24,7 +24,7 @@ const TopProfile = ({ userData }: { userData: UserData | null }) => {
           </StyledView>
           <StyledView className="mb-[12px] flex flex-row items-center">
             <Icon name={"person"} size={24} color={"#333"} />
-            <StyledText>2人</StyledText>
+            <StyledText>*仮*</StyledText>
           </StyledView>
         </StyledView>
 

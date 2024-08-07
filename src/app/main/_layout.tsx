@@ -34,6 +34,7 @@ export default function Layout() {
     dispatch(setMyUid(uid));
     return onSnapshot(userRef, (doc) => {
       if (doc.exists()) {
+        console.log("fetched user data");
         dispatch(setUserData(doc.data()));
       } else {
         console.log("No such user data!");
@@ -45,6 +46,7 @@ export default function Layout() {
     const privateRef = doc(db, "private", uid);
     return onSnapshot(privateRef, (doc) => {
       if (doc.exists()) {
+        console.log("fetched private data");
         dispatch(setPrivateData(doc.data()));
       } else {
         console.log("No such private data!");
@@ -56,6 +58,7 @@ export default function Layout() {
     const appRef = doc(db, "app", uid);
     return onSnapshot(appRef, (doc) => {
       if (doc.exists()) {
+        console.log("fetched app data");
         dispatch(setAppData(doc.data()));
       } else {
         console.log("No such app data!");
@@ -67,6 +70,7 @@ export default function Layout() {
     const currentRef = doc(db, "current", uid);
     return onSnapshot(currentRef, (doc) => {
       if (doc.exists()) {
+        console.log("fetched current data");
         dispatch(setCurrentData(doc.data()));
       } else {
         console.log("No such current data!");
@@ -99,20 +103,16 @@ export default function Layout() {
   };
 
   useEffect(() => {
+    console.log("use effect");
     fetchMyUser(dispatch);
     fetchLocation();
   }, []);
+
   const dispatch = useDispatch();
-
-  const myUserData: UserData = useSelector(
-    (state: any) => state.userData.value,
-  );
-
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   return (
     <Tabs
       screenOptions={{
-        tabBarStyle: isKeyboardVisible ? { height: 0 } : { height: 80 },
+        tabBarStyle: { height: 80 },
         tabBarShowLabel: false,
       }}
     >

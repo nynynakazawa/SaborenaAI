@@ -5,6 +5,8 @@ import appDataReducer from "./appDataSlice";
 import currentDataReducer from "./currentDataSlice";
 import locationReducer from "./locationSlice";
 import myUidReducer from "./myUidSlice";
+import isGpsReducer from "./isGpsSlice";
+import peopleCountReducer from "./peopleCountSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ const store = configureStore({
     currentData: currentDataReducer,
     location: locationReducer,
     myUid: myUidReducer,
+    isGps: isGpsReducer,
+    peopleCount: peopleCountReducer,
   },
 });
 

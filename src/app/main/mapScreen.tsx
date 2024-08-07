@@ -20,6 +20,7 @@ import UserModal from "../../layout/userModal/userProfileModal";
 import WhatNowInput from "../../components/main/map/whatNowInput";
 import { useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ChangeCurrentStatus from "../../components/main/map/changeCurrentStatus";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -34,6 +35,7 @@ const MapScreen = () => {
 
   return (
     <Container style={{ flex: 1 }}>
+      <ChangeCurrentStatus />
       {location ? (
         <MapView
           style={styles.map}
