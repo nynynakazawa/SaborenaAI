@@ -103,7 +103,6 @@ export default function Layout() {
   };
 
   useEffect(() => {
-    console.log("use effect");
     fetchMyUser(dispatch);
     fetchLocation();
   }, []);
@@ -117,7 +116,7 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen
-        name="mapScreen"
+        name="mySettingScreen"
         options={{
           tabBarIcon: ({ focused }) => (
             <FontAwesome
@@ -156,7 +155,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="mySettingScreen"
+        name="mapScreen"
         options={{
           tabBarIcon: ({ focused }) => <BottomNavigation focused={focused} />,
           headerShown: false,
