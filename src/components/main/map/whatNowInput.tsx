@@ -21,7 +21,7 @@ const StyledTextInput = styled(TextInput);
 const WhatNowInput = () => {
   const myUid: string = useSelector((state: any) => state.myUid.value);
 
-  let defaultKeyboardHeight = Platform.OS === "ios" ? 312 : 300;
+  const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>()
   const [keyboardHeight, setKeyboardHeight] = useState<number>(
     defaultKeyboardHeight,
   );
@@ -48,15 +48,15 @@ const WhatNowInput = () => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       (e) => {
-        defaultKeyboardHeight = e.endCoordinates.height;
         setKeyboardHeight(e.endCoordinates.height);
+        setDefaultKeyboardHeight(e.endCoordinates.height)
       },
     );
 
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        setKeyboardHeight(100);
+        setKeyboardHeight(0);
       },
     );
 
@@ -86,7 +86,7 @@ const WhatNowInput = () => {
       }
       style={
         Platform.OS == "ios" &&
-        isTextInputFocused && { bottom: keyboardHeight, marginBottom: -60 }
+        isTextInputFocused && { bottom: defaultKeyboardHeight, marginBottom: -60 }
       }
     >
       <StyledView
