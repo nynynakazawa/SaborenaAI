@@ -45,34 +45,36 @@ const NameDisplayComponent = ({ userData }: { userData: UserData | null }) => {
   const age: number = birthdayDic ? getAge(birthdayDic) : 0;
 
   return (
-    <StyledView className="flex flex-row items-center">
-      <StyledText className="ml-[6px] text-[16px] font-bold">
+    <StyledView className="flex flex-row items-center w-full">
+      <StyledText className="ml-[6px] text-[16px] font-bold text-[#333]">
         {userData?.name} ({age})
       </StyledText>
-      {gender == "male" && (
-        <Icon
-          name="gender-male"
-          size={24}
-          color={"#79C7FF"}
-          className="ml-[4px]"
-        />
-      )}
-      {gender == "female" && (
-        <Icon
-          name="gender-female"
-          size={24}
-          color={"#F479FF"}
-          className="ml-[4px]"
-        />
-      )}
-      {gender != "male" && gender != "female" && (
-        <Icon
-          name="gender-male-female"
-          size={24}
-          color={"#79FF82"}
-          className="ml-[4px]"
-        />
-      )}
+      <StyledView className="w-[24px]">
+        {gender == "male" && (
+          <Icon
+            name="gender-male"
+            size={24}
+            color={"#79C7FF"}
+            className="ml-[4px] translate-y-[2px]"
+          />
+        )}
+        {gender == "female" && (
+          <Icon
+            name="gender-female"
+            size={24}
+            color={"#F479FF"}
+            className="ml-[4px] translate-y-[2px]"
+          />
+        )}
+        {gender != "male" && gender != "female" && (
+          <Icon
+            name="gender-male-female"
+            size={24}
+            color={"#79FF82"}
+            className="ml-[4px] translate-y-[2px]"
+          />
+        )}
+      </StyledView>
     </StyledView>
   );
 };

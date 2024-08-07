@@ -6,6 +6,8 @@ import MyProfileIcon from "../../components/main/mySetting/myProfileIcon";
 import NowMatchHeader from "../../layout/header/nowMatchHeader";
 import { useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SettingButtonContainer from "../../components/main/mySetting/settingButtonContainer";
+import AppInfoDisplay from "../../components/main/mySetting/appInfoDisplay";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -19,9 +21,19 @@ const MySettingScreen = () => {
     <Container style={{ flex: 1 }}>
       <NowMatchHeader />
       <StyledView
-        className={`absolute mt-[80px] flex w-screen items-center ${Platform.OS == "android" ? "top-[10vh]" : "top-[18vh]"}`}
+        className="absolute mt-[80px] flex w-screen items-center top-[10vh]"
       >
-        <MyProfileIcon />
+        <StyledView className="h-[150px]">
+          <MyProfileIcon />
+        </StyledView>
+
+        <StyledView className="w-[94vw] mx-auto mt-[8vh]">
+          <AppInfoDisplay />
+        </StyledView>
+
+        <StyledView className="w-[80vw] mx-auto mt-[12vh]">
+          <SettingButtonContainer />
+        </StyledView>
       </StyledView>
     </Container>
   );

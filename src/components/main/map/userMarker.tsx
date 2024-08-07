@@ -11,10 +11,9 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
-
 const StyledView = styled(View);
 const StyledTouchableOpacity = styled(TouchableOpacity);
-
+const StyledImage = styled(Image);
 const UserMarker = ({
   isVisibleUserModal,
   setIsVisibleUserModal,
@@ -22,8 +21,8 @@ const UserMarker = ({
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const location = useSelector((state: any) => state.location.value);
-  const userData = useSelector((state: any) => state.userData.value);
+  const location: Location.LocationObject = useSelector((state: any) => state.location.value);
+  const userData: UserData = useSelector((state: any) => state.userData.value);
 
   const gender = userData?.gender;
   let frameColor;
@@ -75,8 +74,8 @@ const UserMarker = ({
           <StyledView
             className={`flex h-[52px] w-[52px] items-center justify-center rounded-[14px] ${frameColor}`}
           >
-            <Image
-              source={{ uri: userData?.image_url }}
+            <StyledImage
+              source={{ uri: userData?.image_url || undefined }}
               style={{ width: 42, height: 42, borderRadius: 10 }}
             />
           </StyledView>

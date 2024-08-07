@@ -63,7 +63,7 @@ const MainImageInput = ({
         <StyledTouchableOpacity onPress={pickImage}>
           {!(image == null) ? (
             <StyledImage
-              source={{ uri: image ? image : "" }}
+              source={{ uri: image || undefined }}
               className="h-[64vw] w-[64vw] rounded-md"
             />
           ) : (

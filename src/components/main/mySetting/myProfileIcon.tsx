@@ -15,10 +15,10 @@ const MyProfileIcon = () => {
   const myUserData = useSelector((state: any) => state.userData.value);
 
   return (
-    <StyledTouchableOpacity className="flex items-center" activeOpacity={0.8}>
+    <StyledTouchableOpacity className="flex items-center w-screen h-[200px]" activeOpacity={0.}>
       <StyledView className="absolute">
         <StyledImage
-          source={{ uri: myUserData?.image_url || "" }}
+          source={{ uri: myUserData?.image_url || undefined }}
           style={{ width: 100, height: 100 }}
           className="rounded-full"
         />
@@ -30,9 +30,9 @@ const MyProfileIcon = () => {
             className="bottom-0 right-0"
           />
         </StyledView>
-        <StyledView className="absolute bottom-[-50px] text-[16px]">
-          <NameDisplayComponent userData={myUserData} />
-        </StyledView>
+      </StyledView>
+      <StyledView className="absolute bottom-[-50px] text-[16px] top-[120px]">
+        <NameDisplayComponent userData={myUserData} />
       </StyledView>
     </StyledTouchableOpacity>
   );
