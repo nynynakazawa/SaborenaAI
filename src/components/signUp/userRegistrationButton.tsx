@@ -97,13 +97,11 @@ const UserRegistationButton = ({
       await setDoc(
         currentRef,
         {
-          current_info: {
-            peopleCount: 1,
-            isGPS: false,
-            longitude: -1,
-            latitude: -1,
-            what_now: "こんにちは",
-          },
+          people_count: "1人",
+          longitude: -1,
+          latitude: -1,
+          what_now: "こんにちは",
+          image_url: imageUrl,
         },
         { merge: true },
       );
