@@ -9,14 +9,14 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const PageBackHeader = (
-  { routerPage, text }:
-    { routerPage: string, text: string }
+  { routerPage, text, isFetchUserProps}:
+    { routerPage: string, text: string, isFetchUserProps: string }
 ) => {
   return (
     <StyledView>
       {/* バックボタン */}
       <StyledTouchableOpacity
-        onPress={() => router.push({pathname: `/${routerPage}`, params: { isFetchUserData: "false" }})}
+        onPress={() => router.push({pathname: `/${routerPage}`, params: { isFetchUserData: isFetchUserProps }})}
         className={`${Platform.OS === "ios" && "mt-[50px]"} h-[70px] bg-[#fff]`}
       >
         <StyledView className="mx-auto flex h-full w-[90vw] flex-row items-center">

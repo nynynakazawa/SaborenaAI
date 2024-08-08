@@ -12,7 +12,7 @@ const AgeVerificationPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   return (
     <Container style={{ flex: 1 }}>
-      <PageBackHeader routerPage="main/mySettingScreen" text="年齢確認"/>
+      <PageBackHeader routerPage="main/mySettingScreen" text="年齢確認" isFetchUserProps="false"/>
       <StyledView className="bg-[#f2f2f2] w-full h-full">
         <StyledText>年齢確認</StyledText>
       </StyledView>

@@ -15,7 +15,7 @@ const LikeToPage = () => {
 
   return (
     <Container style={{ flex: 1 }}>
-      <PageBackHeader routerPage="main/mySettingScreen" text="自分から" />
+      <PageBackHeader routerPage="main/mySettingScreen" text="自分から" isFetchUserProps="false"/>
       <StyledView className="bg-[#f2f2f2] w-full h-full">
         <StyledText>自分から</StyledText>
       </StyledView>
