@@ -33,7 +33,7 @@ const WorkInput = ({
   };
 
   return (
-    <StyledView className="mx-auto mb-[12px] flex w-[90vw] flex-row justify-between">
+    <StyledView className="mx-auto mb-[24px] flex w-[90vw] flex-row justify-between">
       <StyledView className="mb-[8px] flex flex-row items-center">
         <Icon
           name="work"

@@ -18,11 +18,11 @@ const StyledButton = styled(Button);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const MainImageInput = ({
-  image,
-  setImage,
+  mainImage,
+  setMainImage,
 }: {
-  image: string | null;
-  setImage: (uri: string) => void;
+  mainImage: string | null;
+  setMainImage: React.Dispatch<React.SetStateAction<string | null>>;
 }) => {
   const pickImage = async (): Promise<void> => {
     const permissionResult =
@@ -43,7 +43,7 @@ const MainImageInput = ({
     if (!result.canceled && result.assets && result.assets.length > 0) {
       const selectedAsset = result.assets[0];
       if (selectedAsset.uri) {
-        setImage(selectedAsset.uri);
+        setMainImage(selectedAsset.uri);
       }
     }
   };
@@ -60,14 +60,16 @@ const MainImageInput = ({
       </StyledView>
 
       <StyledView className="w-full items-center">
-        <StyledTouchableOpacity onPress={pickImage}>
-          {!(image == null) ? (
-            <StyledImage
-              source={{ uri: image || undefined }}
-              className="h-[64vw] w-[64vw] rounded-md"
-            />
+        <StyledTouchableOpacity onPress={pickImage} activeOpacity={0.6}>
+          {!(mainImage == null) ? (
+            <StyledView className="border-[#8a8a8a] border-[2px] rounded-[22px]">
+              <StyledImage
+                source={{ uri: mainImage || undefined }}
+                className="h-[64vw] w-[64vw] rounded-[20px]"
+              />
+            </StyledView>
           ) : (
-            <StyledView className="flex h-[64vw] w-[64vw] items-center justify-center rounded-md border-[4px] border-dotted border-[#8a8a8a] bg-[#cfcfcf]">
+            <StyledView className="flex h-[64vw] w-[64vw] items-center justify-center rounded-[20px] border-[4px] border-dotted border-[#8a8a8a] bg-[#cfcfcf]">
               <Icon name="circle-with-plus" size={60} color="#fff" />
             </StyledView>
           )}

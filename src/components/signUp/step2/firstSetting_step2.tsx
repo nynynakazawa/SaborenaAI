@@ -10,17 +10,17 @@ import NowMatchHeader from "../../../layout/header/nowMatchHeader";
 const StyledView = styled(View);
 
 const FirstSetting_step2 = ({
-  image,
-  setImage,
+  mainImage,
+  setMainImage,
   scene,
   setScene,
 }: {
-  image: string | null;
-  setImage: React.Dispatch<React.SetStateAction<string | null>>;
+  mainImage: string | null;
+  setMainImage: React.Dispatch<React.SetStateAction<string | null>>;
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const isValid: boolean = image != null;
+  const isValid: boolean = mainImage != null;
   return (
     <StyledView className="h-screen">
       <NowMatchHeader />
@@ -29,7 +29,7 @@ const FirstSetting_step2 = ({
       <StyledView
         className={`absolute mt-[80px] w-screen ${Platform.OS == "android" ? "top-[10vh]" : "top-[18vh]"}`}
       >
-        <MainImageInput image={image} setImage={setImage} />
+        <MainImageInput mainImage={mainImage} setMainImage={setMainImage} />
       </StyledView>
 
       <ImageCaution />

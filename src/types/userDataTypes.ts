@@ -1,7 +1,8 @@
 export type UserData = {
   birthday?: string;
   gender?: string;
-  image_url?: string;
+  main_image_url?: string;
+  sub_images_url?: string[];
   name?: string;
   selected_goal?: string;
   selected_residential?: string;

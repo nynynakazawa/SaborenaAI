@@ -75,7 +75,7 @@ const UserRegistationButton = ({
           gender: gender,
           birthday: birthday,
           selected_residential: `${selectedPrefecture},${selectedCity}`,
-          image_url: imageUrl,
+          main_image_url: imageUrl,
           self_introduction: selfIntroduction,
           selected_work: selectedWork,
           selected_goal: selectedGoal,
@@ -101,7 +101,7 @@ const UserRegistationButton = ({
           longitude: -1,
           latitude: -1,
           what_now: "こんにちは",
-          image_url: imageUrl,
+          main_image_url: imageUrl,
         },
         { merge: true },
       );
