@@ -12,7 +12,7 @@ const PremiumPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   return (
     <Container style={{ flex: 1 }}>
-      <PageBackHeader routerPage="main/mySettingScreen"/>
+      <PageBackHeader routerPage="main/mySettingScreen" text="プレミアム"/>
       <StyledView className="bg-[#f2f2f2] w-full h-full">
       <StyledText>プレミアム</StyledText>
       </StyledView>

@@ -14,9 +14,9 @@ const AppInfoDisplay = () => {
       <StyledView className="w-[33.33%] flex justify-center items-center">
         <StyledText className="mb-[12px] h-[30px]">会員情報</StyledText>
         {myAppData?.membership_status == "free" ?
-          <StyledText className="text-[16px] text-[#8FE07A]">無料会員</StyledText>
+          <StyledText className="text-[16px] text-[#8FE07A] font-bold">無料会員</StyledText>
           :
-          <StyledText className="text-[16px] text-[#e0c07a]">有料会員</StyledText>
+          <StyledText className="text-[16px] text-[#e0c07a] font-bold">有料会員</StyledText>
         }
       </StyledView>
 
@@ -25,15 +25,15 @@ const AppInfoDisplay = () => {
           <StyledText>トーク人数</StyledText>
         </StyledView>
         {myAppData?.membership_status == "free" ?
-          <StyledText className="text-[16px] text-[#448FFF]">10 人</StyledText>
+          <StyledText className="text-[16px] text-[#448FFF] font-bold">10 人</StyledText>
           :
-          <StyledText className="text-[16px] text-[#448FFF]">30 人</StyledText>
+          <StyledText className="text-[16px] text-[#448FFF] font-bold">30 人</StyledText>
         }
       </StyledView>
 
       <StyledView className="w-[33.33%] flex justify-center items-center">
         <StyledText className="mb-[12px] h-[30px]">いいね</StyledText>
-        <StyledText className="text-[16px] text-[#DC6CF8]">*仮* 回分</StyledText>
+        <StyledText className="text-[16px] text-[#DC6CF8] font-bold">*仮* 回分</StyledText>
       </StyledView>
 
     </StyledView>

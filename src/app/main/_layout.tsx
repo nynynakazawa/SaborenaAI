@@ -1,4 +1,4 @@
-import { Tabs, useRouter } from "expo-router";
+import { Tabs, useGlobalSearchParams, useRouter } from "expo-router";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import { auth, db } from "../../firebase";
@@ -28,6 +28,8 @@ const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 export default function Layout() {
+  const { isFetchUserData } = useGlobalSearchParams();
+
   const fetchUserData = (uid: string, dispatch: Dispatch) => {
     const userRef = doc(db, "user", uid);
 
@@ -103,8 +105,10 @@ export default function Layout() {
   };
 
   useEffect(() => {
-    fetchMyUser(dispatch);
-    fetchLocation();
+    if(isFetchUserData != "false"){
+      fetchMyUser(dispatch);
+      fetchLocation();
+    }
   }, []);
 
   const dispatch = useDispatch();

@@ -106,7 +106,7 @@ const UserRegistationButton = ({
         { merge: true },
       );
 
-      router.push("/main");
+      router.push("/main")
     } catch (error) {
       console.error("Error registering user:", error);
     }

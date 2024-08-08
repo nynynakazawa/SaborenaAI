@@ -9,14 +9,14 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const PageBackHeader = (
-  { routerPage } : 
-  { routerPage: string}
+  { routerPage, text }:
+    { routerPage: string, text: string }
 ) => {
   return (
     <StyledView>
       {/* バックボタン */}
       <StyledTouchableOpacity
-        onPress={() => router.push(`/${routerPage}`)}
+        onPress={() => router.push({pathname: `/${routerPage}`, params: { isFetchUserData: "false" }})}
         className={`${Platform.OS === "ios" && "mt-[50px]"} h-[70px] bg-[#fff]`}
       >
         <StyledView className="mx-auto flex h-full w-[90vw] flex-row items-center">
@@ -24,9 +24,9 @@ const PageBackHeader = (
             name="chevron-left"
             size={40}
             color="#333"
-            className="mr-[10px]"
+            className="absolute top-[18px]"
           />
-          <StyledText className="text-[16px] text-[#333]">戻る</StyledText>
+          <StyledText className="text-[18px] text-[#333] text-center w-full">{text}</StyledText>
         </StyledView>
       </StyledTouchableOpacity>
     </StyledView>

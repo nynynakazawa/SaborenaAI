@@ -157,7 +157,7 @@ const CreateAccount = ({
     <StyledView>
       <StyledView className="relative h-screen w-screen bg-[#fff]">
         {/* バックボタン */}
-        <PageBackHeader routerPage="loginPage"/>
+        <PageBackHeader routerPage="loginPage" text="新規登録"/>
 
         {/* サインアップフォーム */}
         <StyledView className="mx-auto mt-[10vh] w-[90vw] flex-1 items-center">
