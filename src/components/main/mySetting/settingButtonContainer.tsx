@@ -3,16 +3,19 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { styled } from "nativewind";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useRouter } from "expo-router";
 
 const StyledView = styled(View)
 const StyledText = styled(Text)
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const SettingButtonContainer = () => {
+  const router = useRouter()
+
   return (
     <StyledView className="flex flex-row w-full justify-between">
       <StyledTouchableOpacity
-        onPress={()=>console.log("test")}
+        onPress={() => router.push("/mySetting/likeToPage")}
         className="w-[30%]"
       >
         <StyledView className="flex items-center gap-[10px]">
@@ -26,7 +29,7 @@ const SettingButtonContainer = () => {
       </StyledTouchableOpacity>
 
       <StyledTouchableOpacity
-        onPress={()=>console.log("test")}
+        onPress={() => router.push("/mySetting/ageVerificationPage")}
         className="w-[30%]"
       >
         <StyledView className="flex items-center gap-[10px]">
@@ -40,7 +43,7 @@ const SettingButtonContainer = () => {
       </StyledTouchableOpacity>
 
       <StyledTouchableOpacity
-        onPress={()=>console.log("test")}
+        onPress={() => router.push("/mySetting/premiumPage")}
         className="w-[30%]"
       >
         <StyledView className="flex items-center gap-[10px]">

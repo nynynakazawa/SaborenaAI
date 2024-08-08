@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import { auth, db } from "../../firebase";
@@ -116,7 +116,7 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen
-        name="mySettingScreen"
+        name="mapScreen"
         options={{
           tabBarIcon: ({ focused }) => (
             <FontAwesome
@@ -155,7 +155,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="mapScreen"
+        name="mySettingScreen"
         options={{
           tabBarIcon: ({ focused }) => <BottomNavigation focused={focused} />,
           headerShown: false,
