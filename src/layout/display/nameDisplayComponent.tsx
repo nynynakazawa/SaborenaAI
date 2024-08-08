@@ -45,7 +45,7 @@ const NameDisplayComponent = ({ userData }: { userData: UserData | null }) => {
   const age: number = birthdayDic ? getAge(birthdayDic) : 0;
 
   return (
-    <StyledView className="flex flex-row items-center w-full">
+    <StyledView className="flex w-full flex-row items-center">
       <StyledText className="ml-[6px] text-[16px] font-bold text-[#333]">
         {userData?.name} ({age})
       </StyledText>

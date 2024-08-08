@@ -21,7 +21,9 @@ const UserMarker = ({
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const location: Location.LocationObject = useSelector((state: any) => state.location.value);
+  const location: Location.LocationObject = useSelector(
+    (state: any) => state.location.value,
+  );
   const userData: UserData = useSelector((state: any) => state.userData.value);
 
   const gender = userData?.gender;

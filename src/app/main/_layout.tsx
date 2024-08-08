@@ -105,7 +105,7 @@ export default function Layout() {
   };
 
   useEffect(() => {
-    if(isFetchUserData != "false"){
+    if (isFetchUserData != "false") {
       fetchMyUser(dispatch);
       fetchLocation();
     }
@@ -142,7 +142,11 @@ export default function Layout() {
               color={focused ? "#f91880" : "#333"}
             />
           ),
-          headerShown: false,
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "相手からのいいね",
+          headerStyle: { height: 90 },
+          headerTitleStyle: { fontSize: 16 },
         }}
       />
       <Tabs.Screen
@@ -155,14 +159,22 @@ export default function Layout() {
               color={focused ? "#1a8cd8" : "#333"}
             />
           ),
-          headerShown: false,
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "トーク",
+          headerStyle: { height: 90 },
+          headerTitleStyle: { fontSize: 16 },
         }}
       />
       <Tabs.Screen
         name="mySettingScreen"
         options={{
           tabBarIcon: ({ focused }) => <BottomNavigation focused={focused} />,
-          headerShown: false,
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "設定",
+          headerStyle: { height: 90 },
+          headerTitleStyle: { fontSize: 16 },
         }}
       />
     </Tabs>
