@@ -7,21 +7,21 @@ import PageBackHeader from "../../layout/header/pageBackHeader";
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const AgeVerificationPage = () => {
+const SettingMyProfilePage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
   return (
     <Container style={{ flex: 1 }}>
       <PageBackHeader
         routerPage="main/mySettingScreen"
-        text="年齢確認"
+        text="プロフィール設定"
         isFetchUserProps="false"
       />
       <StyledView className="h-full w-full bg-[#f2f2f2]">
-        <StyledText>年齢確認</StyledText>
+        <StyledText>自分から</StyledText>
       </StyledView>
     </Container>
   );
 };
 
-export default AgeVerificationPage;
+export default SettingMyProfilePage;

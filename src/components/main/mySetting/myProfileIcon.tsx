@@ -5,6 +5,7 @@ import { UserData } from "../../../types/userDataTypes";
 import Icon from "react-native-vector-icons/Entypo";
 import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
 import { useSelector } from "react-redux";
+import { useRouter } from "expo-router";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -13,9 +14,16 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const MyProfileIcon = () => {
   const myUserData = useSelector((state: any) => state.userData.value);
+  const router = useRouter();
 
   return (
-    <StyledTouchableOpacity className="flex items-center w-screen h-[200px]" activeOpacity={0.}>
+    <StyledTouchableOpacity
+      className="flex h-[200px] w-screen items-center"
+      onPress={() => {
+        router.push("mySetting/settingMyProfilePage");
+      }}
+      activeOpacity={0.6}
+    >
       <StyledView className="absolute">
         <StyledImage
           source={{ uri: myUserData?.image_url || undefined }}
@@ -31,7 +39,7 @@ const MyProfileIcon = () => {
           />
         </StyledView>
       </StyledView>
-      <StyledView className="absolute bottom-[-50px] text-[16px] top-[120px]">
+      <StyledView className="absolute bottom-[-50px] top-[120px] text-[16px]">
         <NameDisplayComponent userData={myUserData} />
       </StyledView>
     </StyledTouchableOpacity>

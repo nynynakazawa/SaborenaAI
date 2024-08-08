@@ -19,19 +19,16 @@ const MySettingScreen = () => {
 
   return (
     <Container style={{ flex: 1 }}>
-      <NowMatchHeader />
-      <StyledView
-        className="absolute mt-[80px] flex w-screen items-center top-[10vh]"
-      >
+      <StyledView className="absolute mt-[8vh] flex w-screen items-center">
         <StyledView className="h-[150px]">
           <MyProfileIcon />
         </StyledView>
 
-        <StyledView className="w-[94vw] mx-auto mt-[8vh]">
+        <StyledView className="mx-auto mt-[8vh] w-[94vw]">
           <AppInfoDisplay />
         </StyledView>
 
-        <StyledView className="w-[80vw] mx-auto mt-[12vh]">
+        <StyledView className="mx-auto mt-[8vh] w-[80vw]">
           <SettingButtonContainer />
         </StyledView>
       </StyledView>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../types/userDataTypes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 
@@ -12,9 +11,13 @@ const PremiumPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   return (
     <Container style={{ flex: 1 }}>
-      <PageBackHeader routerPage="main/mySettingScreen" text="プレミアム" isFetchUserProps="false"/>
-      <StyledView className="bg-[#f2f2f2] w-full h-full">
-      <StyledText>プレミアム</StyledText>
+      <PageBackHeader
+        routerPage="main/mySettingScreen"
+        text="プレミアム"
+        isFetchUserProps="false"
+      />
+      <StyledView className="h-full w-full bg-[#f2f2f2]">
+        <StyledText>プレミアム</StyledText>
       </StyledView>
     </Container>
   );
