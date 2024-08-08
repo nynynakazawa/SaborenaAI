@@ -13,7 +13,11 @@ const ResettingPasswordPage = () => {
 
   return (
     <Container style={{ flex: 1 }}>
-      <PageBackHeader />
+      <PageBackHeader
+        routerPage="/login"
+        text="パスワード再発行"
+        isFetchUserProps="false"
+      />
       <ResettingPassword />
       <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#2f77e3]"></StyledView>
     </Container>

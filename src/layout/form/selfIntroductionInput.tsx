@@ -52,7 +52,7 @@ const SelfIntroductionInput = ({
           )}
         </StyledView>
       </StyledView>
-      <StyledView className="mb-[12px] flex w-full pb-[10px]">
+      <StyledView className="flex w-full">
         <StyledTextInput
           onChangeText={setSelfIntroduction}
           value={selfIntroduction}

@@ -77,7 +77,7 @@ const UserMarker = ({
             className={`flex h-[52px] w-[52px] items-center justify-center rounded-[14px] ${frameColor}`}
           >
             <StyledImage
-              source={{ uri: userData?.image_url || undefined }}
+              source={{ uri: userData?.main_image_url || undefined }}
               style={{ width: 42, height: 42, borderRadius: 10 }}
             />
           </StyledView>

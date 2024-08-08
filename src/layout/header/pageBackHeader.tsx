@@ -18,28 +18,32 @@ const PageBackHeader = ({
   text: string;
   isFetchUserProps: string;
 }) => {
+  const Container = Platform.OS === "ios" ? SafeAreaView : View;
   return (
-    <StyledTouchableOpacity
-      onPress={() =>
-        router.push({
-          pathname: `/${routerPage}`,
-          params: { isFetchUserData: isFetchUserProps },
-        })
-      }
-      className={"h-[70px] border-b-[1px] border-[#e8e8e8] bg-[#fff]"}
-    >
-      <StyledView className="mx-auto flex h-full w-[90vw] flex-row items-center">
-        <Icon
-          name="chevron-left"
-          size={40}
-          color="#333"
-          className="absolute top-[18px]"
-        />
-        <StyledText className="w-full text-center text-[16px] font-bold text-[#333]">
-          {text}
-        </StyledText>
-      </StyledView>
-    </StyledTouchableOpacity>
+    <Container edges={['top', 'left', 'right']}>
+      <StyledTouchableOpacity
+        onPress={() =>
+          router.push({
+            pathname: `/${routerPage}`,
+            params: { isFetchUserData: isFetchUserProps },
+          })
+        }
+        className="h-[70px] border-b-[1px] border-[#e8e8e8]"
+      >
+        <StyledView className="mx-auto flex h-full w-[90vw] flex-row items-center">
+          <Icon
+            name="chevron-left"
+            size={40}
+            color="#333"
+            className="absolute top-[18px]"
+          />
+          <StyledText className="w-full text-center text-[16px] font-bold text-[#333]">
+            {text}
+          </StyledText>
+        </StyledView>
+      </StyledTouchableOpacity>
+    </Container>
+
   );
 };
 

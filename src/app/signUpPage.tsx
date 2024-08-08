@@ -40,7 +40,7 @@ const FirstSetting = () => {
   const [selectedCity, setSelectedCity] = useState<string>("未設定");
 
   // FirsetSetting_Step2
-  const [image, setImage] = useState<string | null>(null);
+  const [mainImage, setMainImage] = useState<string | null>(null);
 
   // FirsetSetting_Step3
   const [selfIntroduction, setSelfIntroduction] = useState<string>("");
@@ -86,8 +86,8 @@ const FirstSetting = () => {
       {/* step2 */}
       {scene == 2 && (
         <FirstSetting_step2
-          image={image}
-          setImage={setImage}
+          mainImage={mainImage}
+          setMainImage={setMainImage}
           scene={scene}
           setScene={setScene}
         />
@@ -111,7 +111,7 @@ const FirstSetting = () => {
             email={email}
             password={password}
             birthday={birthday}
-            image={image}
+            image={mainImage}
             gender={gender}
             selectedPrefecture={selectedPrefecture}
             selectedCity={selectedCity}

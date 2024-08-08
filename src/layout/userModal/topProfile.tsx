@@ -13,7 +13,7 @@ const TopProfile = ({ userData }: { userData: UserData | null }) => {
   return (
     <StyledView className="mb-[24px] flex w-full flex-row items-center">
       <StyledImage
-        source={{ uri: userData?.image_url || undefined }}
+        source={{ uri: userData?.main_image_url || undefined }}
         style={{ width: 140, height: 140 }}
         className="rounded-lg"
       />
@@ -30,7 +30,7 @@ const TopProfile = ({ userData }: { userData: UserData | null }) => {
 
         {/* sub images */}
         <StyledImage
-          source={{ uri: userData?.image_url || undefined }}
+          source={{ uri: userData?.main_image_url || undefined }}
           style={{ width: 36, height: 58 }}
           className="rounded-lg"
         />

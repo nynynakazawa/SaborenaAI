@@ -25,6 +25,7 @@ const Index = () => {
             // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
             if (userData.name) {
               router.push("/main");
+              // router.push("mySetting/setMyProfilePage");
             } else {
               router.push({
                 pathname: "/signupPage",
