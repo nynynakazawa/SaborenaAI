@@ -10,9 +10,11 @@ const StyledText = styled(Text);
 const GenderInput = ({
   gender,
   setGender,
+  isEditable = true,
 }: {
   gender: string;
   setGender: React.Dispatch<React.SetStateAction<string>>;
+  isEditable: boolean;
 }) => {
   const radioButtons = useMemo(
     () => [
@@ -59,16 +61,33 @@ const GenderInput = ({
       <StyledView className="mb-[12px] flex flex-row items-center">
         <Icon name="man" size={36} color="#333" className="mr-[8px]" />
         <StyledText className="text-[16px]">
-          性別(再設定不可)<StyledText className="text-[#f00]">*</StyledText>
+          性別 {isEditable && "(再変更不可)"}
+          {isEditable ? (
+            <StyledText className="text-[#f00]">*</StyledText>
+          ) : (
+            <StyledText className="text-[#333]">(編集不可)</StyledText>
+          )}
         </StyledText>
       </StyledView>
       <StyledView className="flex">
-        <RadioGroup
-          radioButtons={radioButtons}
-          onPress={handlePress}
-          selectedId={selectedId}
-          containerStyle={{ flexDirection: "row" }}
-        />
+        {isEditable ? (
+          <RadioGroup
+            radioButtons={radioButtons}
+            onPress={handlePress}
+            selectedId={selectedId}
+            containerStyle={{ flexDirection: "row" }}
+          />
+        ) : (
+          <StyledView className="flex w-[100px] justify-around border-b-2 border-[#333] py-[6px] text-[16px] text-[#333]">
+            <StyledText className="text-center text-[16px] text-[#333]">
+              {gender == "male"
+                ? "男性"
+                : gender == "female"
+                  ? "女性"
+                  : "その他"}
+            </StyledText>
+          </StyledView>
+        )}
       </StyledView>
     </StyledView>
   );

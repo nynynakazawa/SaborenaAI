@@ -10,9 +10,11 @@ const StyledTextInput = styled(TextInput);
 const BirthdayInput = ({
   birthday,
   setBirthday,
+  isEditable = true,
 }: {
   birthday: string;
   setBirthday: React.Dispatch<React.SetStateAction<string>>;
+  isEditable: boolean;
 }) => {
   const [year, setYear] = useState<string>("");
   const [month, setMonth] = useState<string>("");
@@ -54,10 +56,15 @@ const BirthdayInput = ({
       <StyledView className="mb-[12px] flex flex-row items-center">
         <Icon name="calendar" size={36} color="#333" className="mr-[10px]" />
         <StyledText className="text-[16px]">
-          生年月日<StyledText className="text-[#f00]">*</StyledText>
+          生年月日 {isEditable && "(再変更不可)"}
+          {isEditable ? (
+            <StyledText className="text-[#f00]">*</StyledText>
+          ) : (
+            <StyledText className="text-[$333]">(編集不可)</StyledText>
+          )}
         </StyledText>
       </StyledView>
-      <StyledView className="flex w-full flex-row items-center border-b-2 border-[#fff]">
+      <StyledView className="flex w-full flex-row items-center">
         <StyledTextInput
           value={birthday.split(",")[0]}
           onChangeText={handleYearChange}
@@ -65,10 +72,11 @@ const BirthdayInput = ({
           keyboardType="numeric"
           placeholderTextColor="#ccc"
           maxLength={4}
-          className="border-b-2 p-[2px] text-center text-[16px]"
+          editable={isEditable}
+          className="border-b-2 p-[2px] text-center text-[16px] text-[#333]"
           style={{ width: 90 }}
         />
-        <StyledText className="px-[4px]">年</StyledText>
+        <StyledText className="px-[4px] text-[#333]">年</StyledText>
         <StyledTextInput
           value={birthday.split(",")[1]}
           onChangeText={handleMonthChange}
@@ -77,10 +85,11 @@ const BirthdayInput = ({
           placeholderTextColor="#ccc"
           maxLength={2}
           ref={monthInputRef}
-          className="border-b-2 p-[2px] text-center text-[16px]"
+          editable={isEditable}
+          className="border-b-2 p-[2px] text-center text-[16px] text-[#333]"
           style={{ width: 70 }}
         />
-        <StyledText className="px-[4px]">月</StyledText>
+        <StyledText className="px-[4px] text-[#333]">月</StyledText>
         <StyledTextInput
           value={birthday.split(",")[2]}
           onChangeText={handleDayChange}
@@ -89,10 +98,11 @@ const BirthdayInput = ({
           placeholderTextColor="#ccc"
           maxLength={2}
           ref={dayInputRef}
-          className="border-b-2 p-[2px] text-center text-[16px]"
+          editable={isEditable}
+          className="border-b-2 p-[2px] text-center text-[16px] text-[#333]"
           style={{ width: 60 }}
         />
-        <StyledText className="px-[4px]">日</StyledText>
+        <StyledText className="px-[4px] text-[#333]">日</StyledText>
       </StyledView>
     </StyledView>
   );

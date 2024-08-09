@@ -21,6 +21,7 @@ const FirstSetting_step2 = ({
   setScene: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const isValid: boolean = mainImage != null;
+
   return (
     <StyledView className="h-screen">
       <NowMatchHeader />
@@ -29,7 +30,11 @@ const FirstSetting_step2 = ({
       <StyledView
         className={`absolute mt-[80px] w-screen ${Platform.OS == "android" ? "top-[10vh]" : "top-[18vh]"}`}
       >
-        <MainImageInput mainImage={mainImage} setMainImage={setMainImage} />
+        <MainImageInput
+          mainImage={mainImage}
+          setMainImage={setMainImage}
+          isRequired={true}
+        />
       </StyledView>
 
       <ImageCaution />

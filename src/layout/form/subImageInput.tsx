@@ -24,7 +24,6 @@ const SubImageInput = ({
   subImages: (string | null)[];
   setSubImages: React.Dispatch<React.SetStateAction<(string | null)[]>>;
 }) => {
-
   const pickImage = async (index: number): Promise<void> => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -37,7 +36,7 @@ const SubImageInput = ({
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [16, 9],
+      aspect: [9, 16],
       quality: 1,
     });
 
@@ -52,9 +51,13 @@ const SubImageInput = ({
   };
 
   const renderItem = ({ item, index }: ListRenderItemInfo<string | null>) => (
-    <StyledTouchableOpacity onPress={() => pickImage(index)} activeOpacity={0.6} className="mr-[8px]">
+    <StyledTouchableOpacity
+      onPress={() => pickImage(index)}
+      activeOpacity={0.6}
+      className="mr-[8px]"
+    >
       {item ? (
-        <StyledView className="border-[#8a8a8a] border-[2px] rounded-[22px]">
+        <StyledView className="rounded-[22px] border-[2px] border-[#8a8a8a]">
           <StyledImage
             source={{ uri: item || undefined }}
             className="h-[42.6vw] w-[24vw] rounded-[20px]"
@@ -74,19 +77,17 @@ const SubImageInput = ({
         <Icon name="image" size={36} color="#333" className="mr-[10px]" />
         <StyledText className="text-[16px]">サブ画像</StyledText>
       </StyledView>
-    
-      <StyledView className="flex justify-center w-full">
-        <StyledView className="w-max mx-auto">
-        <FlatList
-          data={subImages}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
 
+      <StyledView className="flex w-full justify-center">
+        <StyledView className="mx-auto w-max">
+          <FlatList
+            data={subImages}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
         </StyledView>
-
       </StyledView>
     </StyledView>
   );

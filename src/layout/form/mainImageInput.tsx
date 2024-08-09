@@ -20,9 +20,11 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const MainImageInput = ({
   mainImage,
   setMainImage,
+  isRequired,
 }: {
   mainImage: string | null;
   setMainImage: React.Dispatch<React.SetStateAction<string | null>>;
+  isRequired: boolean;
 }) => {
   const pickImage = async (): Promise<void> => {
     const permissionResult =
@@ -53,8 +55,9 @@ const MainImageInput = ({
       <StyledView className="mb-[12px] flex flex-row items-center">
         <Icon name="image" size={36} color="#333" className="mr-[10px]" />
         <StyledText className="text-[16px]">
-          <StyledText className="text-[16px]">
-            メイン画像<StyledText className="text-[#f00]">*</StyledText>
+          <StyledText className="text-[16px] text-[#333]">
+            メイン画像
+            {isRequired && <StyledText className="text-[#f00]">*</StyledText>}
           </StyledText>
         </StyledText>
       </StyledView>
@@ -62,7 +65,7 @@ const MainImageInput = ({
       <StyledView className="w-full items-center">
         <StyledTouchableOpacity onPress={pickImage} activeOpacity={0.6}>
           {!(mainImage == null) ? (
-            <StyledView className="border-[#8a8a8a] border-[2px] rounded-[22px]">
+            <StyledView className="rounded-[22px] border-[2px] border-[#8a8a8a]">
               <StyledImage
                 source={{ uri: mainImage || undefined }}
                 className="h-[64vw] w-[64vw] rounded-[20px]"

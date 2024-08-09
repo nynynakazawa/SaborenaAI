@@ -156,21 +156,17 @@ const CreateAccount = ({
   return (
     <StyledView>
       <StyledView className="relative h-screen w-screen bg-[#fff]">
-        {/* バックボタン */}
         <PageBackHeader
           routerPage="loginPage"
           text="新規登録"
           isFetchUserProps="true"
         />
 
-        {/* サインアップフォーム */}
         <StyledView className="mx-auto mt-[10vh] w-[90vw] flex-1 items-center">
-          {/* メールアドレス */}
           <StyledView className="mb-[56px] w-full">
             <EmailInput email={email} setEmail={setEmail} option={"black"} />
           </StyledView>
 
-          {/* パスワード */}
           <StyledView className="w-full">
             <PasswordInput
               password={password}
@@ -179,7 +175,6 @@ const CreateAccount = ({
               isValid={isValiedPassword(password)}
             />
           </StyledView>
-          {/* もう一度入力 */}
           <PasswordInput
             password={passwordAgain}
             setPassword={setPasswordAgain}
@@ -187,7 +182,6 @@ const CreateAccount = ({
             isValid={passwordAgain.trim() != "" && passwordAgain == password}
           />
 
-          {/* チェックボックス */}
           <StyledView className="mt-[20px] flex w-full gap-[22px]">
             <BouncyCheckbox
               size={25}
@@ -231,7 +225,6 @@ const CreateAccount = ({
         />
       </StyledView>
 
-      {/* 新規登録ボタン */}
       <StyledView className="absolute bottom-[8vh] w-screen flex-1 items-center">
         <StyledView className="mx-auto mb-4 flex w-[75vw] flex-row justify-end">
           <StyledTouchableOpacity

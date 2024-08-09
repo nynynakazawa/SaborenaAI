@@ -229,11 +229,13 @@ const ResidentialInput = ({
   setSelectedPrefecture,
   selectedCity,
   setSelectedCity,
+  isEditable = true,
 }: {
   selectedPrefecture: string;
   setSelectedPrefecture: React.Dispatch<React.SetStateAction<string>>;
   selectedCity: string;
   setSelectedCity: React.Dispatch<React.SetStateAction<string>>;
+  isEditable: boolean;
 }) => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
@@ -260,11 +262,20 @@ const ResidentialInput = ({
           className="ml-[8px] mr-[16px]"
         />
         <StyledText className="text-[16px]">
-          居住区<StyledText className="text-[#f00]">*</StyledText>
+          居住区
+          {isEditable ? (
+            <StyledText className="text-[#f00]">*</StyledText>
+          ) : (
+            <StyledText className="text-[#333]">(編集不可)</StyledText>
+          )}
         </StyledText>
       </StyledView>
 
-      <StyledTouchableOpacity onPress={toggleModal} activeOpacity={0.8}>
+      <StyledTouchableOpacity
+        onPress={toggleModal}
+        activeOpacity={0.8}
+        disabled={!isEditable}
+      >
         <StyledView className="flex w-[58vw] flex-row justify-around border-b-2 border-[#333] py-[6px] pl-[12px] text-[16px] text-[#333]">
           <StyledText
             className={`text-[16px] text-[#333] ${selectedPrefecture == "未設定" && "text-[#ccc]"}`}
