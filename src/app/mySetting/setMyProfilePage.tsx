@@ -75,7 +75,6 @@ const SetMyProfilePage = () => {
     try {
       await uploadBytes(storageRef, blob);
       const downloadURL = await getDownloadURL(storageRef);
-      console.log(`Image uploaded successfully. Download URL: ${downloadURL}`);
       return downloadURL;
     } catch (error) {
       console.error("Error uploading image: ", error);
@@ -103,7 +102,6 @@ const SetMyProfilePage = () => {
         subImages[index] !== myUserData?.sub_images_url[index]
       ) {
         subImagesChanged = true;
-        console.log(`Sub image at index ${index} has changed.`);
         if (subImages[index]) {
           subImageUrls[index] = await uploadImage(
             "sub_images",
@@ -135,17 +133,14 @@ const SetMyProfilePage = () => {
     }
 
     if (Object.keys(updates).length > 0) {
-      console.log("Updating Firestore with the following data: ", updates);
       const userRef = doc(db, "user", myUid);
       await updateDoc(userRef, updates);
-      console.log("Firestore updated successfully.");
     } else {
       console.log("No changes detected. Firestore update not required.");
     }
   };
 
   useEffect(() => {
-    console.log("Checking for changes in profile data...");
     setIsChange(
       myUserData?.main_image_url != mainImage ||
         myUserData?.sub_images_url != subImages ||
@@ -153,7 +148,6 @@ const SetMyProfilePage = () => {
         myUserData?.selected_work != selectedWork ||
         myUserData?.selected_goal != selectedGoal,
     );
-    console.log("isChange set to: ", isChange);
   }, [mainImage, subImages, selfIntroduction, selectedWork, selectedGoal]);
 
   return (
