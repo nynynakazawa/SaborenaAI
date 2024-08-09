@@ -48,9 +48,9 @@ const GoalInput = ({
         activeOpacity={0.8}
         className="flex"
       >
-        <StyledView className="flex flex-row justify-around border-b-2 border-[#333] p-[6px] px-[20px] text-[16px] text-[#333]">
+        <StyledView className="flex w-[100px] flex-row justify-around border-b-2 border-[#333] py-[6px] text-[16px] text-[#333]">
           <StyledText
-            className={`text-[16px] text-[#333] ${selectedGoal == "未設定" && "text-[#ccc]"}`}
+            className={`text-center text-[16px] text-[#333] ${selectedGoal == "未設定" && "text-[#ccc]"}`}
           >
             {selectedGoal}
           </StyledText>

@@ -13,7 +13,7 @@ import { useGlobalSearchParams } from "expo-router";
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const FirstSetting = () => {
+const SignupPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
   const { isExitUser } = useGlobalSearchParams();
@@ -111,7 +111,7 @@ const FirstSetting = () => {
             email={email}
             password={password}
             birthday={birthday}
-            image={mainImage}
+            mainImage={mainImage}
             gender={gender}
             selectedPrefecture={selectedPrefecture}
             selectedCity={selectedCity}
@@ -128,4 +128,4 @@ const FirstSetting = () => {
   );
 };
 
-export default FirstSetting;
+export default SignupPage;

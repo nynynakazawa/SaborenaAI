@@ -10,7 +10,7 @@ const StyledImage = styled(Image);
 const NowMatchHeader = () => {
   const Container = Platform.OS === "ios" ? SafeAreaView : View;
   return (
-    <Container edges={['top', 'left', 'right']}>
+    <Container edges={["left", "right"]}>
       <StyledView
         className={`mx-auto flex h-[70px] w-full items-center border-b-[1px] border-[#e8e8e8] bg-[#fff] ${Platform.OS === "ios" && "mt-[50px]"}`}
       >

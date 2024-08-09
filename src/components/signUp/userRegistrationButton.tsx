@@ -19,7 +19,7 @@ const UserRegistationButton = ({
   gender,
   selectedPrefecture,
   selectedCity,
-  image,
+  mainImage,
   selfIntroduction,
   selectedWork,
   selectedGoal,
@@ -32,7 +32,7 @@ const UserRegistationButton = ({
   gender: string;
   selectedPrefecture: string;
   selectedCity: string;
-  image: string | null;
+  mainImage: string | null;
   selfIntroduction: string;
   selectedWork: string;
   selectedGoal: string;
@@ -40,11 +40,11 @@ const UserRegistationButton = ({
 }) => {
   const router = useRouter();
 
-  const uploadImage = async (uri: string) => {
+  const uploadImage = async (path: string, uri: string) => {
     const storage = getStorage();
     const storageRef = ref(
       storage,
-      `images/${auth.currentUser?.uid}/${Date.now()}.jpg`,
+      `${path}/${auth.currentUser?.uid}/${Date.now()}.jpg`,
     );
 
     const response = await fetch(uri);
@@ -55,17 +55,17 @@ const UserRegistationButton = ({
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     } catch (error) {
-      console.error("Error uploading image: ", error);
-      throw new Error("Image upload failed");
+      console.error("Error uploading mainImage: ", error);
+      throw new Error("mainImage upload failed");
     }
   };
 
   const handleRegistration = async () => {
     try {
       const user = auth.currentUser as User;
-      let imageUrl = "";
-      if (image) {
-        imageUrl = await uploadImage(image);
+      let mainImageUrl = "";
+      if (mainImage) {
+        mainImageUrl = await uploadImage("main_images", mainImage);
       }
       const userRef = doc(db, "user", user.uid);
       await setDoc(
@@ -75,7 +75,8 @@ const UserRegistationButton = ({
           gender: gender,
           birthday: birthday,
           selected_residential: `${selectedPrefecture},${selectedCity}`,
-          main_image_url: imageUrl,
+          main_mainImage_url: mainImageUrl,
+          sub_Images_url: [null, null, null],
           self_introduction: selfIntroduction,
           selected_work: selectedWork,
           selected_goal: selectedGoal,
@@ -101,7 +102,7 @@ const UserRegistationButton = ({
           longitude: -1,
           latitude: -1,
           what_now: "こんにちは",
-          main_image_url: imageUrl,
+          main_mainImage_url: mainImageUrl,
         },
         { merge: true },
       );
