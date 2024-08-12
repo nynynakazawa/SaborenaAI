@@ -156,7 +156,7 @@ const SetMyProfilePage = () => {
         routerPage="main/mySettingScreen"
         text="プロフィール設定"
         isFetchUserProps="false"
-        handleSaveMyProfile={() => handleSaveMyProfile}
+        handleSaveMyProfile={() => handleSaveMyProfile()}
         isChange={isChange}
       />
 
