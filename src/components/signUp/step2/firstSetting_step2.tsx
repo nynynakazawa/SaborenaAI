@@ -36,7 +36,6 @@ const FirstSetting_step2 = ({
           isRequired={true}
         />
       </StyledView>
-
       <ImageCaution />
 
       <TransitionButton scene={scene} setScene={setScene} isValid={isValid} />

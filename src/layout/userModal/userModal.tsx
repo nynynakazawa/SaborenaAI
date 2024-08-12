@@ -1,4 +1,4 @@
-import React, { Key, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Modal,
@@ -10,17 +10,15 @@ import {
 import { styled } from "nativewind";
 import { CurrentData, UserData } from "../../types/userDataTypes";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import NameDisplayComponent from "../display/nameDisplayComponent";
 import TopProfile from "./topProfile";
 import SelfIntroductionProfile from "./selfIntroductionProfile";
 import WorkProfile from "./workProfile";
 import GoalProfile from "./goalProfile";
 import WhatNowProfile from "./whatNowProfile";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import SendMessageButton from "./sendMessageButton";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
-import { updateKey } from "../../store/allUserDataSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -37,11 +35,10 @@ const UserModal = ({
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  // reduxから値を取得
   const myCurrentData: CurrentData = useSelector(
     (state: any) => state.currentData.value,
   );
-
-  const dispatch = useDispatch();
   const myUserData: UserData = useSelector(
     (state: any) => state.userData.value,
   );
@@ -49,6 +46,8 @@ const UserModal = ({
   const allCurrentData = useSelector(
     (state: any) => state.allCurrentData.value,
   );
+
+  // 各state
   const [userData, setUserData] = useState<UserData | null>(null);
   const [currentData, setCurrentData] = useState<CurrentData | null>(null);
   const [gender, setGender] = useState<string | undefined>("");
@@ -106,6 +105,7 @@ const UserModal = ({
             <Icon name="close" size={24} color="#f00" />
           </StyledTouchableOpacity>
 
+          {/* プロフィールを */}
           <StyledScrollView className="h-full w-full pt-[10%]">
             <TopProfile userData={userData} />
             <WhatNowProfile whatNow={currentData?.what_now} />

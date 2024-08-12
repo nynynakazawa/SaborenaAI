@@ -46,6 +46,8 @@ const UserRegistationButton = ({
 }) => {
   const router = useRouter();
 
+  //  画像のアップロード
+  // TODO: ローディング画面の作成
   const uploadImage = async (path: string, uri: string) => {
     const storage = getStorage();
     const storageRef = ref(
@@ -66,6 +68,7 @@ const UserRegistationButton = ({
     }
   };
 
+  // ユーザー登録
   const handleRegistration = async () => {
     try {
       const user = auth.currentUser as User;
@@ -73,6 +76,7 @@ const UserRegistationButton = ({
       if (mainImage) {
         mainImageUrl = await uploadImage("main_images", mainImage);
       }
+      // userData
       const userRef = doc(db, "user", user.uid);
       await setDoc(
         userRef,
@@ -89,6 +93,7 @@ const UserRegistationButton = ({
         },
         { merge: true },
       );
+      // appData
       const appRef = doc(db, "app", user.uid);
       await setDoc(
         appRef,
@@ -100,6 +105,7 @@ const UserRegistationButton = ({
         },
         { merge: true },
       );
+      // currentDataq
       const currentRef = doc(db, "current", user.uid);
       await setDoc(
         currentRef,

@@ -1,10 +1,8 @@
 import React from "react";
 import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../types/userDataTypes";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const StyledView = styled(View);
 const StyledText = styled(Text);
 
 const TalkListScreen = () => {

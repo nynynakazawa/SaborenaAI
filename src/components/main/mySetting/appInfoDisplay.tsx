@@ -12,6 +12,7 @@ const AppInfoDisplay = () => {
   return (
     <StyledView className="flex h-[40px] w-full flex-row justify-between">
       <StyledView className="flex w-[33.33%] items-center justify-center">
+        {/* 会員情報表示 */}
         <StyledText className="mb-[12px] h-[30px]">会員情報</StyledText>
         {myAppData?.membership_status == "free" ? (
           <StyledText className="text-[16px] font-bold text-[#8FE07A]">
@@ -24,6 +25,7 @@ const AppInfoDisplay = () => {
         )}
       </StyledView>
 
+      {/* トーク人数表示 */}
       <StyledView className="flex w-[33.33%] items-center justify-center border-l-2 border-r-2 border-[#333]">
         <StyledView className="mb-[12px] h-[30px]">
           <StyledText>トーク人数</StyledText>
@@ -38,7 +40,8 @@ const AppInfoDisplay = () => {
           </StyledText>
         )}
       </StyledView>
-
+      
+      {/* いいね数表示 */}
       <StyledView className="flex w-[33.33%] items-center justify-center">
         <StyledText className="mb-[12px] h-[30px]">いいね</StyledText>
         <StyledText className="text-[16px] font-bold text-[#DC6CF8]">

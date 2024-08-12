@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Platform, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { useRouter } from "expo-router";
-import { auth } from "../../firebase"; // firebase の auth をインポート
-import { sendPasswordResetEmail } from "firebase/auth"; // sendPasswordResetEmail をインポート
-import PageBackHeader from "../header/pageBackHeader";
+import { auth } from "../../firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
 import EmailInput from "./emailInput";
 
 const StyledView = styled(View);
@@ -16,6 +12,8 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const ResettingPassword = () => {
   const [isSendingEmail, setIsSendingEmail] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(60);
+  const [email, setEmail] = React.useState("");
+  
   // タイマーのロジック
   useEffect(() => {
     let countdown: NodeJS.Timeout;
@@ -30,8 +28,7 @@ const ResettingPassword = () => {
     return () => clearInterval(countdown);
   }, [isSendingEmail, timer]);
 
-  const [email, setEmail] = React.useState("");
-
+  // パスワードリセットメール送信
   const handleResetPassword = async () => {
     setIsSendingEmail(true);
     try {
@@ -40,7 +37,7 @@ const ResettingPassword = () => {
         "パスワードリセットメール送信",
         `${email}にパスワードリセットのためのメールを送信しました。メールを確認してパスワードを再設定してください。`,
       );
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error sending password reset email:", error);
       Alert.alert(
         "エラー",

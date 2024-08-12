@@ -44,11 +44,11 @@ const AccountManagement = () => {
         アカウント管理
       </StyledText>
       <StyledView>
-        {/* 会員ステータス */}
+        {/* 会員情報表示 */}
         <StyledView className="w-screen border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
             <StyledText className="text-[16px] text-[#333]">
-              会員ステータス
+              会員情報
             </StyledText>
             {myAppData?.membership_status == "free" ? (
               <StyledText className="text-[16px] font-bold text-[#8FE07A]">
@@ -61,7 +61,7 @@ const AccountManagement = () => {
             )}
           </StyledView>
         </StyledView>
-        {/* メールアドレス */}
+        {/* メールアドレス表示 */}
         <StyledView className="w-screen border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
             <StyledText className="text-[16px] text-[#333]">
@@ -72,7 +72,7 @@ const AccountManagement = () => {
             </StyledText>
           </StyledView>
         </StyledView>
-        {/* パスワード */}
+        {/* パスワード表示 */}
         <StyledView className="w-screen border-b-[1px] border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
             <StyledText className="text-[16px] text-[#333]">
@@ -88,7 +88,7 @@ const AccountManagement = () => {
         </StyledView>
       </StyledView>
 
-      {/* ログアウト */}
+      {/* ログアウトボタン */}
       <StyledTouchableOpacity
         onPress={() => handleLogout()}
         className="mt-[6vh]"

@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
-  TextInput,
   View,
-  TouchableOpacity,
-  Keyboard,
 } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/Entypo";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledTextInput = styled(TextInput);
-const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const WhatNowProfile = ({ whatNow }: { whatNow: string | undefined }) => {
   return (

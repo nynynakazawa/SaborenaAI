@@ -11,7 +11,8 @@ import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useSelector } from "react-redux";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../../firebase";
+import { db } from "../../../firebase";
+import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -19,17 +20,17 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
 const WhatNowInput = () => {
-  const myUid: string = useSelector((state: any) => state.myUid.value);
+  const myUid: string = useSelector((state: RootState) => state.myUid.value);
 
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
-  const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
+
   const [isSendingWhatNow, setIsSendingWhatNow] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(60);
   const [whatNow, setWhatNow] = useState<string>("");
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
 
   const handleSend = async () => {
-    console.log("whatnow Send");
+    console.log("🎉whatnow send");
     const currentRef = doc(db, "current", myUid);
     await setDoc(
       currentRef,
@@ -45,22 +46,13 @@ const WhatNowInput = () => {
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
-      (e) => {
-        setKeyboardHeight(e.endCoordinates.height);
+      (e) => { 
         setDefaultKeyboardHeight(e.endCoordinates.height);
-      },
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardHeight(0);
       },
     );
 
     return () => {
       keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
     };
   }, []);
 
@@ -116,7 +108,7 @@ const WhatNowInput = () => {
           )}
         </StyledView>
         <StyledTouchableOpacity
-          onPress={() => {handleSend(); setKeyboardHeight(0); setIsTextInputFocused(false)}}
+          onPress={() => {handleSend(); setIsTextInputFocused(false)}}
           className="h-[40px] border-l-2 border-[#ccc] pl-[16px]"
           disabled={whatNow?.trim() == "" || isSendingWhatNow}
         >

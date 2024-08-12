@@ -23,6 +23,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ChangeCurrentStatus from "../../components/main/map/changeCurrentStatus";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -32,22 +33,25 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const MapScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
-  const location: any = useSelector((state: any) => state.location.value);
-  const isGps: boolean = useSelector((state: any) => state.isGps.value);
-  const allCurrentData = useSelector(
-    (state: any) => state.allCurrentData.value,
+  const location: Location.LocationObject | null = useSelector((state: RootState) => state.location.value);
+  const allCurrentData:{ [key: string]: CurrentData | null }  = useSelector(
+    (state: RootState) => state.allCurrentData.value,
   );
 
-  // 辞書 → 配列
-  const allCurrentDataArray = Object.keys(allCurrentData).map((key) => ({
-    key,
-    value: allCurrentData[key],
-  }));
+  // 辞書を配列に変換する
+  const allCurrentDataArray = allCurrentData
+    ? Object.keys(allCurrentData).map((key: string) => ({
+        key,
+        value: allCurrentData[key],
+      }))
+    : [];
   return (
     <Container style={{ flex: 1 }}>
       {location ? (
         <StyledView>
+          {/* 操作盤 */}
           <ChangeCurrentStatus />
+          {/* マップ */}
           <MapView
             style={styles.map}
             initialRegion={{
@@ -57,6 +61,7 @@ const MapScreen = () => {
               longitudeDelta: 0.0421,
             }}
           >
+            {/* 全てのユーザのピンを表示 */}
             {allCurrentDataArray.map((item) => (
               <UserMarker
                 key={item.key}
@@ -65,9 +70,11 @@ const MapScreen = () => {
               />
             ))}
           </MapView>
+          {/* whatnowインプットボックス */}
           <WhatNowInput />
         </StyledView>
       ) : (
+        // TODO: ローディング画面
         <StyledText>waiting</StyledText>
       )}
     </Container>

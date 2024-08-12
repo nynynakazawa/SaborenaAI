@@ -86,7 +86,7 @@ const FirstSetting_step1 = ({
           birthday={birthday}
           setBirthday={setBirthday}
           isEditable={true}
-        />
+          />
         <GenderInput gender={gender} setGender={setGender} isEditable={false} />
         <ResidentialInput
           selectedPrefecture={selectedPrefecture}

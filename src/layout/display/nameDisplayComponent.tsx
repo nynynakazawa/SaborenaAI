@@ -14,6 +14,7 @@ type Birthday = {
 };
 
 const NameDisplayComponent = ({ userData }: { userData: UserData | null }) => {
+  // 生年月日から年齢を取得
   function getAge(birthday: Birthday) {
     const today = new Date();
     const birthDate = new Date(

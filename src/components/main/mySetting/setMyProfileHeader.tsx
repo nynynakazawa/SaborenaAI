@@ -35,6 +35,7 @@ const SetMyProfileHeader = ({
   return (
     <Container edges={["top", "left", "right"]}>
       <StyledView className="mx-auto flex h-[70px] w-[90vw] flex-row items-center">
+        {/* バックボタン */}
         <StyledTouchableOpacity
           onPress={() =>
             router.push({
@@ -51,6 +52,7 @@ const SetMyProfileHeader = ({
             className="absolute top-[18px]"
           />
         </StyledTouchableOpacity>
+        {/* 表示テキスト */}
         <StyledText className="w-full text-center text-[16px] font-bold text-[#333]">
           {text}
         </StyledText>

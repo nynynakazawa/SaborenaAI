@@ -30,6 +30,7 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
       }}
       activeOpacity={isEditable ? 0.6 : 1}
     >
+      {/* myアイコン */}
       <StyledView className="absolute">
         <StyledImage
           source={{ uri: myUserData?.main_image_url || undefined }}
@@ -37,6 +38,7 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
           className="rounded-full"
         />
         {isEditable && (
+          // 筆アイコン
           <StyledView className="absolute bottom-[-4px] right-[-4px] flex h-[40px] w-[40px] items-center justify-center rounded-full border-[1px] border-[#eee] bg-[#fafafa]">
             <Icon
               name="pencil"
@@ -47,6 +49,7 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
           </StyledView>
         )}
       </StyledView>
+      {/* 名前 */}
       <StyledView className="absolute bottom-[-50px] top-[120px] text-[16px]">
         <NameDisplayComponent userData={myUserData} />
       </StyledView>

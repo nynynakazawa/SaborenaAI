@@ -5,7 +5,6 @@ import { UserData } from "../../../types/userDataTypes";
 import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 const StyledImage = styled(Image);
 
 const BottomNavigation = ({ focused }: { focused: boolean }) => {
@@ -14,6 +13,7 @@ const BottomNavigation = ({ focused }: { focused: boolean }) => {
   );
   return (
     <StyledView className="relative">
+      {/* ボトムナビゲーション画像 */}
       <StyledImage
         source={{ uri: myUserData?.main_image_url || undefined }}
         style={{ width: 34, height: 34 }}

@@ -26,70 +26,89 @@ import { set as setMyUid } from "../../store/myUidSlice";
 import {
   set as setAllCurrentData,
 } from "../../store/allCurrentDataSlice";
+import {
+  updateKey
+} from "../../store/allCurrentDataSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { useEffect, useRef, useState } from "react";
-import { styled } from "nativewind";
-import { Image, Text, View } from "react-native";
+import { useEffect, useRef } from "react";
 import BottomNavigation from "../../components/main/navigation/bottomNavigation";
-
-const StyledView = styled(View);
-const StyledText = styled(Text);
-const StyledImage = styled(Image);
+import { RootState } from "../../store/store";
 
 export default function Layout() {
   const { isFetchUserData } = useGlobalSearchParams();
-  const router = useRouter();
   const dispatch = useDispatch();
 
+  const location: Location.LocationObject | null = useSelector((state: RootState) => state.location.value);
+  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const isGps: boolean = useSelector((state: RootState) => state.isGps.value);
+  const prevLocationRef = useRef(location);
+
+  // userData取得
   const fetchUserData = (uid: string, dispatch: Dispatch) => {
     const userRef = doc(db, "user", uid);
     return onSnapshot(userRef, (doc) => {
       if (doc.exists()) {
-        console.log("fetched user data");
+        console.log("🔵fetched user data");
         dispatch(setUserData(doc.data()));
       } else {
-        console.log("No such user data!");
+        console.log("❌no such user data!");
       }
     });
   };
 
+  // privateData取得
   const fetchPrivateData = (uid: string, dispatch: Dispatch) => {
     const privateRef = doc(db, "private", uid);
     return onSnapshot(privateRef, (doc) => {
       if (doc.exists()) {
-        console.log("fetched private data");
+        console.log("🔵fetched private data");
         dispatch(setPrivateData(doc.data()));
       } else {
-        console.log("No such private data!");
+        console.log("❌no such private data!");
       }
     });
   };
 
+  // appData取得
   const fetchAppData = (uid: string, dispatch: Dispatch) => {
     const appRef = doc(db, "app", uid);
     return onSnapshot(appRef, (doc) => {
       if (doc.exists()) {
-        console.log("fetched app data");
+        console.log("🔵fetched app data");
         dispatch(setAppData(doc.data()));
       } else {
-        console.log("No such app data!");
+        console.log("❌no such app data!");
       }
     });
   };
 
+  // currentData取得
   const fetchCurrentData = (uid: string, dispatch: Dispatch) => {
     const currentRef = doc(db, "current", uid);
     return onSnapshot(currentRef, (doc) => {
       if (doc.exists()) {
-        console.log("fetched current data");
+        console.log("🔵fetched current data", doc.data());
         dispatch(setCurrentData(doc.data()));
       } else {
-        console.log("No such current data!");
+        console.log("❌no such current data!");
       }
     });
   };
 
+  // location取得
+  const fetchLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.log("❌permission to access location was denied");
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    dispatch(setLocation(location));
+  };
+  // 自身の情報を取得
   const fetchMyUser = async (dispatch: Dispatch) => {
     const user = auth.currentUser;
     dispatch(setMyUid(user?.uid));
@@ -104,74 +123,64 @@ export default function Layout() {
     }
   };
 
-  const fetchLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      console.log("Permission to access location was denied");
-      return;
+//   const monitorCurrentCollection = (dispatch: Dispatch) => {
+//     const currentRef = collection(db, "current");
+  
+//     // コレクション全体を監視
+//     onSnapshot(currentRef, (snapshot) => {
+//       snapshot.docChanges().forEach((change) => {
+//         if (change.type === "added") {
+//           console.log(`🔵Document added with ID: ${change.doc.id}`);
+//         }
+//         if (change.type === "modified") {
+//           console.log(`🔵Document modified with ID: ${change.doc.id}`);
+//         }
+//         if (change.type === "removed") {
+//           console.log(`🔵Document removed with ID: ${change.doc.id}`);
+//         }
+  
+//         // ドキュメントIDを取得し、必要に応じてReduxにディスパッチ
+//         const documentId = change.doc.id;
+//         console.log(documentId)
+//       });
+//     });
+//   };
+
+// // Fetch all users' current data and set up real-time listeners
+const fetchAllCurrentData = async (dispatch: Dispatch) => {
+  const currentRef = collection(db, "current");
+  try {
+    const querySnapshot = await getDocs(currentRef);
+    if (!querySnapshot.empty) {
+      console.log("🔵fetched all current data");
+      let allCurrentDataDict: { [key: string]: CurrentData | null } = {};
+
+      querySnapshot.forEach((doc) => {
+        allCurrentDataDict[doc.id] = doc.data() as CurrentData;
+      });
+
+      console.log(allCurrentDataDict)
+      // 全てのユーザの current データを dispatch にセット
+      dispatch(setAllCurrentData(allCurrentDataDict));
+    } else {
+      console.log("❌no user data found!");
     }
-
-    let location = await Location.getCurrentPositionAsync({});
-    dispatch(setLocation(location));
-  };
-
-  const fetchCurrentData_indvidual = (
-    uid: string,
-    dispatch: Dispatch,
-    existingData: { [key: string]: CurrentData | null },
-  ) => {
-    const currentRef = doc(db, "current", uid);
-    return onSnapshot(currentRef, (doc) => {
-      if (doc.exists()) {
-        console.log(`Fetched current data for user ${uid}`);
-        const updatedData = {
-          ...existingData,
-          [uid]: doc.data() as CurrentData,
-        };
-        dispatch(setAllCurrentData(updatedData));
-      } else {
-        console.log(`No current data for user ${uid}`);
-      }
-    });
-  };
-
-  const fetchAllCurrentData = async (dispatch: Dispatch) => {
-    const currentRef = collection(db, "current");
-    try {
-      const querySnapshot = await getDocs(currentRef);
-      if (!querySnapshot.empty) {
-        console.log("Fetched all current data");
-        let allCurrentDataDict: { [key: string]: CurrentData | null } = {};
-        querySnapshot.forEach((doc) => {
-          allCurrentDataDict[doc.id] = doc.data() as CurrentData;
-        });
-
-        // 全てのユーザの current データを dispatch にセット
-        dispatch(setAllCurrentData(allCurrentDataDict));
-
-        // 各ユーザの current ドキュメントをリアルタイムで監視
-        querySnapshot.forEach((doc) => {
-          fetchCurrentData_indvidual(doc.id, dispatch, allCurrentDataDict);
-        });
-      } else {
-        console.log("No user data found!");
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+  } catch (error) {
+    console.error("❌error fetching user data:", error);
+  }
+};
 
   const sendLocation = async (uid: string, isGps: boolean) => {
     if (isGps === false) {
       return;
     }
-    console.log("send location");
+    console.log("🎉send location");
     const currentRef = doc(db, "current", uid);
     await setDoc(
       currentRef,
       {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
+        latitude: location?.coords.latitude,
+        longitude: location?.coords.longitude,
       },
       { merge: true },
     );
@@ -182,7 +191,7 @@ export default function Layout() {
       fetchAllCurrentData(dispatch);
       fetchMyUser(dispatch);
       fetchLocation();
-      sendLocation(myUid, true);
+      // sendLocation(myUid, true);
     }
   }, []);
 
@@ -196,10 +205,6 @@ export default function Layout() {
   //   return () => clearInterval(intervalId);
   // },[])
 
-  const location: any = useSelector((state: any) => state.location.value);
-  const myUid: string = useSelector((state: any) => state.myUid.value);
-  const isGps: boolean = useSelector((state: any) => state.isGps.value);
-  const prevLocationRef = useRef(location);
 
   useEffect(() => {
     const interval = setInterval(() => {

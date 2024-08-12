@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
   Platform,
   ScrollView,
-  Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
-import PageBackHeader from "../../layout/header/pageBackHeader";
-import MyProfileIcon from "../../components/main/mySetting/myProfileIcon";
 import { UserData } from "../../types/userDataTypes";
 import { useSelector } from "react-redux";
 import SelfIntroductionInput from "../../layout/form/selfIntroductionInput";
@@ -21,27 +17,28 @@ import SetMyProfileHeader from "../../components/main/mySetting/setMyProfileHead
 import NameInput from "../../layout/form/nameInput";
 import BirthdayInput from "../../layout/form/birthInput";
 import GenderInput from "../../layout/form/genderInput";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import {
   getDownloadURL,
   getStorage,
   ref,
-  uploadBytes,
   uploadBytesResumable,
 } from "firebase/storage";
 import ResidentialInput from "../../layout/form/residentialInput";
+import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
-const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const SetMyProfilePage = () => {
-  const myUserData: UserData = useSelector(
-    (state: any) => state.userData.value,
-  );
-  const myUid: string = useSelector((state: any) => state.myUid.value);
+  const Container = Platform.OS === "android" ? SafeAreaView : View;
 
+  // reduxから値を取得する
+  const myUserData: UserData | null = useSelector((state: RootState) => state.userData.value,);
+  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+
+  // 各種state
+  // 基本設定
   const [name, setName] = useState<string>(myUserData?.name || "");
   const [birthday, setBirthday] = useState<string>(myUserData?.birthday || "");
   const [gender, setGender] = useState<string>(myUserData?.gender || "");
@@ -51,6 +48,7 @@ const SetMyProfilePage = () => {
   );
   const [selectedCity, setSelectedCity] = useState<string>(residential[1]);
 
+  // 画像
   const [mainImage, setMainImage] = useState<string | null>(
     myUserData?.main_image_url || null,
   );
@@ -58,6 +56,7 @@ const SetMyProfilePage = () => {
     myUserData?.sub_images_url || [null, null, null],
   );
 
+  // 詳細設定
   const [selfIntroduction, setSelfIntroduction] = useState<string>(
     myUserData?.self_introduction || "",
   );
@@ -67,9 +66,12 @@ const SetMyProfilePage = () => {
   const [selectedGoal, setSelectedGoal] = useState<string>(
     myUserData?.selected_goal || "",
   );
-  const [isChange, setIsChange] = useState<boolean>(false);
-  const Container = Platform.OS === "android" ? SafeAreaView : View;
 
+  // 変化したか判定
+  const [isChange, setIsChange] = useState<boolean>(false);
+
+  // 画像のアップロード
+  // TODO: ローディング画面の作成
   const uploadImage = async (path: string, uri: string) => {
     console.log(`Uploading image to path: ${path}, uri: ${uri}`);
     const storage = getStorage();
@@ -88,12 +90,14 @@ const SetMyProfilePage = () => {
     }
   };
 
+  // プロフィールを更新する
   const handleSaveMyProfile = async () => {
+    // データを送る量を減らすために変化したstateだけdbに送信する
     console.log("Saving profile...");
 
     const updates: Partial<UserData> = {};
     // メイン画像
-    if (mainImage !== myUserData.main_image_url) {
+    if (mainImage !== myUserData?.main_image_url) {
       let mainImageUrl = "";
       if (mainImage) {
         mainImageUrl = await uploadImage("main_images", mainImage);
@@ -106,6 +110,7 @@ const SetMyProfilePage = () => {
       });
     }
 
+    // サブ画像
     const subImageUrls = [...subImages];
     let subImagesChanged = false;
     for (let index = 0; index < 3; index++) {
@@ -129,17 +134,17 @@ const SetMyProfilePage = () => {
       updates.sub_images_url = subImageUrls;
     }
 
-    if (selfIntroduction !== myUserData.self_introduction) {
+    if (selfIntroduction !== myUserData?.self_introduction) {
       console.log("Self introduction has changed.");
       updates.self_introduction = selfIntroduction;
     }
 
-    if (selectedWork !== myUserData.selected_work) {
+    if (selectedWork !== myUserData?.selected_work) {
       console.log("Selected work has changed.");
       updates.selected_work = selectedWork;
     }
 
-    if (selectedGoal !== myUserData.selected_goal) {
+    if (selectedGoal !== myUserData?.selected_goal) {
       console.log("Selected goal has changed.");
       updates.selected_goal = selectedGoal;
     }
@@ -164,6 +169,7 @@ const SetMyProfilePage = () => {
 
   return (
     <Container style={{ flex: 1 }}>
+      {/* ヘッダー */}
       <SetMyProfileHeader
         routerPage="main/mySettingScreen"
         text="プロフィール設定"
@@ -171,9 +177,8 @@ const SetMyProfilePage = () => {
         handleSaveMyProfile={handleSaveMyProfile}
         isChange={isChange}
       />
-      <StyledTouchableOpacity
-        onPress={handleSaveMyProfile}
-      ></StyledTouchableOpacity>
+
+      {/* メインフォーム */}
       <ScrollView className="bg-[#f2f2f2]">
         <StyledView>
           <StyledView className="top-[8vh] mb-[36vh]">
@@ -217,6 +222,7 @@ const SetMyProfilePage = () => {
           </StyledView>
         </StyledView>
 
+        {/* フッター */}
         <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#E3422F]"></StyledView>
       </ScrollView>
     </Container>

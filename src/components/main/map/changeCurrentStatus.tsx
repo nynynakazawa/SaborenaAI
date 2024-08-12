@@ -7,15 +7,16 @@ import { set as setPeopleCount } from "../../../store/peopleCountSlice";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const ChangeCurrentStatus = () => {
-  const peopleCount = useSelector((state: any) => state.peopleCount.value);
-  const isGps = useSelector((state: any) => state.isGps.value);
-  const myUid = useSelector((state: any) => state.myUid.value);
+  const peopleCount = useSelector((state: RootState) => state.peopleCount.value);
+  const isGps = useSelector((state: RootState) => state.isGps.value);
+  const myUid = useSelector((state: RootState) => state.myUid.value);
   const dispatch = useDispatch();
 
   const prevPeopleCountRef = useRef(peopleCount);

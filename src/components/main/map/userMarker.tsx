@@ -12,6 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
 import UserModal from "../../../layout/userModal/userModal";
+import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);
 const StyledTouchableOpacity = styled(TouchableOpacity);
@@ -22,14 +23,14 @@ const UserMarker = ({
   currentData,
 }: {
   uid: string;
-  currentData: CurrentData;
+  currentData: CurrentData | null;
 }) => {
   const location: Location.LocationObject = useSelector(
     (state: any) => state.location.value,
   );
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
   const gender = currentData?.gender;
-  const myUid: string = useSelector((state: any) => state.myUid.value);
+  const myUid: string = useSelector((state: RootState) => state.myUid.value);
   let frameColor;
   if (gender === "male") {
     frameColor = "bg-[#79C7FF]";
@@ -42,7 +43,6 @@ const UserMarker = ({
   const scale = useSharedValue(1);
 
   const handlePress = () => {
-    console.log(currentData?.main_image_url);
     scale.value = withSequence(
       withSpring(0.8), // 小さくなる
       withSpring(1), // 元の大きさに戻る
@@ -92,11 +92,13 @@ const UserMarker = ({
         </StyledView>
       </Animated.View>
       {/* モーダル */}
-      <UserModal
-        uid={uid}
-        isVisibleUserModal={isVisibleUserModal}
-        setIsVisibleUserModal={setIsVisibleUserModal}
-      />
+      { isVisibleUserModal &&
+        <UserModal
+          uid={uid}
+          isVisibleUserModal={isVisibleUserModal}
+          setIsVisibleUserModal={setIsVisibleUserModal}
+        />
+      }
     </Marker>
   );
 };
