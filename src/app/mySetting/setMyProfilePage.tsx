@@ -23,7 +23,7 @@ import BirthdayInput from "../../layout/form/birthInput";
 import GenderInput from "../../layout/form/genderInput";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import ResidentialInput from "../../layout/form/residentialInput";
 
 const StyledView = styled(View);
@@ -73,7 +73,7 @@ const SetMyProfilePage = () => {
     const blob = await response.blob();
 
     try {
-      await uploadBytes(storageRef, blob);
+      await uploadBytesResumable(storageRef, blob);
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     } catch (error) {
@@ -86,7 +86,9 @@ const SetMyProfilePage = () => {
     console.log("Saving profile...");
 
     const updates: Partial<UserData> = {};
-
+    if(mainImage){
+      await uploadImage("main_images", mainImage)
+    }
     if (mainImage !== myUserData.main_image_url) {
       console.log("Main image has changed.");
       updates.main_image_url = mainImage
@@ -156,10 +158,13 @@ const SetMyProfilePage = () => {
         routerPage="main/mySettingScreen"
         text="プロフィール設定"
         isFetchUserProps="false"
-        handleSaveMyProfile={() => handleSaveMyProfile()}
+        handleSaveMyProfile={handleSaveMyProfile}
         isChange={isChange}
       />
-
+      <StyledTouchableOpacity
+        onPress={handleSaveMyProfile}
+      >
+        </StyledTouchableOpacity>
       <ScrollView className="bg-[#f2f2f2]">
         <StyledView>
           <StyledView className="top-[8vh] mb-[36vh]">
