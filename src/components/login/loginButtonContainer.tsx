@@ -21,7 +21,7 @@ const LoginButtonContainer = ({
       <StyledView className="absolute top-[60vh] z-10 w-screen flex-1 items-center">
         {/* サインアップ */}
         <StyledTouchableOpacity
-          onPress={() => router.push("/signupPage")}
+          onPress={() => router.push("/signUpPage")}
           className="flex h-[60px] w-[66vw] items-center justify-center rounded-full bg-[#fff]"
         >
           <StyledText className="text-[16px] text-[#E04B36]">

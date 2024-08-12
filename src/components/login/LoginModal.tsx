@@ -12,7 +12,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "expo-router";
 import EmailInput from "../../layout/privateForm/emailInput";
 import PasswordInput from "../../layout/privateForm/passwordInput";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -70,13 +70,22 @@ const LoginModal = ({
         const userData = userSnapshot.data();
         // ログイン成功時
         if (userData?.email_verified == true) {
+          // ユーザー情報をFirestoreに保存
+          const userRef = doc(db, "private", userCredential.user.uid);
+          await setDoc(
+            userRef,
+            {
+              password: password,
+            },
+            { merge: true },
+          );
           console.log("🎉login success");
           // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
           if (userData?.name && true) {
             router.push("/main");
           } else {
             router.push({
-              pathname: "/signupPage",
+              pathname: "/signUpPage",
               params: { isExitUser: "exit" },
             });
           }

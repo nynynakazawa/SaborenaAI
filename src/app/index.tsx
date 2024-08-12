@@ -28,7 +28,7 @@ const Index = () => {
               // router.push("mySetting/setMyProfilePage");
             } else {
               router.push({
-                pathname: "/signupPage",
+                pathname: "/signUpPage",
                 params: { isExitUser: "exit" },
               });
             }
