@@ -43,4 +43,6 @@ export type CurrentData = {
   latitude?: number;
   what_now?: string;
   uid?: string;
+  main_image_url?: string;
+  gender?: string;
 };

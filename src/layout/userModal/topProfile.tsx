@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, Text, View } from "react-native";
 import { styled } from "nativewind";
 import NameDisplayComponent from "../display/nameDisplayComponent";
 import { UserData } from "../../types/userDataTypes";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useSelector } from "react-redux";
+import peopleCountSlice from "../../store/peopleCountSlice";
 
 const StyledView = styled(View);
 const StyledImage = styled(Image);
 const StyledText = styled(Text);
 
 const TopProfile = ({ userData }: { userData: UserData | null }) => {
+  const myPeopleCount: number = useSelector(
+    (state: any) => state.peopleCount.value,
+  );
+  useEffect(() => {
+    console.log(myPeopleCount);
+  });
   return (
     <StyledView className="mb-[24px] flex w-full flex-row items-center">
       <StyledImage
@@ -24,7 +32,7 @@ const TopProfile = ({ userData }: { userData: UserData | null }) => {
           </StyledView>
           <StyledView className="mb-[12px] flex flex-row items-center">
             <Icon name={"person"} size={24} color={"#333"} />
-            <StyledText>*仮*</StyledText>
+            <StyledText>{myPeopleCount}</StyledText>
           </StyledView>
         </StyledView>
 

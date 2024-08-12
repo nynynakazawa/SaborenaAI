@@ -11,22 +11,25 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
+import UserModal from "../../../layout/userModal/userModal";
+
 const StyledView = styled(View);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledImage = styled(Image);
+
 const UserMarker = ({
-  isVisibleUserModal,
-  setIsVisibleUserModal,
+  uid,
+  currentData,
 }: {
-  isVisibleUserModal: boolean;
-  setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
+  uid: string;
+  currentData: CurrentData;
 }) => {
   const location: Location.LocationObject = useSelector(
     (state: any) => state.location.value,
   );
-  const userData: UserData = useSelector((state: any) => state.userData.value);
 
-  const gender = userData?.gender;
+  const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
+  const gender = currentData?.gender;
   let frameColor;
   if (gender === "male") {
     frameColor = "bg-[#79C7FF]";
@@ -39,6 +42,7 @@ const UserMarker = ({
   const scale = useSharedValue(1);
 
   const handlePress = () => {
+    console.log(currentData?.main_image_url);
     scale.value = withSequence(
       withSpring(0.8), // 小さくなる
       withSpring(1), // 元の大きさに戻る
@@ -56,9 +60,8 @@ const UserMarker = ({
       coordinate={
         location
           ? {
-              // TODO: データベースから取得した値に置き換える
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+              latitude: currentData?.latitude || 0,
+              longitude: currentData?.longitude || 0,
             }
           : {
               latitude: 0,
@@ -77,7 +80,7 @@ const UserMarker = ({
             className={`flex h-[52px] w-[52px] items-center justify-center rounded-[14px] ${frameColor}`}
           >
             <StyledImage
-              source={{ uri: userData?.main_image_url || undefined }}
+              source={{ uri: currentData?.main_image_url || undefined }}
               style={{ width: 42, height: 42, borderRadius: 10 }}
             />
           </StyledView>
@@ -88,6 +91,12 @@ const UserMarker = ({
           </StyledView>
         </StyledView>
       </Animated.View>
+      {/* モーダル */}
+      <UserModal
+        uid={uid}
+        isVisibleUserModal={isVisibleUserModal}
+        setIsVisibleUserModal={setIsVisibleUserModal}
+      />
     </Marker>
   );
 };

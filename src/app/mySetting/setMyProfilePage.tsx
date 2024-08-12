@@ -23,7 +23,13 @@ import BirthdayInput from "../../layout/form/birthInput";
 import GenderInput from "../../layout/form/genderInput";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 import ResidentialInput from "../../layout/form/residentialInput";
 
 const StyledView = styled(View);
@@ -86,14 +92,18 @@ const SetMyProfilePage = () => {
     console.log("Saving profile...");
 
     const updates: Partial<UserData> = {};
-    if(mainImage){
-      await uploadImage("main_images", mainImage)
-    }
+    // メイン画像
     if (mainImage !== myUserData.main_image_url) {
+      let mainImageUrl = "";
+      if (mainImage) {
+        mainImageUrl = await uploadImage("main_images", mainImage);
+      }
       console.log("Main image has changed.");
-      updates.main_image_url = mainImage
-        ? await uploadImage("main_images", mainImage)
-        : null;
+      updates.main_image_url = mainImage ? mainImageUrl : null;
+      const currentRef = doc(db, "current", myUid);
+      await updateDoc(currentRef, {
+        main_image_url: mainImageUrl,
+      });
     }
 
     const subImageUrls = [...subImages];
@@ -163,8 +173,7 @@ const SetMyProfilePage = () => {
       />
       <StyledTouchableOpacity
         onPress={handleSaveMyProfile}
-      >
-        </StyledTouchableOpacity>
+      ></StyledTouchableOpacity>
       <ScrollView className="bg-[#f2f2f2]">
         <StyledView>
           <StyledView className="top-[8vh] mb-[36vh]">

@@ -2,7 +2,14 @@ import { Tabs, useGlobalSearchParams, useRouter } from "expo-router";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import { auth, db } from "../../firebase";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
 import {
   AppData,
   CurrentData,
@@ -16,9 +23,12 @@ import { set as setAppData } from "../../store/appDataSlice";
 import { set as setCurrentData } from "../../store/currentDataSlice";
 import { set as setLocation } from "../../store/locationSlice";
 import { set as setMyUid } from "../../store/myUidSlice";
+import allCurrentDataSlice, {
+  set as setAllCurrentData,
+} from "../../store/allCurrentDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { styled } from "nativewind";
 import { Image, Text, View } from "react-native";
 import BottomNavigation from "../../components/main/navigation/bottomNavigation";
@@ -30,11 +40,10 @@ const StyledImage = styled(Image);
 export default function Layout() {
   const { isFetchUserData } = useGlobalSearchParams();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const fetchUserData = (uid: string, dispatch: Dispatch) => {
     const userRef = doc(db, "user", uid);
-
-    dispatch(setMyUid(uid));
     return onSnapshot(userRef, (doc) => {
       if (doc.exists()) {
         console.log("fetched user data");
@@ -83,6 +92,7 @@ export default function Layout() {
 
   const fetchMyUser = async (dispatch: Dispatch) => {
     const user = auth.currentUser;
+    dispatch(setMyUid(user?.uid));
     if (user) {
       const unsubscribes = [
         fetchUserData(user.uid, dispatch),
@@ -105,15 +115,92 @@ export default function Layout() {
     dispatch(setLocation(location));
   };
 
+  const fetchCurrentData_indvidual = (
+    uid: string,
+    dispatch: Dispatch,
+    existingData: { [key: string]: CurrentData | null },
+  ) => {
+    const currentRef = doc(db, "current", uid);
+    return onSnapshot(currentRef, (doc) => {
+      if (doc.exists()) {
+        console.log(`Fetched current data for user ${uid}`);
+        const updatedData = {
+          ...existingData,
+          [uid]: doc.data() as CurrentData,
+        };
+        dispatch(setAllCurrentData(updatedData));
+      } else {
+        console.log(`No current data for user ${uid}`);
+      }
+    });
+  };
+
+  const fetchAllCurrentData = async (dispatch: Dispatch) => {
+    const currentRef = collection(db, "current");
+    try {
+      const querySnapshot = await getDocs(currentRef);
+      if (!querySnapshot.empty) {
+        console.log("Fetched all current data");
+        let allCurrentDataDict: { [key: string]: CurrentData | null } = {};
+        querySnapshot.forEach((doc) => {
+          allCurrentDataDict[doc.id] = doc.data() as CurrentData;
+        });
+
+        // 全てのユーザの current データを dispatch にセット
+        dispatch(setAllCurrentData(allCurrentDataDict));
+
+        // 各ユーザの current ドキュメントをリアルタイムで監視
+        querySnapshot.forEach((doc) => {
+          fetchCurrentData_indvidual(doc.id, dispatch, allCurrentDataDict);
+        });
+      } else {
+        console.log("No user data found!");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   useEffect(() => {
     if (isFetchUserData != "false") {
+      fetchAllCurrentData(dispatch);
       fetchMyUser(dispatch);
       fetchLocation();
     }
     // router.push("/mySetting/variousSettingPage")
   }, []);
 
-  const dispatch = useDispatch();
+  const location: any = useSelector((state: any) => state.location.value);
+  const myUid: string = useSelector((state: any) => state.myUid.value);
+  const isGps: boolean = useSelector((state: any) => state.isGps.value);
+  const prevLocationRef = useRef(location);
+
+  const sendLocation = async (uid: string) => {
+    if (isGps === false) {
+      return;
+    }
+    console.log("send location");
+    const currentRef = doc(db, "current", uid);
+    await setDoc(
+      currentRef,
+      {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      },
+      { merge: true },
+    );
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (prevLocationRef.current !== location) {
+        sendLocation(myUid);
+        prevLocationRef.current = location;
+      }
+    }, 2 * 1000); // 180秒
+
+    return () => clearInterval(interval);
+  }, [Location]);
   return (
     <Tabs
       screenOptions={{

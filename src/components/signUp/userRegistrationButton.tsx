@@ -4,7 +4,13 @@ import { styled } from "nativewind";
 import { createUserWithEmailAndPassword, User } from "firebase/auth";
 import { auth, db } from "../../firebase";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { useRouter } from "expo-router";
 
 const StyledView = styled(View);
@@ -51,7 +57,7 @@ const UserRegistationButton = ({
     const blob = await response.blob();
 
     try {
-      await uploadBytes(storageRef, blob);
+      await uploadBytesResumable(storageRef, blob);
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     } catch (error) {

@@ -20,7 +20,7 @@ const SelfIntroductionProfile = ({
   selfIntroduction: string | undefined;
 }) => {
   return (
-    <StyledView className="mx-auto mb-[12px] w-full">
+    <StyledView className="mx-auto mb-[24px] w-full">
       <StyledView className="flex flex-row items-center justify-between">
         <StyledView className="mb-[12px] flex flex-row items-center">
           <Icon name="face-man" size={38} color="#333" className="mr-[10px]" />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Key, useEffect, useState } from "react";
 import {
   Image,
   Modal,
@@ -16,7 +16,11 @@ import SelfIntroductionProfile from "./selfIntroductionProfile";
 import WorkProfile from "./workProfile";
 import GoalProfile from "./goalProfile";
 import WhatNowProfile from "./whatNowProfile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import SendMessageButton from "./sendMessageButton";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase";
+import { updateKey } from "../../store/allUserDataSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -25,16 +29,50 @@ const StyledImage = styled(Image);
 const StyledScrollView = styled(ScrollView);
 
 const UserModal = ({
+  uid,
   isVisibleUserModal,
   setIsVisibleUserModal,
 }: {
+  uid: string;
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const userData: UserData = useSelector((state: any) => state.userData.value);
-  const currentData: CurrentData = useSelector(
+  const myCurrentData: CurrentData = useSelector(
     (state: any) => state.currentData.value,
   );
+
+  const dispatch = useDispatch();
+  const myUserData: UserData = useSelector(
+    (state: any) => state.userData.value,
+  );
+  const myUid: string = useSelector((state: any) => state.myUid.value);
+  const allCurrentData = useSelector(
+    (state: any) => state.allCurrentData.value,
+  );
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [currentData, setCurrentData] = useState<CurrentData | null>(null);
+  const [gender, setGender] = useState<string | undefined>("");
+
+  useEffect(() => {
+    if (uid === myUid) {
+      setUserData(myUserData);
+      setCurrentData(myCurrentData);
+      setGender(myUserData?.gender);
+    } else {
+      setCurrentData(allCurrentData[uid]);
+      const userRef = doc(db, "user", uid);
+      return onSnapshot(userRef, (doc) => {
+        if (doc.exists()) {
+          console.log("fetched current data");
+          const userData_tmp = doc.data();
+          setUserData(userData_tmp);
+          setGender(userData_tmp?.gender);
+        } else {
+          console.log("No such current data!");
+        }
+      });
+    }
+  }, []);
 
   return (
     <Modal
@@ -47,7 +85,19 @@ const UserModal = ({
         className="flex-1 items-center justify-center"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       >
-        <StyledView className="relative h-[60vh] w-[86vw] rounded-lg bg-[#fff] p-[24px]">
+        <StyledView
+          className={`relative h-[60vh] w-[86vw] rounded-lg p-[24px] ${
+            uid == myUid
+              ? "bg-[#fff0d9]"
+              : gender == "male"
+                ? "bg-[#E4F5FF]"
+                : gender == "female"
+                  ? "bg-[#FFE4E4]"
+                  : "bg-[#E4FFEB]"
+          }`}
+        >
+          {/* メッセージ送信ボタン */}
+          {uid != myUid && <SendMessageButton />}
           {/* モーダルの右上に閉じるボタンを追加 */}
           <StyledTouchableOpacity
             onPress={() => setIsVisibleUserModal(false)}
@@ -56,7 +106,7 @@ const UserModal = ({
             <Icon name="close" size={24} color="#f00" />
           </StyledTouchableOpacity>
 
-          <StyledScrollView className="h-full w-full">
+          <StyledScrollView className="h-full w-full pt-[10%]">
             <TopProfile userData={userData} />
             <WhatNowProfile whatNow={currentData?.what_now} />
             <SelfIntroductionProfile
@@ -64,6 +114,7 @@ const UserModal = ({
             />
             <WorkProfile selectedWork={userData?.selected_work} />
             <GoalProfile selectedGoal={userData?.selected_goal} />
+            <StyledView className="h-[30px]" />
           </StyledScrollView>
         </StyledView>
       </StyledView>
