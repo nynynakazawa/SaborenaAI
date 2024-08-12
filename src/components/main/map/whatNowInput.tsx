@@ -116,7 +116,7 @@ const WhatNowInput = () => {
           )}
         </StyledView>
         <StyledTouchableOpacity
-          onPress={() => handleSend()}
+          onPress={() => {handleSend(); setKeyboardHeight(0); setIsTextInputFocused(false)}}
           className="h-[40px] border-l-2 border-[#ccc] pl-[16px]"
           disabled={whatNow?.trim() == "" || isSendingWhatNow}
         >

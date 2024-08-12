@@ -23,7 +23,7 @@ import { set as setAppData } from "../../store/appDataSlice";
 import { set as setCurrentData } from "../../store/currentDataSlice";
 import { set as setLocation } from "../../store/locationSlice";
 import { set as setMyUid } from "../../store/myUidSlice";
-import allCurrentDataSlice, {
+import {
   set as setAllCurrentData,
 } from "../../store/allCurrentDataSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -161,21 +161,7 @@ export default function Layout() {
     }
   };
 
-  useEffect(() => {
-    if (isFetchUserData != "false") {
-      fetchAllCurrentData(dispatch);
-      fetchMyUser(dispatch);
-      fetchLocation();
-    }
-    // router.push("/mySetting/variousSettingPage")
-  }, []);
-
-  const location: any = useSelector((state: any) => state.location.value);
-  const myUid: string = useSelector((state: any) => state.myUid.value);
-  const isGps: boolean = useSelector((state: any) => state.isGps.value);
-  const prevLocationRef = useRef(location);
-
-  const sendLocation = async (uid: string) => {
+  const sendLocation = async (uid: string, isGps: boolean) => {
     if (isGps === false) {
       return;
     }
@@ -192,15 +178,40 @@ export default function Layout() {
   };
 
   useEffect(() => {
+    if (isFetchUserData != "false") {
+      fetchAllCurrentData(dispatch);
+      fetchMyUser(dispatch);
+      fetchLocation();
+      sendLocation(myUid, true);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   console.log("a")
+  //   const intervalId = setInterval(() => {
+  //     fetchLocation();
+  //     console.log("fetch location")
+  //   }, 1000);
+
+  //   return () => clearInterval(intervalId);
+  // },[])
+
+  const location: any = useSelector((state: any) => state.location.value);
+  const myUid: string = useSelector((state: any) => state.myUid.value);
+  const isGps: boolean = useSelector((state: any) => state.isGps.value);
+  const prevLocationRef = useRef(location);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       if (prevLocationRef.current !== location) {
-        sendLocation(myUid);
+        sendLocation(myUid, isGps);
         prevLocationRef.current = location;
       }
     }, 2 * 1000); // 180秒
 
     return () => clearInterval(interval);
   }, [Location]);
+
   return (
     <Tabs
       screenOptions={{

@@ -108,7 +108,7 @@ const UserRegistationButton = ({
           longitude: -1,
           latitude: -1,
           what_now: "こんにちは",
-          main_mainImage_url: mainImageUrl,
+          main_image_url: mainImageUrl,
         },
         { merge: true },
       );

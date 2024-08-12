@@ -27,9 +27,9 @@ const UserMarker = ({
   const location: Location.LocationObject = useSelector(
     (state: any) => state.location.value,
   );
-
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
   const gender = currentData?.gender;
+  const myUid: string = useSelector((state: any) => state.myUid.value);
   let frameColor;
   if (gender === "male") {
     frameColor = "bg-[#79C7FF]";
@@ -58,15 +58,15 @@ const UserMarker = ({
   return (
     <Marker
       coordinate={
-        location
+        uid == myUid
           ? {
-              latitude: currentData?.latitude || 0,
-              longitude: currentData?.longitude || 0,
-            }
-          : {
-              latitude: 0,
-              longitude: 0,
-            }
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          }:
+          {
+            latitude: currentData?.latitude || 0,
+            longitude: currentData?.longitude || 0,
+          }
       }
       style={{ width: 52, height: 60, paddingBottom: 40 }}
       onPress={() => {
