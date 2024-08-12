@@ -20,7 +20,7 @@ const PageBackHeader = ({
 }) => {
   const Container = Platform.OS === "ios" ? SafeAreaView : View;
   return (
-    <Container>
+    <Container edges={["top", "left", "right"]}>
       <StyledView className="mx-auto flex h-[70px] w-[90vw] flex-row items-center">
         <StyledTouchableOpacity
           onPress={() =>

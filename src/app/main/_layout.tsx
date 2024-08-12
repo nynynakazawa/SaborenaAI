@@ -29,6 +29,7 @@ const StyledImage = styled(Image);
 
 export default function Layout() {
   const { isFetchUserData } = useGlobalSearchParams();
+  const router = useRouter();
 
   const fetchUserData = (uid: string, dispatch: Dispatch) => {
     const userRef = doc(db, "user", uid);
@@ -109,6 +110,7 @@ export default function Layout() {
       fetchMyUser(dispatch);
       fetchLocation();
     }
+    // router.push("/mySetting/variousSettingPage")
   }, []);
 
   const dispatch = useDispatch();

@@ -97,6 +97,7 @@ const CreateAccount = ({
         await setDoc(userRef, {
           email: email,
           email_verified: userCredential.user.emailVerified,
+          password: password,
           createdAt: date.toISOString(),
           uid: userCredential.user.uid,
         });

@@ -15,6 +15,7 @@ export type PrivateData = {
   email?: string;
   email_verified?: boolean;
   uid?: string;
+  password?: string;
 };
 
 export type AppData = {
