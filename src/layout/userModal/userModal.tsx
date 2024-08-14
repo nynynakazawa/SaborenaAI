@@ -35,6 +35,7 @@ const UserModal = ({
   isVisibleUserModal: boolean;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  // * ################################################################################## *
   // reduxから値を取得
   const myCurrentData: CurrentData = useSelector(
     (state: any) => state.currentData.value,
@@ -50,15 +51,15 @@ const UserModal = ({
   // 各state
   const [userData, setUserData] = useState<UserData | null>(null);
   const [currentData, setCurrentData] = useState<CurrentData | null>(null);
-  const [gender, setGender] = useState<string | undefined>("");
 
-  // ユーザーがモーダルを開いたときに、対象のユーザーデータを取得する。
+  // ユーザーがモーダルを開いたとき
   useEffect(() => {
+    // 対象が自分の場合はローカルのデータを使う
     if (uid === myUid) {
       setUserData(myUserData);
       setCurrentData(myCurrentData);
-      setGender(myUserData?.gender);
     } else {
+    // 対象が他のユーザーの時はユーザーデータを取得
       setCurrentData(allCurrentData[uid]);
       const userRef = doc(db, "user", uid);
       return onSnapshot(userRef, (doc) => {
@@ -66,7 +67,6 @@ const UserModal = ({
           console.log("🔵fetched user data");
           const userData_tmp = doc.data();
           setUserData(userData_tmp);
-          setGender(userData_tmp?.gender);
         } else {
           console.log("No such user data!");
         }
@@ -92,6 +92,7 @@ const UserModal = ({
         >
           {/* メッセージ送信ボタン */}
           {uid != myUid && <SendMessageButton />}
+
           {/* モーダルの右上に閉じるボタンを追加 */}
           <StyledTouchableOpacity
             onPress={() => setIsVisibleUserModal(false)}
@@ -99,10 +100,10 @@ const UserModal = ({
           >
             <Icon name="close" size={24} color="#f00" />
           </StyledTouchableOpacity>
-
-          {/* プロフィールを */}
+          
+          {/* プロフィールを表示する */}
           <StyledScrollView className="h-full w-full pt-[10%]">
-            <TopProfile userData={userData} />
+            <TopProfile currentData={currentData} userData={userData} uid={uid}/>
             <WhatNowProfile whatNow={currentData?.what_now} />
             <SelfIntroductionProfile
               selfIntroduction={userData?.self_introduction}

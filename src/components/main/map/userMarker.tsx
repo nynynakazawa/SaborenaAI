@@ -25,12 +25,14 @@ const UserMarker = ({
   uid: string;
   currentData: CurrentData | null;
 }) => {
+  // * ################################################################################## *
   const location: Location.LocationObject = useSelector(
     (state: any) => state.location.value,
   );
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
   const gender = currentData?.gender;
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
+
   let frameColor;
   if (uid == myUid) {
     frameColor = "bg-[#ffc179]";
@@ -59,6 +61,7 @@ const UserMarker = ({
 
   return (
     <Marker
+      // 自分の現在位置は連続的に変更
       coordinate={
         uid == myUid
           ? {

@@ -6,7 +6,6 @@ import PageBackHeader from "../../layout/header/pageBackHeader";
 import AccountManagement from "../../components/main/mySetting/accountManagement";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 
 const HelpPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;

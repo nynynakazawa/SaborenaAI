@@ -37,7 +37,7 @@ export type AppData = {
 };
 
 export type CurrentData = {
-  peopleCount?: "1人" | "2人" | "3人" | "複数人";
+  people_count?: "1人" | "2人" | "3人" | "複数人";
   isGPS?: boolean;
   longitude?: number;
   latitude?: number;

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Image, Text, View } from "react-native";
 import { styled } from "nativewind";
 import NameDisplayComponent from "../display/nameDisplayComponent";
-import { UserData } from "../../types/userDataTypes";
+import { CurrentData, UserData } from "../../types/userDataTypes";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useSelector } from "react-redux";
 
@@ -10,7 +10,18 @@ const StyledView = styled(View);
 const StyledImage = styled(Image);
 const StyledText = styled(Text);
 
-const TopProfile = ({ userData }: { userData: UserData | null }) => {
+const TopProfile = ({ 
+  currentData,
+  userData, 
+  uid,
+} : {
+  currentData: CurrentData | null;
+  userData: UserData | null;
+  uid: string;
+}) => {
+  // * ################################################################################## *
+  
+  const myUid: string = useSelector((state: any) => state.myUid.value);
   const myPeopleCount: number = useSelector(
     (state: any) => state.peopleCount.value,
   );
@@ -29,7 +40,9 @@ const TopProfile = ({ userData }: { userData: UserData | null }) => {
           </StyledView>
           <StyledView className="mb-[12px] flex flex-row items-center">
             <Icon name={"person"} size={24} color={"#333"} />
-            <StyledText>{myPeopleCount}</StyledText>
+            <StyledText>
+              {myUid == uid ? myPeopleCount : currentData?.people_count}
+            </StyledText>
           </StyledView>
         </StyledView>
 

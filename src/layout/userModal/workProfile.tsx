@@ -11,6 +11,7 @@ const WorkProfile = ({
 }: {
   selectedWork: string | undefined;
 }) => {
+    // * ################################################################################## *
   return (
     <StyledView className="mx-auto mb-[24px] flex w-full flex-row items-center justify-between rounded-lg">
       <StyledView className="flex flex-row items-center">

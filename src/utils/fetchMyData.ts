@@ -64,7 +64,7 @@ export const fetchCurrentData = (uid: string, dispatch: Dispatch) => {
   const currentRef = doc(db, "current", uid);
   return onSnapshot(currentRef, (doc) => {
     if (doc.exists()) {
-      console.log("🟣fetched current data", doc.data());
+      console.log("🟣fetched current data");
       dispatch(setCurrentData(doc.data()));
     } else {
       console.log("❌no such current data!");

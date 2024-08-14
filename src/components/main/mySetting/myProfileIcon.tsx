@@ -30,7 +30,7 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
       }}
       activeOpacity={isEditable ? 0.6 : 1}
     >
-      {/* myアイコン */}
+      {/* MYアイコン */}
       <StyledView className="absolute">
         <StyledImage
           source={{ uri: myUserData?.main_image_url || undefined }}
