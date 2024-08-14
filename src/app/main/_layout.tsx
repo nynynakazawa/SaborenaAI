@@ -238,23 +238,6 @@ const fetchAllCurrentData = async (dispatch: Dispatch) => {
         }}
       />
       <Tabs.Screen
-        name="likeFromScreen"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="heart"
-              size={30}
-              color={focused ? "#f91880" : "#333"}
-            />
-          ),
-          headerShown: true,
-          headerTitleAlign: "center",
-          headerTitle: "相手からのいいね",
-          headerStyle: { height: 90 },
-          headerTitleStyle: { fontSize: 16 },
-        }}
-      />
-      <Tabs.Screen
         name="talkListScreen"
         options={{
           tabBarIcon: ({ focused }) => (
