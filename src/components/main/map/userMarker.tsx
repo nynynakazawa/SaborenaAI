@@ -32,7 +32,9 @@ const UserMarker = ({
   const gender = currentData?.gender;
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
   let frameColor;
-  if (gender === "male") {
+  if(uid == myUid){
+    frameColor = "bg-[#ffc179]"
+  } else if (gender === "male") {
     frameColor = "bg-[#79C7FF]";
   } else if (gender === "female") {
     frameColor = "bg-[#F479FF]";

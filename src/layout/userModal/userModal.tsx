@@ -88,11 +88,7 @@ const UserModal = ({
           className={`relative h-[60vh] w-[86vw] rounded-lg p-[24px] ${
             uid == myUid
               ? "bg-[#fff0d9]"
-              : gender == "male"
-                ? "bg-[#E4F5FF]"
-                : gender == "female"
-                  ? "bg-[#FFE4E4]"
-                  : "bg-[#E4FFEB]"
+              : "bg-[#fff]"
           }`}
         >
           {/* メッセージ送信ボタン */}
