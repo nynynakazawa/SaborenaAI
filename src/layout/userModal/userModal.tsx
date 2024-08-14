@@ -52,6 +52,7 @@ const UserModal = ({
   const [currentData, setCurrentData] = useState<CurrentData | null>(null);
   const [gender, setGender] = useState<string | undefined>("");
 
+  // ユーザーがモーダルを開いたときに、対象のユーザーデータを取得する。
   useEffect(() => {
     if (uid === myUid) {
       setUserData(myUserData);
@@ -62,12 +63,12 @@ const UserModal = ({
       const userRef = doc(db, "user", uid);
       return onSnapshot(userRef, (doc) => {
         if (doc.exists()) {
-          console.log("fetched current data");
+          console.log("🔵fetched user data");
           const userData_tmp = doc.data();
           setUserData(userData_tmp);
           setGender(userData_tmp?.gender);
         } else {
-          console.log("No such current data!");
+          console.log("No such user data!");
         }
       });
     }
@@ -86,9 +87,7 @@ const UserModal = ({
       >
         <StyledView
           className={`relative h-[60vh] w-[86vw] rounded-lg p-[24px] ${
-            uid == myUid
-              ? "bg-[#fff0d9]"
-              : "bg-[#fff]"
+            uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
           }`}
         >
           {/* メッセージ送信ボタン */}

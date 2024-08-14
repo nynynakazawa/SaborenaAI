@@ -46,7 +46,7 @@ const WhatNowInput = () => {
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
-      (e) => { 
+      (e) => {
         setDefaultKeyboardHeight(e.endCoordinates.height);
       },
     );
@@ -108,7 +108,10 @@ const WhatNowInput = () => {
           )}
         </StyledView>
         <StyledTouchableOpacity
-          onPress={() => {handleSend(); setIsTextInputFocused(false)}}
+          onPress={() => {
+            handleSend();
+            setIsTextInputFocused(false);
+          }}
           className="h-[40px] border-l-2 border-[#ccc] pl-[16px]"
           disabled={whatNow?.trim() == "" || isSendingWhatNow}
         >

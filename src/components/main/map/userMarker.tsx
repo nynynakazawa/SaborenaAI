@@ -32,8 +32,8 @@ const UserMarker = ({
   const gender = currentData?.gender;
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
   let frameColor;
-  if(uid == myUid){
-    frameColor = "bg-[#ffc179]"
+  if (uid == myUid) {
+    frameColor = "bg-[#ffc179]";
   } else if (gender === "male") {
     frameColor = "bg-[#79C7FF]";
   } else if (gender === "female") {
@@ -62,13 +62,13 @@ const UserMarker = ({
       coordinate={
         uid == myUid
           ? {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }:
-          {
-            latitude: currentData?.latitude || 0,
-            longitude: currentData?.longitude || 0,
-          }
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+            }
+          : {
+              latitude: currentData?.latitude || 0,
+              longitude: currentData?.longitude || 0,
+            }
       }
       style={{ width: 52, height: 60, paddingBottom: 40 }}
       onPress={() => {
@@ -94,13 +94,13 @@ const UserMarker = ({
         </StyledView>
       </Animated.View>
       {/* モーダル */}
-      { isVisibleUserModal &&
+      {isVisibleUserModal && (
         <UserModal
           uid={uid}
           isVisibleUserModal={isVisibleUserModal}
           setIsVisibleUserModal={setIsVisibleUserModal}
         />
-      }
+      )}
     </Marker>
   );
 };

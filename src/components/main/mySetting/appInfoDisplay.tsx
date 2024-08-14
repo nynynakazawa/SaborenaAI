@@ -40,7 +40,7 @@ const AppInfoDisplay = () => {
           </StyledText>
         )}
       </StyledView>
-      
+
       {/* いいね数表示 */}
       <StyledView className="flex w-[33.33%] items-center justify-center">
         <StyledText className="mb-[12px] h-[30px]">いいね</StyledText>

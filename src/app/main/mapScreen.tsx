@@ -33,8 +33,10 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const MapScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
-  const location: Location.LocationObject | null = useSelector((state: RootState) => state.location.value);
-  const allCurrentData:{ [key: string]: CurrentData | null }  = useSelector(
+  const location: Location.LocationObject | null = useSelector(
+    (state: RootState) => state.location.value,
+  );
+  const allCurrentData: { [key: string]: CurrentData | null } = useSelector(
     (state: RootState) => state.allCurrentData.value,
   );
 

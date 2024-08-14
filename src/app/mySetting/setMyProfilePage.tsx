@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Platform,
-  ScrollView,
-  View,
-} from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { UserData } from "../../types/userDataTypes";
@@ -34,7 +30,9 @@ const SetMyProfilePage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
   // reduxから値を取得する
-  const myUserData: UserData | null = useSelector((state: RootState) => state.userData.value,);
+  const myUserData: UserData | null = useSelector(
+    (state: RootState) => state.userData.value,
+  );
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
 
   // 各種state

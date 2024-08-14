@@ -13,7 +13,7 @@ const ResettingPassword = () => {
   const [isSendingEmail, setIsSendingEmail] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(60);
   const [email, setEmail] = React.useState("");
-  
+
   // タイマーのロジック
   useEffect(() => {
     let countdown: NodeJS.Timeout;

@@ -14,7 +14,9 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const ChangeCurrentStatus = () => {
-  const peopleCount = useSelector((state: RootState) => state.peopleCount.value);
+  const peopleCount = useSelector(
+    (state: RootState) => state.peopleCount.value,
+  );
   const isGps = useSelector((state: RootState) => state.isGps.value);
   const myUid = useSelector((state: RootState) => state.myUid.value);
   const dispatch = useDispatch();

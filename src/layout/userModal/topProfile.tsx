@@ -11,7 +11,6 @@ const StyledImage = styled(Image);
 const StyledText = styled(Text);
 
 const TopProfile = ({ userData }: { userData: UserData | null }) => {
-
   const myPeopleCount: number = useSelector(
     (state: any) => state.peopleCount.value,
   );
