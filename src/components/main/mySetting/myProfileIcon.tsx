@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
@@ -22,7 +21,7 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
 
   return (
     <StyledTouchableOpacity
-      className="flex h-[200px] w-screen items-center"
+      className="flex h-[200px] items-center"
       onPress={() => {
         if (isEditable) {
           router.push("mySetting/setMyProfilePage");
@@ -43,7 +42,7 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
             <Icon
               name="pencil"
               size={26}
-              color={"#333"}
+              color="#333"
               className="bottom-0 right-0"
             />
           </StyledView>
@@ -51,7 +50,7 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
       </StyledView>
       {/* 名前 */}
       <StyledView className="absolute bottom-[-50px] top-[120px] text-[16px]">
-        <NameDisplayComponent userData={myUserData} />
+        <NameDisplayComponent userData={myUserData} size={"large"}/>
       </StyledView>
     </StyledTouchableOpacity>
   );

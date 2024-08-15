@@ -13,7 +13,13 @@ type Birthday = {
   date: number;
 };
 
-const NameDisplayComponent = ({ userData }: { userData: UserData | null }) => {
+const NameDisplayComponent = ({
+  userData,
+  size,
+}: {
+  userData: UserData | null;
+  size: "small" | "large";
+}) => {
   // 生年月日から年齢を取得
   function getAge(birthday: Birthday) {
     const today = new Date();
@@ -45,16 +51,22 @@ const NameDisplayComponent = ({ userData }: { userData: UserData | null }) => {
   const gender: string = userData?.gender || "";
   const age: number = birthdayDic ? getAge(birthdayDic) : 0;
 
+  // サイズによるスタイルの変更
+  const fontSize = size === "large" ? 16: 12;
+  const iconSize = size === "large" ? 24 : 16;
+  
   return (
-    <StyledView className="flex w-full flex-row items-center">
-      <StyledText className="ml-[6px] text-[16px] font-bold text-[#333]">
+    <StyledView className="flex flex-row flex-wrap items-center">
+      <StyledText
+        className={`ml-[4px] font-bold text-[#333] text-[${fontSize}px]`}
+      >
         {userData?.name} ({age})
       </StyledText>
-      <StyledView className="w-[24px]">
+      <StyledView className={`w-[${iconSize}px]`}>
         {gender == "male" && (
           <Icon
             name="gender-male"
-            size={24}
+            size={iconSize}
             color={"#79C7FF"}
             className="ml-[4px] translate-y-[2px]"
           />
@@ -62,7 +74,7 @@ const NameDisplayComponent = ({ userData }: { userData: UserData | null }) => {
         {gender == "female" && (
           <Icon
             name="gender-female"
-            size={24}
+            size={iconSize}
             color={"#F479FF"}
             className="ml-[4px] translate-y-[2px]"
           />
@@ -70,7 +82,7 @@ const NameDisplayComponent = ({ userData }: { userData: UserData | null }) => {
         {gender != "male" && gender != "female" && (
           <Icon
             name="gender-male-female"
-            size={24}
+            size={iconSize}
             color={"#79FF82"}
             className="ml-[4px] translate-y-[2px]"
           />

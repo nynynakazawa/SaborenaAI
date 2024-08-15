@@ -1,11 +1,10 @@
 import React from "react";
-import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
-const StyledScrollView = styled(ScrollView);
 
 type TermModalProps = {
   visible: boolean;

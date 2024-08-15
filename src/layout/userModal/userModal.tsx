@@ -87,7 +87,7 @@ const UserModal = ({
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       >
         <StyledView
-          className={`relative h-[60vh] w-[86vw] rounded-lg p-[24px] ${uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
+          className={`relative h-[60vh] w-[90vw] rounded-lg p-[24px] ${uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
             }`}
         >
           {userData ? (
@@ -104,7 +104,7 @@ const UserModal = ({
               </StyledTouchableOpacity>
 
               {/* プロフィールを表示する */}
-              <StyledScrollView className="h-full w-full pt-[10%]">
+              <StyledScrollView showsVerticalScrollIndicator={false} className="h-full w-full pt-[10%]">
                 <TopProfile currentData={currentData} userData={userData} uid={uid} />
                 <WhatNowProfile whatNow={currentData?.what_now} />
                 <SelfIntroductionProfile

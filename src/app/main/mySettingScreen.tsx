@@ -15,7 +15,7 @@ const MySettingScreen = () => {
     <Container style={{ flex: 1 }}>
       <StyledView className="absolute mt-[8vh] flex w-screen items-center">
         {/* プロフィールアイコン */}
-        <StyledView className="h-[150px]">
+        <StyledView className="h-[150px] w-full">
           <MyProfileIcon isEditable={true} />
         </StyledView>
 

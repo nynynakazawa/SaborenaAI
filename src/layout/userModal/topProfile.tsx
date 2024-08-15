@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Image, Text, View } from "react-native";
+import React from "react";
+import { FlatList, Image, ListRenderItemInfo, Text, View } from "react-native";
 import { styled } from "nativewind";
 import NameDisplayComponent from "../display/nameDisplayComponent";
 import { CurrentData, UserData } from "../../types/userDataTypes";
@@ -10,48 +10,69 @@ const StyledView = styled(View);
 const StyledImage = styled(Image);
 const StyledText = styled(Text);
 
-const TopProfile = ({ 
+const TopProfile = ({
   currentData,
-  userData, 
+  userData,
   uid,
-} : {
+}: {
   currentData: CurrentData | null;
   userData: UserData | null;
   uid: string;
 }) => {
-  // * ################################################################################## *
-  
   const myUid: string = useSelector((state: any) => state.myUid.value);
   const myPeopleCount: number = useSelector(
     (state: any) => state.peopleCount.value,
   );
 
+  const renderItem = ({ item }: ListRenderItemInfo<string | null>) => (
+    <StyledImage
+      source={{ uri: item || undefined }}
+      style={{ width: 36, height: 58 }}
+      className="w-[33%] rounded-lg"
+    />
+  );
+
   return (
-    <StyledView className="mb-[24px] flex w-full flex-row items-center">
+    <StyledView className="mb-[24px] flex w-full flex-row">
+      {/* メイン画像 */}
       <StyledImage
         source={{ uri: userData?.main_image_url || undefined }}
         style={{ width: 140, height: 140 }}
         className="rounded-lg"
       />
-      <StyledView className="ml-[12px] flex w-full justify-between">
-        <StyledView>
-          <StyledView className="mb-[6px] w-full border-b-2 border-[#aaa] pb-[12px]">
-            <NameDisplayComponent userData={userData} />
+
+      <StyledView className="ml-[12px] flex items-end">
+        <StyledView className="mb-[12px] flex-1 justify-between">
+          {/* 名前 */}
+          <StyledView className="w-full border-b-2 border-[#aaa] pb-[8px]">
+            <NameDisplayComponent userData={userData} size={"small"} />
           </StyledView>
-          <StyledView className="mb-[12px] flex flex-row items-center">
-            <Icon name={"person"} size={24} color={"#333"} />
-            <StyledText>
+          {/* 人数 */}
+          <StyledView className="flex flex-row items-center">
+            <Icon name={"person"} size={18} color={"#333"} />
+            <StyledText className="text-[#333]">
               {myUid == uid ? myPeopleCount : currentData?.people_count}
             </StyledText>
           </StyledView>
         </StyledView>
 
-        {/* sub images */}
-        <StyledImage
-          source={{ uri: userData?.main_image_url || undefined }}
-          style={{ width: 36, height: 58 }}
-          className="rounded-lg"
-        />
+        {/* サブ画像 */}
+        <StyledView className="flex-1 justify-end w-full">
+          <StyledView>
+            <FlatList
+              data={userData?.sub_images_url}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal
+              scrollEnabled={false}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                justifyContent: "space-between",
+                flexGrow: 1,
+              }}
+            />
+          </StyledView>
+        </StyledView>
       </StyledView>
     </StyledView>
   );
