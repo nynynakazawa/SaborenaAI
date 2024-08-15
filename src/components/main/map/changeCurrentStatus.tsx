@@ -15,8 +15,8 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const ChangeCurrentStatus = () => {
-  const location: Location.LocationObject = useSelector(
-    (state: any) => state.location.value,
+  const location: Location.LocationObject | null = useSelector(
+    (state: RootState) => state.location.value,
   );
   const peopleCount = useSelector(
     (state: RootState) => state.peopleCount.value,

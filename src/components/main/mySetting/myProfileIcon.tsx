@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
 import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
+import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);
 const StyledImage = styled(Image);
@@ -16,7 +17,7 @@ interface ProfileProps {
 }
 
 const MyProfileIcon = ({ isEditable }: ProfileProps) => {
-  const myUserData = useSelector((state: any) => state.userData.value);
+  const myUserData = useSelector((state: RootState) => state.userData.value);
   const router = useRouter();
 
   return (
@@ -50,7 +51,7 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
       </StyledView>
       {/* 名前 */}
       <StyledView className="absolute bottom-[-50px] top-[120px] text-[16px]">
-        <NameDisplayComponent userData={myUserData} size={"large"}/>
+        <NameDisplayComponent userData={myUserData} size={"large"} />
       </StyledView>
     </StyledTouchableOpacity>
   );

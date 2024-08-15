@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Modal, Pressable, Text, TouchableOpacity, View } from "react-native"
+import React, { useState } from "react";
+import { Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "expo-router";
@@ -46,26 +46,33 @@ const LogoutManegement = () => {
         onRequestClose={() => setIsLogoutModalVisible(false)}
       >
         <Pressable
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,0.5)",
+          }}
           onPress={() => setIsLogoutModalVisible(false)}
         >
-          <StyledView className="bg-white p-[20px] rounded-lg w-[80%]">
-            <StyledText className="text-[18px] font-bold mb-[20px] text-center">
+          <StyledView className="w-[80%] rounded-lg bg-white p-[20px]">
+            <StyledText className="mb-[20px] text-center text-[18px] font-bold">
               本当に退会しますか?
             </StyledText>
             <StyledView className="flex-row justify-between">
               <StyledTouchableOpacity
                 onPress={() => setIsLogoutModalVisible(false)}
-                className="flex-1 items-center justify-center px-[10px] py-[12px] bg-[#ddd] rounded-lg mr-[10px]"
+                className="mr-[10px] flex-1 items-center justify-center rounded-lg bg-[#ddd] px-[10px] py-[12px]"
               >
-                <StyledText className="text-[16px] text-[#333]">いいえ</StyledText>
+                <StyledText className="text-[16px] text-[#333]">
+                  いいえ
+                </StyledText>
               </StyledTouchableOpacity>
               <StyledTouchableOpacity
                 onPress={() => {
                   setIsLogoutModalVisible(false);
                   handleLogout();
                 }}
-                className="flex-1 items-center justify-center px-[10px] py-[12px] bg-[#EF6B5C] rounded-lg"
+                className="flex-1 items-center justify-center rounded-lg bg-[#EF6B5C] px-[10px] py-[12px]"
               >
                 <StyledText className="text-[16px] text-white">はい</StyledText>
               </StyledTouchableOpacity>
@@ -74,7 +81,7 @@ const LogoutManegement = () => {
         </Pressable>
       </Modal>
     </StyledView>
-  )
-}
+  );
+};
 
 export default LogoutManegement;

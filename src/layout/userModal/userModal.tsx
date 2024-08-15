@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import SendMessageButton from "./sendMessageButton";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
+import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -38,15 +39,15 @@ const UserModal = ({
 }) => {
   // * ################################################################################## *
   // reduxから値を取得
-  const myCurrentData: CurrentData = useSelector(
-    (state: any) => state.currentData.value,
+  const myCurrentData: CurrentData | null = useSelector(
+    (state: RootState) => state.currentData.value,
   );
-  const myUserData: UserData = useSelector(
-    (state: any) => state.userData.value,
+  const myUserData: UserData | null = useSelector(
+    (state: RootState) => state.userData.value,
   );
-  const myUid: string = useSelector((state: any) => state.myUid.value);
+  const myUid: string = useSelector((state: RootState) => state.myUid.value);
   const allCurrentData = useSelector(
-    (state: any) => state.allCurrentData.value,
+    (state: RootState) => state.allCurrentData.value,
   );
 
   // 各state
@@ -87,8 +88,9 @@ const UserModal = ({
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       >
         <StyledView
-          className={`relative h-[60vh] w-[90vw] rounded-lg p-[24px] ${uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
-            }`}
+          className={`relative h-[60vh] w-[90vw] rounded-lg p-[24px] ${
+            uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
+          }`}
         >
           {userData ? (
             <>
@@ -104,8 +106,15 @@ const UserModal = ({
               </StyledTouchableOpacity>
 
               {/* プロフィールを表示する */}
-              <StyledScrollView showsVerticalScrollIndicator={false} className="h-full w-full pt-[10%]">
-                <TopProfile currentData={currentData} userData={userData} uid={uid} />
+              <StyledScrollView
+                showsVerticalScrollIndicator={false}
+                className="h-full w-full pt-[10%]"
+              >
+                <TopProfile
+                  currentData={currentData}
+                  userData={userData}
+                  uid={uid}
+                />
                 <WhatNowProfile whatNow={currentData?.what_now} />
                 <SelfIntroductionProfile
                   selfIntroduction={userData?.self_introduction}
@@ -116,7 +125,7 @@ const UserModal = ({
               </StyledScrollView>
             </>
           ) : (
-            <StyledView className="flex justify-center items-center h-full">
+            <StyledView className="flex h-full items-center justify-center">
               <ActivityIndicator size="large" />
             </StyledView>
           )}

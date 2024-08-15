@@ -3,13 +3,14 @@ import { Image, Text, View } from "react-native";
 import { styled } from "nativewind";
 import { UserData } from "../../../types/userDataTypes";
 import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);
 const StyledImage = styled(Image);
 
 const BottomNavigation = ({ focused }: { focused: boolean }) => {
   const myUserData: null | UserData = useSelector(
-    (state: any) => state.userData.value,
+    (state: RootState) => state.userData.value,
   );
   return (
     <StyledView className="relative">

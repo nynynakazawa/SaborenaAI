@@ -48,7 +48,7 @@ const UserRegistationButton = ({
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-    // * ############################################################################## *
+  // * ############################################################################## *
   const router = useRouter();
   //  画像のアップロード
   const uploadImage = async (path: string, uri: string) => {

@@ -19,9 +19,7 @@ export type PrivateData = {
   membership_status?: "free" | "premium";
 };
 
-export type AppData = {
-  
-};
+export type AppData = {};
 
 export type TalkData = {
   [uid: string]: {
@@ -41,4 +39,3 @@ export type CurrentData = {
   what_now?: string;
   main_image_url?: string;
 };
-

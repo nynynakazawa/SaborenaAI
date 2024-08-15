@@ -134,7 +134,7 @@ const SignupPage = () => {
           )}
         </>
       ) : (
-        <StyledView className="flex justify-center items-center h-full">
+        <StyledView className="flex h-full items-center justify-center">
           <ActivityIndicator size="large" />
         </StyledView>
       )}

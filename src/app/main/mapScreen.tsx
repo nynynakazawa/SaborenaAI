@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
-import { CurrentData} from "../../types/userDataTypes";
+import { CurrentData } from "../../types/userDataTypes";
 import { styled } from "nativewind";
 import UserMarker from "../../components/main/map/userMarker";
 import WhatNowInput from "../../components/main/map/whatNowInput";
@@ -32,9 +32,9 @@ const MapScreen = () => {
   // 辞書を配列に変換する
   const allCurrentDataArray = allCurrentData
     ? Object.keys(allCurrentData).map((key: string) => ({
-      key,
-      value: allCurrentData[key],
-    }))
+        key,
+        value: allCurrentData[key],
+      }))
     : [];
 
   return (
@@ -66,7 +66,7 @@ const MapScreen = () => {
           <WhatNowInput />
         </StyledView>
       ) : (
-        <StyledView className="flex justify-center items-center h-full">
+        <StyledView className="flex h-full items-center justify-center">
           <ActivityIndicator size="large" />
         </StyledView>
       )}

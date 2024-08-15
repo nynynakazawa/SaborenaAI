@@ -30,7 +30,9 @@ const AccountManagement = () => {
         {/* 会員情報表示 */}
         <StyledView className="w-screen border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
-            <StyledText className="text-[16px] text-[#333]">会員情報</StyledText>
+            <StyledText className="text-[16px] text-[#333]">
+              会員情報
+            </StyledText>
             {myPrivateData?.membership_status == "free" ? (
               <StyledText className="text-[16px] font-bold text-[#8FE07A]">
                 無料会員
@@ -56,7 +58,9 @@ const AccountManagement = () => {
         {/* パスワード表示 */}
         <StyledView className="w-screen border-b-[1px] border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
-            <StyledText className="text-[16px] text-[#333]">パスワード</StyledText>
+            <StyledText className="text-[16px] text-[#333]">
+              パスワード
+            </StyledText>
             <StyledView className="flex flex-row items-center">
               <StyledText className="text-[12px] text-[#333]">
                 {passwordDisplay}

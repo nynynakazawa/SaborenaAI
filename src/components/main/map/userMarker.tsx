@@ -26,8 +26,8 @@ const UserMarker = ({
   currentData: CurrentData | null;
 }) => {
   // * ################################################################################## *
-  const location: Location.LocationObject = useSelector(
-    (state: any) => state.location.value,
+  const location: Location.LocationObject | null = useSelector(
+    (state: RootState) => state.location.value,
   );
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
   const gender = currentData?.gender;
@@ -66,8 +66,8 @@ const UserMarker = ({
       coordinate={
         uid == myUid
           ? {
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+              latitude: location?.coords.latitude || 0,
+              longitude: location?.coords.longitude || 0,
             }
           : {
               latitude: currentData?.latitude || 0,
@@ -81,7 +81,9 @@ const UserMarker = ({
       }}
     >
       <Animated.View style={[animatedStyle]}>
-        <StyledView className={`flex h-[60px] w-max ${(uid==myUid && !isGps) && "opacity-60"}`}>
+        <StyledView
+          className={`flex h-[60px] w-max ${uid == myUid && !isGps && "opacity-60"}`}
+        >
           <StyledView
             className={`flex h-[52px] w-[52px] items-center justify-center rounded-[14px] ${frameColor}`}
           >

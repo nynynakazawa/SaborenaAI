@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Text, TouchableOpacity, View, Modal, ActivityIndicator } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Modal,
+  ActivityIndicator,
+} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -14,6 +20,7 @@ import EmailInput from "../../layout/privateForm/emailInput";
 import PasswordInput from "../../layout/privateForm/passwordInput";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import PageBackHeader from "../../layout/header/pageBackHeader";
+import { FirebaseError } from "firebase/app";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -137,8 +144,12 @@ const CreateAccount = ({
       } else {
         console.log("No user is signed in.");
       }
-    } catch (errorMessage: any) {
-      console.log(errorMessage.message);
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        console.error(`Firebase error: ${error.code} - ${error.message}`);
+      } else {
+        console.error(`Unexpected error: ${error}`);
+      }
     }
   };
 

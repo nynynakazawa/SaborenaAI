@@ -5,6 +5,7 @@ import NameDisplayComponent from "../display/nameDisplayComponent";
 import { CurrentData, UserData } from "../../types/userDataTypes";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
 const StyledImage = styled(Image);
@@ -19,9 +20,9 @@ const TopProfile = ({
   userData: UserData | null;
   uid: string;
 }) => {
-  const myUid: string = useSelector((state: any) => state.myUid.value);
-  const myPeopleCount: number = useSelector(
-    (state: any) => state.peopleCount.value,
+  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const myPeopleCount: string = useSelector(
+    (state: RootState) => state.peopleCount.value,
   );
 
   const renderItem = ({ item }: ListRenderItemInfo<string | null>) => (
@@ -57,7 +58,7 @@ const TopProfile = ({
         </StyledView>
 
         {/* サブ画像 */}
-        <StyledView className="flex-1 justify-end w-full">
+        <StyledView className="w-full flex-1 justify-end">
           <StyledView>
             <FlatList
               data={userData?.sub_images_url}

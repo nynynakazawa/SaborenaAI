@@ -18,10 +18,7 @@ const allCurrentDataSlice = createSlice({
       state.value = action.payload;
     },
     // 特定のキーだけを更新するリデューサー
-    updateKey: (
-      state,
-      action: PayloadAction<{ key: string; data: any }>,
-    ) => {
+    updateKey: (state, action: PayloadAction<{ key: string; data: any }>) => {
       const { key, data } = action.payload;
       if (state.value) {
         state.value[key] = data;
