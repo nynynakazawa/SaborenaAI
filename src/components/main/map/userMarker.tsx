@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { CurrentData, UserData } from "../../../types/userDataTypes";

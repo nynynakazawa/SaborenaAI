@@ -12,7 +12,7 @@ const MySettingScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
   return (
-    <Container style={{ flex: 1 }}>
+    <Container edges={["left", "right"]}>
       <StyledView className="absolute mt-[8vh] flex w-screen items-center">
         {/* プロフィールアイコン */}
         <StyledView className="h-[150px] w-full">

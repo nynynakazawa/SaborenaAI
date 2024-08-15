@@ -11,7 +11,6 @@ import UserRegistationButton from "../components/signUp/userRegistrationButton";
 import { useGlobalSearchParams } from "expo-router";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 
 const SignupPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;

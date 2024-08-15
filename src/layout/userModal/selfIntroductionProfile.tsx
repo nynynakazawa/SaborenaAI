@@ -11,8 +11,6 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledTextInput = styled(TextInput);
-const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const SelfIntroductionProfile = ({
   selfIntroduction,

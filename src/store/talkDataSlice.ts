@@ -9,8 +9,8 @@ const initialState: TalkDataState = {
   value: {},
 };
 
-const allCurrentDataSlice = createSlice({
-  name: "allCurrentData",
+const talkDataSlice = createSlice({
+  name: "talkData",
   initialState,
   reducers: {
     // 全体を設定するリデューサー
@@ -27,5 +27,5 @@ const allCurrentDataSlice = createSlice({
   },
 });
 
-export const { set, updateKey } = allCurrentDataSlice.actions;
-export default allCurrentDataSlice.reducer;
+export const { set, updateKey } = talkDataSlice.actions;
+export default talkDataSlice.reducer;

@@ -18,6 +18,7 @@ import {
   fetchCurrentData,
   fetchLocation,
   fetchPrivateData,
+  fetchTalkData,
   fetchUserData,
 } from "../../utils/fetchMyData";
 
@@ -41,6 +42,7 @@ export default function Layout() {
         fetchUserData(user.uid, dispatch),
         fetchPrivateData(user.uid, dispatch),
         fetchCurrentData(user.uid, dispatch),
+        fetchTalkData(user.uid, dispatch),
       ];
       return () => unsubscribes.forEach((unsub) => unsub());
     }

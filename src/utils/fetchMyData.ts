@@ -4,7 +4,7 @@ import { db } from "../firebase";
 import { set as setUserData } from "../store/userDataSlice";
 import { set as setPrivateData } from "../store/privateDataSlice";
 import { set as setCurrentData } from "../store/currentDataSlice";
-import { set as setTalkData } from "../store/currentDataSlice";
+import { set as setTalkData } from "../store/talkDataSlice";
 import * as Location from "expo-location";
 import { set as setLocation } from "../store/locationSlice";
 
@@ -47,9 +47,9 @@ export const fetchPrivateData = (uid: string, dispatch: Dispatch) => {
 };
 
 // talkData取得
-export const fetchAppData = (uid: string, dispatch: Dispatch) => {
-  const appRef = doc(db, "talk", uid);
-  return onSnapshot(appRef, (doc) => {
+export const fetchTalkData = (uid: string, dispatch: Dispatch) => {
+  const talkRef = doc(db, "talk", uid);
+  return onSnapshot(talkRef, (doc) => {
     if (doc.exists()) {
       console.log("🟢fetched app data");
       dispatch(setTalkData(doc.data()));

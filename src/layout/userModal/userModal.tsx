@@ -95,7 +95,13 @@ const UserModal = ({
           {userData ? (
             <>
               {/* メッセージ送信ボタン */}
-              {uid != myUid && <SendMessageButton />}
+              {uid != myUid && 
+                <SendMessageButton
+                  userData={userData}
+                  uid={uid}
+                  setIsVisibleUserModal={setIsVisibleUserModal}
+                />
+              }
 
               {/* モーダルの右上に閉じるボタンを追加 */}
               <StyledTouchableOpacity

@@ -1,16 +1,50 @@
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import {  TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/Entypo";
+import { useRouter } from "expo-router";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { UserData } from "../../types/userDataTypes";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const ActionButton = () => {
+const SendMessageButton = ({
+  userData,
+  uid,
+  setIsVisibleUserModal,
+} : {
+  userData: UserData | null;
+  uid: string;
+  setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  // * ################################################################################## *
+  const router = useRouter()
+
+  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  // メッセージ送信処理
+  const handleSendMessage = async() => {
+    setIsVisibleUserModal(false);
+    const talkRef = doc(db, "talk", myUid);
+    await setDoc(talkRef, {
+      [uid]: {
+        lastActionDate: Date.now(),
+        firstActionDate: Date.now(),
+      }
+    }, {merge: true})
+
+    router.push({
+      pathname: "/talkList/talkPage",
+      params: { uid: uid, name: userData?.name },
+    });
+  }
+
   return (
     <StyledTouchableOpacity
-      onPress={() => console.log("message")}
+      onPress={() => handleSendMessage()}
       className="absolute bottom-[6%] right-[10%] z-[200] gap-[20px]"
     >
       <StyledView className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#448FFF] shadow-2xl">
@@ -20,4 +54,4 @@ const ActionButton = () => {
   );
 };
 
-export default ActionButton;
+export default SendMessageButton;
