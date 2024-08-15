@@ -30,6 +30,8 @@ const UserRegistationButton = ({
   selectedWork,
   selectedGoal,
   setScene,
+  isLoading,
+  setIsLoading,
 }: {
   name: string;
   email: string;
@@ -43,11 +45,12 @@ const UserRegistationButton = ({
   selectedWork: string;
   selectedGoal: string;
   setScene: React.Dispatch<React.SetStateAction<number>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+    // * ############################################################################## *
   const router = useRouter();
-
   //  画像のアップロード
-  // TODO: ローディング画面の作成
   const uploadImage = async (path: string, uri: string) => {
     const storage = getStorage();
     const storageRef = ref(
@@ -70,6 +73,7 @@ const UserRegistationButton = ({
 
   // ユーザー登録
   const handleRegistration = async () => {
+    setIsLoading(true);
     try {
       const user = auth.currentUser as User;
       let mainImageUrl = "";
@@ -98,14 +102,12 @@ const UserRegistationButton = ({
       await setDoc(
         appRef,
         {
-          like_to: [],
-          like_from: [],
           talk_list: {},
           membership_status: "free",
         },
         { merge: true },
       );
-      // currentDataq
+      // currentData
       const currentRef = doc(db, "current", user.uid);
       await setDoc(
         currentRef,
@@ -122,6 +124,8 @@ const UserRegistationButton = ({
       router.push("/main");
     } catch (error) {
       console.error("Error registering user:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -1,34 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
-  Text,
-  Button,
-  Image,
-  TouchableOpacity,
   Platform,
-  FlatList,
+  ActivityIndicator,
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView from "react-native-maps";
 import * as Location from "expo-location";
-import Modal from "react-native-modal";
-import { CurrentData, UserData } from "../../types/userDataTypes";
+import { CurrentData} from "../../types/userDataTypes";
 import { styled } from "nativewind";
 import UserMarker from "../../components/main/map/userMarker";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import UserModal from "../../layout/userModal/userModal";
 import WhatNowInput from "../../components/main/map/whatNowInput";
 import { useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ChangeCurrentStatus from "../../components/main/map/changeCurrentStatus";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../firebase";
 import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
-const StyledImage = styled(Image);
-const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const MapScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
@@ -43,10 +31,11 @@ const MapScreen = () => {
   // 辞書を配列に変換する
   const allCurrentDataArray = allCurrentData
     ? Object.keys(allCurrentData).map((key: string) => ({
-        key,
-        value: allCurrentData[key],
-      }))
+      key,
+      value: allCurrentData[key],
+    }))
     : [];
+
   return (
     <Container style={{ flex: 1 }}>
       {location ? (
@@ -76,8 +65,9 @@ const MapScreen = () => {
           <WhatNowInput />
         </StyledView>
       ) : (
-        // TODO: ローディング画面
-        <StyledText>waiting</StyledText>
+        <StyledView className="flex justify-center items-center h-full">
+          <ActivityIndicator size="large" />
+        </StyledView>
       )}
     </Container>
   );

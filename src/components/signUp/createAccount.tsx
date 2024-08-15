@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, TouchableOpacity, View, Modal } from "react-native";
+import { Text, TouchableOpacity, View, Modal, ActivityIndicator } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -32,6 +32,8 @@ const CreateAccount = ({
   setIsAgreeTerms,
   scene,
   setScene,
+  isLoading,
+  setIsLoading,
 }: {
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -45,7 +47,10 @@ const CreateAccount = ({
   setIsAgreeTerms: React.Dispatch<React.SetStateAction<boolean>>;
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  // * ############################################################################## *
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
   const [
     isVisibleWaitingVerificationModal,
@@ -85,6 +90,7 @@ const CreateAccount = ({
 
   // サインアップ処理
   const handleSignUp = () => {
+    setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("🎉sign up success");
@@ -116,6 +122,7 @@ const CreateAccount = ({
           handleSendEmail();
         }
       });
+    setIsLoading(false);
   };
 
   // email送信処理
@@ -219,7 +226,6 @@ const CreateAccount = ({
             </StyledText>
           </StyledView>
         </StyledView>
-
         <TermModal
           visible={isVisibleTermModal}
           onClose={() => setIsVisibleTermModal(false)}

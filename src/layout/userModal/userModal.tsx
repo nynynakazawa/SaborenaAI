@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   Modal,
   ScrollView,
@@ -59,7 +60,7 @@ const UserModal = ({
       setUserData(myUserData);
       setCurrentData(myCurrentData);
     } else {
-    // 対象が他のユーザーの時はユーザーデータを取得
+      // 対象が他のユーザーの時はユーザーデータを取得
       setCurrentData(allCurrentData[uid]);
       const userRef = doc(db, "user", uid);
       return onSnapshot(userRef, (doc) => {
@@ -86,32 +87,39 @@ const UserModal = ({
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       >
         <StyledView
-          className={`relative h-[60vh] w-[86vw] rounded-lg p-[24px] ${
-            uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
-          }`}
+          className={`relative h-[60vh] w-[86vw] rounded-lg p-[24px] ${uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
+            }`}
         >
-          {/* メッセージ送信ボタン */}
-          {uid != myUid && <SendMessageButton />}
+          {userData ? (
+            <>
+              {/* メッセージ送信ボタン */}
+              {uid != myUid && <SendMessageButton />}
 
-          {/* モーダルの右上に閉じるボタンを追加 */}
-          <StyledTouchableOpacity
-            onPress={() => setIsVisibleUserModal(false)}
-            className="absolute right-[8px] top-[8px]"
-          >
-            <Icon name="close" size={24} color="#f00" />
-          </StyledTouchableOpacity>
-          
-          {/* プロフィールを表示する */}
-          <StyledScrollView className="h-full w-full pt-[10%]">
-            <TopProfile currentData={currentData} userData={userData} uid={uid}/>
-            <WhatNowProfile whatNow={currentData?.what_now} />
-            <SelfIntroductionProfile
-              selfIntroduction={userData?.self_introduction}
-            />
-            <WorkProfile selectedWork={userData?.selected_work} />
-            <GoalProfile selectedGoal={userData?.selected_goal} />
-            <StyledView className="h-[30px]" />
-          </StyledScrollView>
+              {/* モーダルの右上に閉じるボタンを追加 */}
+              <StyledTouchableOpacity
+                onPress={() => setIsVisibleUserModal(false)}
+                className="absolute right-[8px] top-[8px]"
+              >
+                <Icon name="close" size={24} color="#f00" />
+              </StyledTouchableOpacity>
+
+              {/* プロフィールを表示する */}
+              <StyledScrollView className="h-full w-full pt-[10%]">
+                <TopProfile currentData={currentData} userData={userData} uid={uid} />
+                <WhatNowProfile whatNow={currentData?.what_now} />
+                <SelfIntroductionProfile
+                  selfIntroduction={userData?.self_introduction}
+                />
+                <WorkProfile selectedWork={userData?.selected_work} />
+                <GoalProfile selectedGoal={userData?.selected_goal} />
+                <StyledView className="h-[30px]" />
+              </StyledScrollView>
+            </>
+          ) : (
+            <StyledView className="flex justify-center items-center h-full">
+              <ActivityIndicator size="large" />
+            </StyledView>
+          )}
         </StyledView>
       </StyledView>
     </Modal>
