@@ -75,7 +75,7 @@ export default function Layout() {
     }
   }, []);
 
-  // 1秒ごとに現在時刻取得
+  // 1秒ごとに現在位置取得
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetchLocation(dispatch);
@@ -87,12 +87,12 @@ export default function Layout() {
   // 10秒ごとに現在位置をdbに送る
   useEffect(() => {
     const interval = setInterval(() => {
-      // 位置が変化していない場合は送らない
+      // 位置が変化している場合
       if (prevLocationRef.current !== location) {
         sendLocation(myUid, isGps);
         prevLocationRef.current = location;
       }
-    }, 10 * 1000); // 180秒
+    }, 10 * 1000); // 10秒
 
     return () => clearInterval(interval);
   }, []);

@@ -32,6 +32,7 @@ const UserMarker = ({
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
   const gender = currentData?.gender;
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const isGps: boolean = useSelector((state: RootState) => state.isGps.value);
 
   let frameColor;
   if (uid == myUid) {
@@ -80,7 +81,7 @@ const UserMarker = ({
       }}
     >
       <Animated.View style={[animatedStyle]}>
-        <StyledView className="flex h-[60px] w-max">
+        <StyledView className={`flex h-[60px] w-max ${(uid==myUid && !isGps) && "opacity-60"}`}>
           <StyledView
             className={`flex h-[52px] w-[52px] items-center justify-center rounded-[14px] ${frameColor}`}
           >

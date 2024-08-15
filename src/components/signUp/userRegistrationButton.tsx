@@ -112,9 +112,10 @@ const UserRegistationButton = ({
       await setDoc(
         currentRef,
         {
+          longitude: null,
+          latitude: null,
+          gender: gender,
           people_count: "1人",
-          longitude: -1,
-          latitude: -1,
           what_now: "こんにちは",
           main_image_url: mainImageUrl,
         },
