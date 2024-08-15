@@ -34,7 +34,7 @@ const TopProfile = ({
   );
 
   return (
-    <StyledView className="mb-[24px] flex w-full flex-row">
+    <StyledView className="mb-[24px] flex w-full flex-1 flex-row">
       {/* メイン画像 */}
       <StyledImage
         source={{ uri: userData?.main_image_url || undefined }}
@@ -42,8 +42,8 @@ const TopProfile = ({
         className="rounded-lg"
       />
 
-      <StyledView className="ml-[12px] flex items-end">
-        <StyledView className="mb-[12px] flex-1 justify-between">
+      <StyledView className="ml-[12px] flex flex-1 items-end">
+        <StyledView className="mb-[12px] w-full flex-1 justify-between">
           {/* 名前 */}
           <StyledView className="w-full border-b-2 border-[#aaa] pb-[8px]">
             <NameDisplayComponent userData={userData} size={"small"} />
@@ -59,7 +59,7 @@ const TopProfile = ({
 
         {/* サブ画像 */}
         <StyledView className="w-full flex-1 justify-end">
-          <StyledView>
+          <StyledView className="w-[90%] items-start">
             <FlatList
               data={userData?.sub_images_url}
               renderItem={renderItem}

@@ -44,7 +44,21 @@ const SubImageInput = ({
       const selectedAsset = result.assets[0];
       if (selectedAsset.uri) {
         const newSubImages = [...subImages];
-        newSubImages[index] = selectedAsset.uri;
+        // 画像の枚数
+        let imageCnt = 0;
+        for (let i = 0; i < newSubImages.length; i++) {
+          if (newSubImages[i]) {
+            imageCnt += 1;
+          }
+        }
+        console.log(subImages);
+        console.log(index);
+        // 画像が存在している
+        if (subImages[index]) {
+          newSubImages[index] = selectedAsset.uri;
+        } else {
+          newSubImages[imageCnt] = selectedAsset.uri;
+        }
         setSubImages(newSubImages);
       }
     }
