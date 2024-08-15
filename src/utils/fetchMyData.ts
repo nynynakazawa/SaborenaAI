@@ -3,8 +3,8 @@ import { Dispatch } from "redux";
 import { db } from "../firebase";
 import { set as setUserData } from "../store/userDataSlice";
 import { set as setPrivateData } from "../store/privateDataSlice";
-import { set as setAppData } from "../store/appDataSlice";
 import { set as setCurrentData } from "../store/currentDataSlice";
+import { set as setTalkData } from "../store/currentDataSlice";
 import * as Location from "expo-location";
 import { set as setLocation } from "../store/locationSlice";
 
@@ -46,13 +46,13 @@ export const fetchPrivateData = (uid: string, dispatch: Dispatch) => {
   });
 };
 
-// appData取得
+// talkData取得
 export const fetchAppData = (uid: string, dispatch: Dispatch) => {
-  const appRef = doc(db, "app", uid);
+  const appRef = doc(db, "talk", uid);
   return onSnapshot(appRef, (doc) => {
     if (doc.exists()) {
       console.log("🟢fetched app data");
-      dispatch(setAppData(doc.data()));
+      dispatch(setTalkData(doc.data()));
     } else {
       console.log("❌no such app data!");
     }

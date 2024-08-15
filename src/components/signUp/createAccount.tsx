@@ -106,6 +106,7 @@ const CreateAccount = ({
           password: password,
           createdAt: date.toISOString(),
           uid: userCredential.user.uid,
+          membership_status: "free",
         });
       })
       .catch(async () => {

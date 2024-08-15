@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { styled } from "nativewind";
-import { AppData, PrivateData } from "../../../types/userDataTypes";
+import { PrivateData } from "../../../types/userDataTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -12,9 +12,6 @@ const StyledText = styled(Text);
 const AccountManagement = () => {
   const myPrivateData: PrivateData | null = useSelector(
     (state: RootState) => state.privateData.value,
-  );
-  const myAppData: AppData | null = useSelector(
-    (state: RootState) => state.appData.value,
   );
   const password = myPrivateData?.password || "";
   let passwordDisplay: string = password[0] + password[1];
@@ -34,7 +31,7 @@ const AccountManagement = () => {
         <StyledView className="w-screen border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
             <StyledText className="text-[16px] text-[#333]">会員情報</StyledText>
-            {myAppData?.membership_status == "free" ? (
+            {myPrivateData?.membership_status == "free" ? (
               <StyledText className="text-[16px] font-bold text-[#8FE07A]">
                 無料会員
               </StyledText>

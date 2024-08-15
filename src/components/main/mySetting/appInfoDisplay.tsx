@@ -2,19 +2,22 @@ import React from "react";
 import { Text, View } from "react-native";
 import { styled } from "nativewind";
 import { useSelector } from "react-redux";
-import { AppData } from "../../../types/userDataTypes";
+import { PrivateData } from "../../../types/userDataTypes";
+import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
 const AppInfoDisplay = () => {
-  const myAppData: AppData = useSelector((state: any) => state.appData.value);
+  const myPrivateData: PrivateData | null = useSelector(
+    (state: RootState) => state.privateData.value,
+  );
   return (
     <StyledView className="flex h-[40px] w-full flex-row justify-between">
       <StyledView className="flex w-[33.33%] items-center justify-center">
         {/* 会員情報表示 */}
         <StyledText className="mb-[12px] h-[30px]">会員情報</StyledText>
-        {myAppData?.membership_status == "free" ? (
+        {myPrivateData?.membership_status == "free" ? (
           <StyledText className="text-[16px] font-bold text-[#8FE07A]">
             無料会員
           </StyledText>
@@ -30,7 +33,7 @@ const AppInfoDisplay = () => {
         <StyledView className="mb-[12px] h-[30px]">
           <StyledText>トーク人数</StyledText>
         </StyledView>
-        {myAppData?.membership_status == "free" ? (
+        {myPrivateData?.membership_status == "free" ? (
           <StyledText className="text-[16px] font-bold text-[#448FFF]">
             10 人
           </StyledText>

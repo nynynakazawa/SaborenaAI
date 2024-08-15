@@ -97,16 +97,6 @@ const UserRegistationButton = ({
         },
         { merge: true },
       );
-      // appData
-      const appRef = doc(db, "app", user.uid);
-      await setDoc(
-        appRef,
-        {
-          talk_list: {},
-          membership_status: "free",
-        },
-        { merge: true },
-      );
       // currentData
       const currentRef = doc(db, "current", user.uid);
       await setDoc(

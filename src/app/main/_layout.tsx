@@ -15,7 +15,6 @@ import {
   monitorCurrentCollection,
 } from "../../utils/fetchAllCurrentData";
 import {
-  fetchAppData,
   fetchCurrentData,
   fetchLocation,
   fetchPrivateData,
@@ -41,7 +40,6 @@ export default function Layout() {
       const unsubscribes = [
         fetchUserData(user.uid, dispatch),
         fetchPrivateData(user.uid, dispatch),
-        fetchAppData(user.uid, dispatch),
         fetchCurrentData(user.uid, dispatch),
       ];
       return () => unsubscribes.forEach((unsub) => unsub());
