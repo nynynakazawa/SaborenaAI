@@ -59,7 +59,7 @@ const TopProfile = ({
 
         {/* サブ画像 */}
         <StyledView className="w-full flex-1 justify-end">
-          <StyledView className="w-[90%] items-start">
+          <StyledView className="w-[70%] min-w-[140px] items-start">
             <FlatList
               data={userData?.sub_images_url}
               renderItem={renderItem}
