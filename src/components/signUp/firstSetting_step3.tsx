@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
-import ProgressBar from "../../firstSetting/progressBar";
-import SelfIntroductionInput from "../../../layout/form/selfIntroductionInput";
-import WorkInput from "../../../layout/form/workInput";
-import GoalInput from "../../../layout/form/goalInput";
-import NowMatchHeader from "../../../layout/header/nowMatchHeader";
+import ProgressBar from "../firstSetting/progressBar";
+import SelfIntroductionInput from "../../layout/form/selfIntroductionInput";
+import WorkInput from "../../layout/form/workInput";
+import GoalInput from "../../layout/form/goalInput";
+import NowMatchHeader from "../../layout/header/nowMatchHeader";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
