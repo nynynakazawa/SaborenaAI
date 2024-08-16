@@ -21,7 +21,7 @@ export type PrivateData = {
 
 export type TalkData = {
   [uid: string]: {
-    chatroom_id?: string;
+    talk_room_id?: string;
   },
 }
 
@@ -39,7 +39,6 @@ export type CurrentData = {
   latitude?: number;
   gender?: string;
   people_count?: "1人" | "2人" | "3人" | "複数人";
-  isGPS?: boolean;
   what_now?: string;
   main_image_url?: string;
 };

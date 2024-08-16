@@ -69,7 +69,7 @@ const LoginModal = ({
       if (userSnapshot.exists()) {
         const userData = userSnapshot.data();
         // ログイン成功時
-        if (userData?.email_verified == true) {
+        if (userCredential.user.emailVerified == true) {
           // ユーザー情報をFirestoreに保存
           const userRef = doc(db, "private", userCredential.user.uid);
           await setDoc(

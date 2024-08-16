@@ -109,7 +109,6 @@ const CreateAccount = ({
         const userRef = doc(db, "private", userCredential.user.uid);
         await setDoc(userRef, {
           email: email,
-          email_verified: userCredential.user.emailVerified,
           password: password,
           createdAt: date.toISOString(),
           uid: userCredential.user.uid,
@@ -160,11 +159,6 @@ const CreateAccount = ({
         await user.reload(); // ユーザー情報をリフレッシュ
         if (user.emailVerified) {
           console.log("Email verified!");
-          // Firestoreのユーザー情報を更新
-          const userRef = doc(db, "user", user.uid);
-          await setDoc(userRef, {
-            email_verified: true,
-          });
           setScene((prev) => prev + 1);
           setIsVisibleWaitingVerificationModal(false);
         }

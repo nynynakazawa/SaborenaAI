@@ -1,15 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { TalkData, UserData } from "../../types/userDataTypes";
-import { db } from "../../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import {  UserData } from "../../types/userDataTypes";
 import NameDisplayComponent from "../../layout/display/nameDisplayComponent";
-import { set as setTalkPartnerData } from "../../store/talkPartnerDataSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

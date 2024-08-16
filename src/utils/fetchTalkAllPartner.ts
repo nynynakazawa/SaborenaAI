@@ -1,8 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { TalkData, UserData } from "../types/userDataTypes";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
 import { set as setTalkPartnerData } from "../store/talkPartnerDataSlice";
 import { Dispatch } from "redux";
 
@@ -16,7 +14,7 @@ const fetchUserData = async (uid: string) => {
     return userSnapshot.data() as UserData;
   } else {
     console.log("❌no such user data!");
-    return null;
+    return null; 
   }
 };
 

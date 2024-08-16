@@ -38,7 +38,7 @@ const NameInput = ({
         <StyledTextInput
           onChangeText={setName}
           value={name}
-          placeholder="あだ名など"
+          placeholder="8文字まで"
           placeholderTextColor="#ccc"
           maxLength={8}
           editable={isEditable} // ここでisEditableを使用

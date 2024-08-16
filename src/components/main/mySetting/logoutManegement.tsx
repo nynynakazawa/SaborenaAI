@@ -56,7 +56,7 @@ const LogoutManegement = () => {
         >
           <StyledView className="w-[80%] rounded-lg bg-white p-[20px]">
             <StyledText className="mb-[20px] text-center text-[18px] font-bold">
-              本当に退会しますか?
+              本当にログアウトしますか?
             </StyledText>
             <StyledView className="flex-row justify-between">
               <StyledTouchableOpacity

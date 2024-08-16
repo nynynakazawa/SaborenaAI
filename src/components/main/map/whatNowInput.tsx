@@ -99,7 +99,7 @@ const WhatNowInput = () => {
               className="h-full w-[60vw] text-[16px] text-[#333]"
               onChangeText={setWhatNow}
               value={whatNow}
-              placeholder="いまなにしてる？ (最大30文字)"
+              placeholder="いまなにしてる？ (30文字まで)"
               maxLength={30}
               placeholderTextColor={"#ccc"}
               onFocus={() => setIsTextInputFocused(true)}
