@@ -14,13 +14,15 @@ const fetchUserData = async (uid: string) => {
     return userSnapshot.data() as UserData;
   } else {
     console.log("❌no such user data!");
-    return null; 
+    return null;
   }
 };
 
 // 自分とトーク関係にある全ユーザーのユーザーデータを取得
-export const fetchAllTalkPartners = async (talkData: TalkData | null, dispatch: Dispatch) => {
-
+export const fetchAllTalkPartners = async (
+  talkData: TalkData | null,
+  dispatch: Dispatch,
+) => {
   const newTalkPartnerData: { [key: string]: UserData | null } = {};
   for (let uid in talkData) {
     const userData = await fetchUserData(uid);

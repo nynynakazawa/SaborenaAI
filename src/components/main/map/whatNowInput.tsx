@@ -21,7 +21,6 @@ const StyledTextInput = styled(TextInput);
 
 const WhatNowInput = () => {
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
-
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
 
   const [isSendingWhatNow, setIsSendingWhatNow] = useState<boolean>(false);
@@ -87,16 +86,16 @@ const WhatNowInput = () => {
           isTextInputFocused ? "border-2 border-blue-500" : ""
         }`}
       >
-        <StyledView>
+        <StyledView className="w-[60vw]">
           {isSendingWhatNow ? (
-            <StyledView className="flex h-full w-[60vw] justify-center text-[16px] text-[#aaa]">
+            <StyledView className="flex h-full justify-center text-[16px] text-[#aaa]">
               <StyledText className="text-[16px] text-[#555]">
                 再送信可能まで{timer}秒
               </StyledText>
             </StyledView>
           ) : (
             <StyledTextInput
-              className="h-full w-[60vw] text-[16px] text-[#333]"
+              className="h-full w-[60vw] pr-[20px] text-[16px] text-[#333]"
               onChangeText={setWhatNow}
               value={whatNow}
               placeholder="いまなにしてる？ (30文字まで)"
@@ -111,6 +110,7 @@ const WhatNowInput = () => {
           onPress={() => {
             handleSend();
             setIsTextInputFocused(false);
+            Keyboard.dismiss();
           }}
           className="h-[40px] border-l-2 border-[#ccc] pl-[16px]"
           disabled={whatNow?.trim() == "" || isSendingWhatNow}

@@ -1,5 +1,5 @@
 import React from "react";
-import {  TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/Entypo";
 import { useRouter } from "expo-router";
@@ -16,23 +16,23 @@ const SendMessageButton = ({
   userData,
   uid,
   setIsVisibleUserModal,
-} : {
+}: {
   userData: UserData | null;
   uid: string;
   setIsVisibleUserModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // * ################################################################################## *
-  const router = useRouter()
+  const router = useRouter();
 
   // メッセージ送信処理
-  const handleSendMessage = async() => {
+  const handleSendMessage = async () => {
     setIsVisibleUserModal(false);
 
     router.push({
       pathname: "/talkList/talkPage",
       params: { uid: uid, name: userData?.name },
     });
-  }
+  };
 
   return (
     <StyledTouchableOpacity

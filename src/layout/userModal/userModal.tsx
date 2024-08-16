@@ -86,7 +86,7 @@ const UserModal = ({
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
         activeOpacity={1}
         onPressOut={() => setIsVisibleUserModal(false)}
-        >
+      >
         <StyledTouchableOpacity
           className={`relative h-[60vh] w-[90vw] rounded-lg p-[24px] ${
             uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
@@ -97,13 +97,13 @@ const UserModal = ({
           {userData ? (
             <>
               {/* メッセージ送信ボタン */}
-              {uid != myUid && 
+              {uid != myUid && (
                 <SendMessageButton
                   userData={userData}
                   uid={uid}
                   setIsVisibleUserModal={setIsVisibleUserModal}
                 />
-              }
+              )}
 
               {/* モーダルの右上に閉じるボタンを追加 */}
               <StyledTouchableOpacity

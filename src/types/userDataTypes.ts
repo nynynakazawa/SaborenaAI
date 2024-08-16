@@ -22,17 +22,17 @@ export type PrivateData = {
 export type TalkData = {
   [uid: string]: {
     talk_room_id?: string;
-  },
-}
+  };
+};
 
 export type ChatroomData = {
   chatroom_id?: {
     message_id?: {
       senderId?: string;
       text?: string;
-    }
-  }
-}
+    };
+  };
+};
 
 export type CurrentData = {
   longitude?: number;

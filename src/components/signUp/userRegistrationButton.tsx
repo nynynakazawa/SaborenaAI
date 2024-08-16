@@ -113,11 +113,7 @@ const UserRegistationButton = ({
       );
       // talkData
       const talkRef = doc(db, "talk", user.uid);
-      await setDoc(
-        talkRef,
-        {},
-        { merge: true },
-      );
+      await setDoc(talkRef, {}, { merge: true });
 
       router.push("/main");
     } catch (error) {

@@ -33,9 +33,7 @@ const NameDisplayComponent = ({
 
   return (
     <StyledView className="flex flex-row flex-wrap items-center">
-      <StyledText
-        className={`font-bold text-[#333] text-[${fontSize}px]`}
-      >
+      <StyledText className={`font-bold text-[#333] text-[${fontSize}px]`}>
         {userData?.name} ({age})
       </StyledText>
       <StyledView className={`w-[${iconSize}px]`}>

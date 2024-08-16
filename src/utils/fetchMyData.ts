@@ -53,7 +53,7 @@ export const fetchTalkData = (uid: string, dispatch: Dispatch) => {
   return onSnapshot(talkRef, (doc) => {
     if (doc.exists()) {
       console.log("🟠fetched talk data");
-      const talkData = doc.data()
+      const talkData = doc.data();
       dispatch(setTalkData(talkData));
       fetchAllTalkPartners(talkData, dispatch);
     } else {
@@ -74,4 +74,3 @@ export const fetchCurrentData = (uid: string, dispatch: Dispatch) => {
     }
   });
 };
-
