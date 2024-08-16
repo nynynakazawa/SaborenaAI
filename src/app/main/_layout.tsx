@@ -67,7 +67,7 @@ export default function Layout() {
 
   // レンダリング時に各ユーザーデータ取得
   useEffect(() => {
-    if (isFetchUserData != "false") {
+    if (isFetchUserData == "true") {
       fetchAllCurrentData(dispatch);
       monitorCurrentCollection(dispatch);
       fetchLocation(dispatch);

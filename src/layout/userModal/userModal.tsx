@@ -23,9 +23,7 @@ import { db } from "../../firebase";
 import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
-const StyledImage = styled(Image);
 const StyledScrollView = styled(ScrollView);
 
 const UserModal = ({
@@ -83,14 +81,18 @@ const UserModal = ({
       visible={isVisibleUserModal}
       onRequestClose={() => setIsVisibleUserModal(false)}
     >
-      <StyledView
+      <StyledTouchableOpacity
         className="flex-1 items-center justify-center"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-      >
-        <StyledView
+        activeOpacity={1}
+        onPressOut={() => setIsVisibleUserModal(false)}
+        >
+        <StyledTouchableOpacity
           className={`relative h-[60vh] w-[90vw] rounded-lg p-[24px] ${
             uid == myUid ? "bg-[#fff0d9]" : "bg-[#fff]"
           }`}
+          activeOpacity={1}
+          onPress={() => {}}
         >
           {userData ? (
             <>
@@ -135,8 +137,8 @@ const UserModal = ({
               <ActivityIndicator size="large" />
             </StyledView>
           )}
-        </StyledView>
-      </StyledView>
+        </StyledTouchableOpacity>
+      </StyledTouchableOpacity>
     </Modal>
   );
 };

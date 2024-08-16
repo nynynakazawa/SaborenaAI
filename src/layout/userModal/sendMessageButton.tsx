@@ -24,17 +24,9 @@ const SendMessageButton = ({
   // * ################################################################################## *
   const router = useRouter()
 
-  const myUid: string = useSelector((state: RootState) => state.myUid.value);
   // メッセージ送信処理
   const handleSendMessage = async() => {
     setIsVisibleUserModal(false);
-    const talkRef = doc(db, "talk", myUid);
-    await setDoc(talkRef, {
-      [uid]: {
-        lastActionDate: Date.now(),
-        firstActionDate: Date.now(),
-      }
-    }, {merge: true})
 
     router.push({
       pathname: "/talkList/talkPage",

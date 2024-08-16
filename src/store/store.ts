@@ -3,6 +3,7 @@ import userDataReducer from "./userDataSlice";
 import privateDataReducer from "./privateDataSlice";
 import currentDataReducer from "./currentDataSlice";
 import talkDataReducer from "./talkDataSlice";
+import talkPartnerDataReducer from "./talkPartnerDataSlice";
 import locationReducer from "./locationSlice";
 import myUidReducer from "./myUidSlice";
 import isGpsReducer from "./isGpsSlice";
@@ -16,6 +17,7 @@ const store = configureStore({
     privateData: privateDataReducer,
     currentData: currentDataReducer,
     talkData: talkDataReducer,
+    talkPartnerData: talkPartnerDataReducer,
     location: locationReducer,
     myUid: myUidReducer,
     isGps: isGpsReducer,

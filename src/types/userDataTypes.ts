@@ -24,7 +24,7 @@ export type AppData = {};
 export type TalkData = {
   [uid: string]: {
     messages?: {
-      people?: string;
+      senderId?: string;
       text?: string;
     }[];
   };

@@ -1,4 +1,4 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { Dispatch } from "redux";
 import { db } from "../firebase";
 import { set as setUserData } from "../store/userDataSlice";
@@ -46,15 +46,15 @@ export const fetchPrivateData = (uid: string, dispatch: Dispatch) => {
   });
 };
 
-// talkData取得
 export const fetchTalkData = (uid: string, dispatch: Dispatch) => {
   const talkRef = doc(db, "talk", uid);
   return onSnapshot(talkRef, (doc) => {
     if (doc.exists()) {
-      console.log("🟢fetched app data");
+      console.log("🟠fetched talk data");
+      console.log(doc.data());
       dispatch(setTalkData(doc.data()));
     } else {
-      console.log("❌no such app data!");
+      console.log("❌no such talk data!");
     }
   });
 };
@@ -64,7 +64,6 @@ export const fetchCurrentData = (uid: string, dispatch: Dispatch) => {
   const currentRef = doc(db, "current", uid);
   return onSnapshot(currentRef, (doc) => {
     if (doc.exists()) {
-      console.log(new Date())
       console.log("🟣fetched current data");
       dispatch(setCurrentData(doc.data()));
     } else {
