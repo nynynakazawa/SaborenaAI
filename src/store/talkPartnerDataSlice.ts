@@ -10,7 +10,7 @@ const initialState: TalkDataState = {
 };
 
 const talkPartnerSlice = createSlice({
-  name: "talkData",
+  name: "talkPartnerData",
   initialState,
   reducers: {
     // 全体を設定するリデューサー

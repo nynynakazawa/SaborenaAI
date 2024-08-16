@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { Dispatch } from "redux";
 import { db } from "../firebase";
 import { set as setUserData } from "../store/userDataSlice";
@@ -7,6 +7,7 @@ import { set as setCurrentData } from "../store/currentDataSlice";
 import { set as setTalkData } from "../store/talkDataSlice";
 import * as Location from "expo-location";
 import { set as setLocation } from "../store/locationSlice";
+import { fetchAllTalkPartners } from "./fetchTalkAllPartner";
 
 // location取得
 export const fetchLocation = async (dispatch: Dispatch) => {
@@ -46,13 +47,15 @@ export const fetchPrivateData = (uid: string, dispatch: Dispatch) => {
   });
 };
 
+// talkdata取得
 export const fetchTalkData = (uid: string, dispatch: Dispatch) => {
   const talkRef = doc(db, "talk", uid);
   return onSnapshot(talkRef, (doc) => {
     if (doc.exists()) {
       console.log("🟠fetched talk data");
-      console.log(doc.data());
-      dispatch(setTalkData(doc.data()));
+      const talkData = doc.data()
+      dispatch(setTalkData(talkData));
+      fetchAllTalkPartners(talkData, dispatch);
     } else {
       console.log("❌no such talk data!");
     }
@@ -71,3 +74,4 @@ export const fetchCurrentData = (uid: string, dispatch: Dispatch) => {
     }
   });
 };
+

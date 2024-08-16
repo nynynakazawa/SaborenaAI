@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useGlobalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { TalkData, UserData } from "../../types/userDataTypes";
@@ -18,43 +18,11 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const TalkDictScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const { isFetchUserData } = useGlobalSearchParams();
 
-  // トークデータ
-  const talkData: TalkData | null = useSelector((state: RootState) => state.talkData.value);
+  const router = useRouter();
+
   // 自分とトーク関係にある人のユーザーデータ辞書(キーは相手のuid)
   const talkPartnerData: { [key: string]: UserData | null } = useSelector((state: RootState) => state.talkPartnerData.value);
-
-  // userDataを取得
-  const fetchUserData = async (uid: string) => {
-    const userRef = doc(db, "user", uid);
-    const userSnapshot = await getDoc(userRef);
-
-    if (userSnapshot.exists()) {
-      console.log("🔵fetched user data");
-      return userSnapshot.data() as UserData;
-    } else {
-      console.log("❌no such user data!");
-      return null;
-    }
-  };
-
-  // 自分とトーク関係にある全ユーザーのユーザーデータを取得
-  const fetchAllTalkPartners = async () => {
-    const newTalkPartnerData: { [key: string]: UserData | null } = {};
-    for (let uid in talkData) {
-      const userData = await fetchUserData(uid);
-      newTalkPartnerData[uid] = userData;
-    }
-    dispatch(setTalkPartnerData(newTalkPartnerData));
-  };
-
-  // レンダリング時、データフェチ
-  useEffect(() => {
-    fetchAllTalkPartners();
-  }, []);
 
   // トーク画面に遷移
   const handlePressTalkButton = (uid: string, userData: UserData | null) => {

@@ -19,16 +19,20 @@ export type PrivateData = {
   membership_status?: "free" | "premium";
 };
 
-export type AppData = {};
-
 export type TalkData = {
   [uid: string]: {
-    messages?: {
+    chatroom_id?: string;
+  },
+}
+
+export type ChatroomData = {
+  chatroom_id?: {
+    message_id?: {
       senderId?: string;
       text?: string;
-    }[];
-  };
-};
+    }
+  }
+}
 
 export type CurrentData = {
   longitude?: number;

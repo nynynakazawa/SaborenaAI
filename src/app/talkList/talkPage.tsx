@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Platform, Text, View, TextInput, Button, FlatList, KeyboardAvoidingView } from "react-native";
 import { styled } from "nativewind";
 import { useGlobalSearchParams } from "expo-router";
@@ -6,9 +6,10 @@ import PageBackHeader from "../../layout/header/pageBackHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { db } from "../../firebase";
-import { collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { RootState } from "../../store/store";
 import { TalkData } from "../../types/userDataTypes";
+import uuid from 'react-native-uuid';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -16,6 +17,7 @@ const StyledTextInput = styled(TextInput);
 
 const TalkPage = () => {
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const talkData: TalkData | null = useSelector((state: RootState) => state.talkData.value);
   const { uid, name } = useGlobalSearchParams();
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   
@@ -23,27 +25,39 @@ const TalkPage = () => {
   const [messages, setMessages] = useState<any[]>([]);
 
   // メッセージの送信
-  const sendMessage = async (uid: string | string[]) => {
-    const key = uid as string
-    if (message.trim().length > 0) {
-      try {
-        const talkRef = doc(db, "talk", myUid);
-        // メッセージを追加
+  const sendMessage = async (uid: string) => {
+    let chatroomId: string | undefined;
+    if (uid && typeof uid === "string" && talkData) {
+      // メッセージ初送信 (chatroomを作成)
+      chatroomId = uuid.v4() as string;
+      console.log(talkData[uid]);
+      if(!(uid in talkData)){
+        // 自分のtalkデータとチャットルームのidを紐づけ
+        const myTalkRef = doc(db, "talk", myUid);
         await setDoc(
-          talkRef,
-          {
-            [key]: {
-              messages: {
-                text: message,
-                senderId: myUid,
-              },
-            },
-          }, { merge: true },
-        );
-        setMessage("");
-      } catch (error) {
-        console.error("Error sending message: ", error);
+          myTalkRef,{
+            [uid] : {
+              chatroom_id : chatroomId
+            }
+          },
+        )
+        // 相手ののtalkデータとチャットルームのidを紐づけ
+        const partnerTalkRef = doc(db, "talk", uid);
+        await setDoc(
+          partnerTalkRef,{
+            [myUid] : {
+              chatroom_id : chatroomId
+            }
+          },
+        )
+      } else {
+        const dict = talkData[uid];
+        chatroomId = dict.chatroom_id;
       }
+
+      console.log(chatroomId)
+      // メッセージ送信 (chatroom_idにメッセージ追加) 
+
     }
   };
 
@@ -79,7 +93,7 @@ const TalkPage = () => {
               className="flex-1 p-2 border border-gray-300 rounded-lg"
             />
             {uid &&
-              <Button title="送信" onPress={() => sendMessage(uid)} />
+              <Button title="送信" onPress={() => sendMessage(String(uid))} />
             }
           </StyledView>
         </KeyboardAvoidingView>
