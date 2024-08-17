@@ -19,7 +19,7 @@ import { RootState } from "../../store/store";
 import { Message, TalkData } from "../../types/userDataTypes";
 import uuid from "react-native-uuid";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { updateKey } from "../../store/talkHistoryDataSlice";
+import { convertTimestamp } from "../../utils/convertTimestamp";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -130,13 +130,18 @@ const TalkPage = () => {
 
   // Render item
   const renderItem = ({ item }: { item: any }) => (
-    <StyledView
-      className={`m-2 rounded-[24px] px-[20px] py-[16px] ${item.senderId === myUid
-          ? "self-end rounded-br-[6px] bg-[#ff6767]"
-          : "self-start rounded-bl-[6px] bg-[#aaa]"
-        }`}
-    >
-      <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
+    <StyledView className={`${item.senderId === myUid ? "self-end" : "self-start"}`}>
+      <StyledView
+        className={`rounded-[24px] mb-[4px] px-[20px] py-[16px] ${item.senderId === myUid
+            ? "rounded-br-[6px] bg-[#ff6767]"
+            : "rounded-bl-[6px] bg-[#aaa]"
+          }`}
+      >
+        <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
+      </StyledView>
+      <StyledText className={`text-[#aaa] mb-[12px] ${item.senderId === myUid ? "self-end mr-[12px]" : "self-start mr-[12px]"}`}>
+        {convertTimestamp(item.timestamp)}
+      </StyledText>
     </StyledView>
   );
 

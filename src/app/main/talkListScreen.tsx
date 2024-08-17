@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Message, UserData } from "../../types/userDataTypes";
 import NameDisplayComponent from "../../components/display/nameDisplayComponent";
+import { convertTimestamp } from "../../utils/convertTimestamp";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -43,14 +44,6 @@ const TalkDictScreen = () => {
     });
   };
 
-  // timestampをhh:mmに変換
-  const formatTimestampToTime = (timestamp: number): string => {
-    const date = new Date(timestamp);
-    const hours = date.getHours().toString().padStart(2, '0'); // Ensure 2 digits for hours
-    const minutes = date.getMinutes().toString().padStart(2, '0'); // Ensure 2 digits for minutes
-    return `${hours}:${minutes}`;
-  };
-
   return (
     <Container edges={["left", "right"]}>
       {/* トークリスト画面 */}
@@ -72,7 +65,7 @@ const TalkDictScreen = () => {
                 <StyledView className="w-full flex flex-row items-center mb-[6px]">
                   <NameDisplayComponent userData={userData} size="large" />
                   {myTalkHistroyData[uid] &&
-                    <StyledText className="text-[#aaa]">{formatTimestampToTime(myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].timestamp)}</StyledText>
+                    <StyledText className="text-[#aaa]">{convertTimestamp(myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].timestamp)}</StyledText>
                   }
                 </StyledView>
                 {myTalkHistroyData[uid] ?
