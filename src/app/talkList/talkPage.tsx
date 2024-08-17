@@ -12,14 +12,14 @@ import { styled } from "nativewind";
 import { useGlobalSearchParams } from "expo-router";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { db } from "../../firebase";
-import { doc, setDoc, onSnapshot } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { RootState } from "../../store/store";
 import { Message, TalkData } from "../../types/userDataTypes";
 import uuid from "react-native-uuid";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { convertTimestamp } from "../../utils/convertTimestamp";
+import { convertTimestamp_hhmm } from "../../utils/convertTimestamp";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -32,17 +32,15 @@ const TalkPage = () => {
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
 
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
-  const talkData: TalkData | null = useSelector(
+  const myTalkData: TalkData | null = useSelector(
     (state: RootState) => state.talkData.value,
   );
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
   );
-  const messages = myTalkHistroyData[uid as string]
 
+  const messages = myTalkHistroyData[uid as string]
   const [message, setMessage] = useState<string>("");
-  // const [messages, setMessages] = useState<Message[] | null>(null);
-  const [talkRoomId, setTalkRoomId] = useState<string | null>(null);
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
 
@@ -52,13 +50,17 @@ const TalkPage = () => {
     uid: string,
   ): Promise<string> => {
     const talkRoomId = uuid.v4() as string;
-    if (talkData && !(uid in talkData)) {
+    const date = new Date()
+    const timestamp = date.getTime();
+
+    if (myTalkData && !(uid in myTalkData)) {
       const myTalkRef = doc(db, "talk", myUid);
       await setDoc(
         myTalkRef,
         {
           [uid]: {
             talk_room_id: talkRoomId,
+            created_at: timestamp,
           },
         },
         { merge: true },
@@ -69,6 +71,7 @@ const TalkPage = () => {
         {
           [myUid]: {
             talk_room_id: talkRoomId,
+            created_at: timestamp,
           },
         },
         { merge: true },
@@ -77,21 +80,23 @@ const TalkPage = () => {
     return talkRoomId;
   };
 
-  // メッセージを送る処理
+  // メッセージを送信処理
   const handleSend = async (myUid: string, uid: string) => {
-    let talkRoomIdToUse: string | null = talkRoomId;
-
-    if (!talkRoomIdToUse) {
-      talkRoomIdToUse = await createTalkRoom(myUid, uid);
-      setTalkRoomId(talkRoomIdToUse);
+    const date = new Date()
+    const timestamp = date.getTime();
+    let talkRoomId: string = ""
+    if(myTalkData) {
+      talkRoomId =  myTalkData[uid as string]?.talk_room_id as string;
     }
 
-    if (talkRoomIdToUse) {
+    if (!talkRoomId) {
+      talkRoomId = await createTalkRoom(myUid, uid);
+    }
+
+    if (talkRoomId) {
       setMessage("");
-      const talkRoomRef = doc(db, "talk_room", talkRoomIdToUse);
+      const talkRoomRef = doc(db, "talk_room", talkRoomId);
       const messageId = uuid.v4() as string;
-      const date = new Date()
-      const timestamp = date.getTime();
       await setDoc(
         talkRoomRef,
         {
@@ -118,16 +123,6 @@ const TalkPage = () => {
     }
   }, [messages]);
 
-  // レンダリング時
-  useEffect(() => {
-    if (talkData && uid) {
-      const existingTalkRoomId = talkData[uid as string]?.talk_room_id;
-      if (existingTalkRoomId) {
-        setTalkRoomId(existingTalkRoomId);
-      }
-    }
-  }, [talkData, uid]);
-
   // Render item
   const renderItem = ({ item }: { item: any }) => (
     <StyledView className={`${item.senderId === myUid ? "self-end" : "self-start"}`}>
@@ -140,7 +135,7 @@ const TalkPage = () => {
         <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
       </StyledView>
       <StyledText className={`text-[#aaa] mb-[12px] ${item.senderId === myUid ? "self-end mr-[12px]" : "self-start mr-[12px]"}`}>
-        {convertTimestamp(item.timestamp)}
+        {convertTimestamp_hhmm(item.timestamp)}
       </StyledText>
     </StyledView>
   );

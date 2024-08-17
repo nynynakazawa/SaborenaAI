@@ -100,7 +100,8 @@ const CreateAccount = ({
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("🎉sign up success");
-        const date = new Date();
+        const date = new Date()
+        const timestamp = date.getTime();
         handleSendEmail();
         setIsVisibleWaitingVerificationModal(true);
 
@@ -109,7 +110,7 @@ const CreateAccount = ({
         await setDoc(userRef, {
           email: email,
           password: password,
-          createdAt: date.toISOString(),
+          created_at: timestamp,
           uid: userCredential.user.uid,
           membership_status: "free",
         });

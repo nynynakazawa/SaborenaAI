@@ -14,10 +14,7 @@ const fetchTalkHistory = (uid: string, talkRoomId: string, dispatch: Dispatch) =
       const sortedMessages: Message[] = Object.values(talkRoomData).sort(
         (a: any, b: any) => a.timestamp - b.timestamp
       );
-      // トークヒストリーに追加
-      console.log("###############################");
-      console.log(sortedMessages);
-      console.log("###############################");
+      // talkHistoryに追加
       dispatch(updateKey({ key: uid, data: sortedMessages }));
     } else {
       console.log("❌ No such talk data!");

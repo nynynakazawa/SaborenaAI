@@ -22,6 +22,7 @@ export type PrivateData = {
 export type TalkData = {
   [uid: string]: {
     talk_room_id?: string;
+    created_at?: number;
   };
 };
 

@@ -26,7 +26,7 @@ const SendMessageButton = ({
 
     router.push({
       pathname: "/talkList/talkPage",
-      params: { uid: uid, name: userData?.name },
+      params: { uid: uid, name: userData?.name},
     });
   };
 
