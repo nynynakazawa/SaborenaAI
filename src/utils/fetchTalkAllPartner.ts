@@ -28,6 +28,6 @@ export const fetchAllTalkPartners = async (
     const userData = await fetchUserData(uid);
     newTalkPartnerData[uid] = userData;
   }
-  console.log("😁fetched user data");
+  console.log("😁fetched all talk partner user data");
   dispatch(setTalkPartnerData(newTalkPartnerData));
 };

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Platform,
   Text,
   View,
   TextInput,
-  Button,
   FlatList,
-  KeyboardAvoidingView,
   TouchableOpacity,
   Keyboard,
 } from "react-native";
@@ -14,13 +12,14 @@ import { styled } from "nativewind";
 import { useGlobalSearchParams } from "expo-router";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../firebase";
 import { doc, setDoc, onSnapshot } from "firebase/firestore";
 import { RootState } from "../../store/store";
-import { TalkData } from "../../types/userDataTypes";
+import { Message, TalkData } from "../../types/userDataTypes";
 import uuid from "react-native-uuid";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { updateKey } from "../../store/talkHistoryDataSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -32,16 +31,18 @@ const TalkPage = () => {
   const talkData: TalkData | null = useSelector(
     (state: RootState) => state.talkData.value,
   );
+  const Container = Platform.OS === "android" ? SafeAreaView : View;
   const { uid, name } = useGlobalSearchParams();
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
-  const Container = Platform.OS === "android" ? SafeAreaView : View;
+  const dispatch = useDispatch()
 
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<any[]>([]);
   const [talkRoomId, setTalkRoomId] = useState<string | null>(null);
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
+  const flatListRef = useRef<FlatList>(null);
 
-  // Create talkRoom
+  // talkRoom作成
   const createTalkRoom = async (
     myUid: string,
     uid: string,
@@ -72,8 +73,8 @@ const TalkPage = () => {
     return talkRoomId;
   };
 
-  // Send message
-  const handleSend = async (uid: string) => {
+  // メッセージを送る処理
+  const handleSend = async (myUid: string, uid: string) => {
     let talkRoomIdToUse: string | null = talkRoomId;
 
     if (!talkRoomIdToUse) {
@@ -82,8 +83,11 @@ const TalkPage = () => {
     }
 
     if (talkRoomIdToUse) {
+      setMessage("");
       const talkRoomRef = doc(db, "talk_room", talkRoomIdToUse);
       const messageId = uuid.v4() as string;
+      const date = new Date()
+      const timestamp = date.getTime();
       await setDoc(
         talkRoomRef,
         {
@@ -91,32 +95,45 @@ const TalkPage = () => {
             id: messageId,
             text: message,
             senderId: myUid,
-            timestamp: new Date(),
+            timestamp: timestamp,
           },
         },
         { merge: true },
       );
-      setMessage("");
     }
   };
 
-  // Fetch messages
+  // 新しいメッセージが追加されたら自動的に一番下にスクロール
+  useEffect(() => {
+    if (messages.length > 0) {
+      setTimeout(() => {
+        flatListRef.current?.scrollToEnd({ animated: true });
+      }, 200);
+    }
+  }, [messages]);
+
+  // メッセージを取得
   const fetchMessages = (talkRoomId: string) => {
     const talkRoomRef = doc(db, "talk_room", talkRoomId);
     return onSnapshot(talkRoomRef, (doc) => {
       if (doc.exists()) {
-        console.log("🟠 Fetched talk data");
-        const talkRoomData = doc.data();
-        const sortedMessages = Object.values(talkRoomData).sort(
-          (a: any, b: any) => a.timestamp.seconds - b.timestamp.seconds,
+        console.log("🟠 Fetched talkRoom data");
+        const talkRoomData: {[key: string]: Message}= doc.data();
+        const sortedMessages: Message[] = Object.values(talkRoomData).sort(
+          (a: any, b: any) => a.timestamp - b.timestamp
         );
+        // トークヒストリーに追加
+        console.log("###############################")
+        console.log(sortedMessages);
         setMessages(sortedMessages);
+        dispatch(updateKey({ key: uid as string, data: sortedMessages }));
       } else {
         console.log("❌ No such talk data!");
       }
     });
   };
 
+  // レンダリング時
   useEffect(() => {
     if (talkData && uid) {
       const existingTalkRoomId = talkData[uid as string]?.talk_room_id;
@@ -130,11 +147,10 @@ const TalkPage = () => {
   // Render item
   const renderItem = ({ item }: { item: any }) => (
     <StyledView
-      className={`m-2 rounded-[24px] px-[20px] py-[16px] ${
-        item.senderId === myUid
+      className={`m-2 rounded-[24px] px-[20px] py-[16px] ${item.senderId === myUid
           ? "self-end rounded-br-[6px] bg-[#ff6767]"
           : "self-start rounded-bl-[6px] bg-[#aaa]"
-      }`}
+        }`}
     >
       <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
     </StyledView>
@@ -163,6 +179,7 @@ const TalkPage = () => {
       <StyledView className="flex-1 bg-[#f2f2f2] p-2">
         {/* メッセージ表示部 */}
         <FlatList
+          ref={flatListRef}
           data={messages}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
@@ -194,7 +211,7 @@ const TalkPage = () => {
               />
               <StyledTouchableOpacity
                 onPress={() => {
-                  handleSend(myUid);
+                  handleSend(myUid, uid as string);
                   setIsTextInputFocused(false);
                   Keyboard.dismiss();
                 }}
@@ -205,9 +222,8 @@ const TalkPage = () => {
                   name="send"
                   size={34}
                   color="#73BBFD"
-                  className={`translate-y-[2px] ${
-                    message.trim() == "" && "opacity-30"
-                  }`}
+                  className={`translate-y-[2px] ${message.trim() == "" && "opacity-30"
+                    }`}
                 />
               </StyledTouchableOpacity>
             </StyledView>

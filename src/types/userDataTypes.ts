@@ -25,6 +25,13 @@ export type TalkData = {
   };
 };
 
+export type Message = {
+  id: string;
+  text: string;
+  senderId: string;
+  timestamp: number;
+}
+
 export type ChatroomData = {
   chatroom_id?: {
     message_id?: {
