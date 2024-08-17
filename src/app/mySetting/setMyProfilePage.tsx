@@ -4,15 +4,15 @@ import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { UserData } from "../../types/userDataTypes";
 import { useSelector } from "react-redux";
-import SelfIntroductionInput from "../../layout/form/selfIntroductionInput";
-import WorkInput from "../../layout/form/workInput";
-import GoalInput from "../../layout/form/goalInput";
-import MainImageInput from "../../layout/form/mainImageInput";
-import SubImageInput from "../../layout/form/subImageInput";
-import SetMyProfileHeader from "../../components/main/mySetting/setMyProfileHeader";
-import NameInput from "../../layout/form/nameInput";
-import BirthdayInput from "../../layout/form/birthInput";
-import GenderInput from "../../layout/form/genderInput";
+import SelfIntroductionInput from "../../components/form/selfIntroductionInput";
+import WorkInput from "../../components/form/workInput";
+import GoalInput from "../../components/form/goalInput";
+import MainImageInput from "../../components/form/mainImageInput";
+import SubImageInput from "../../components/form/subImageInput";
+import SetMyProfileHeader from "../../features/main/mySetting/setMyProfileHeader";
+import NameInput from "../../components/form/nameInput";
+import BirthdayInput from "../../components/form/birthInput";
+import GenderInput from "../../components/form/genderInput";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import {
@@ -21,7 +21,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import ResidentialInput from "../../layout/form/residentialInput";
+import ResidentialInput from "../../components/form/residentialInput";
 import { RootState } from "../../store/store";
 
 const StyledView = styled(View);

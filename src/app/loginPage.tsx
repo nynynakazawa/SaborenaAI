@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { View, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import LoginBackground from "../components/login/loginBackground";
-import LoginLogo from "../components/login/loginLogo";
-import LoginButtonContainer from "../components/login/loginButtonContainer";
-import LoginModal from "../components/login/LoginModal";
+import LoginBackground from "../features/login/loginBackground";
+import LoginLogo from "../features/login/loginLogo";
+import LoginButtonContainer from "../features/login/loginButtonContainer";
+import LoginModal from "../features/login/LoginModal";
 
 const LoginPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;

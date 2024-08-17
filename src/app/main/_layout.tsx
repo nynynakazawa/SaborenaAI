@@ -8,7 +8,7 @@ import { set as setMyUid } from "../../store/myUidSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
-import BottomNavigation from "../../components/main/navigation/bottomNavigation";
+import BottomNavigation from "../../features/main/navigation/bottomNavigation";
 import { RootState } from "../../store/store";
 import {
   fetchAllCurrentData,

@@ -9,11 +9,11 @@ import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import { CurrentData } from "../../types/userDataTypes";
 import { styled } from "nativewind";
-import UserMarker from "../../components/main/map/userMarker";
-import WhatNowInput from "../../components/main/map/whatNowInput";
+import UserMarker from "../../features/main/map/userMarker";
+import WhatNowInput from "../../features/main/map/whatNowInput";
 import { useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ChangeCurrentStatus from "../../components/main/map/changeCurrentStatus";
+import ChangeCurrentStatus from "../../features/main/map/changeCurrentStatus";
 import { RootState } from "../../store/store";
 
 const StyledView = styled(View);

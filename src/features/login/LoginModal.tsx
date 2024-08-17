@@ -9,8 +9,8 @@ import { styled } from "nativewind";
 import { auth, db } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "expo-router";
-import EmailInput from "../../layout/privateForm/emailInput";
-import PasswordInput from "../../layout/privateForm/passwordInput";
+import EmailInput from "../../components/privateForm/emailInput";
+import PasswordInput from "../../components/privateForm/passwordInput";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const StyledView = styled(View);

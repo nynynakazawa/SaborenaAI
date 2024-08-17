@@ -13,7 +13,7 @@ import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Message, UserData } from "../../types/userDataTypes";
-import NameDisplayComponent from "../../layout/display/nameDisplayComponent";
+import NameDisplayComponent from "../../components/display/nameDisplayComponent";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

@@ -11,7 +11,7 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
-import UserModal from "../../../layout/userModal/userModal";
+import UserModal from "../../../components/userModal/userModal";
 import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);

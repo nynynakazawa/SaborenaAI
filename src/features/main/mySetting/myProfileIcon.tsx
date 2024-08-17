@@ -2,7 +2,7 @@ import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/Entypo";
-import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
+import NameDisplayComponent from "../../../components/display/nameDisplayComponent";
 import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 import { RootState } from "../../../store/store";

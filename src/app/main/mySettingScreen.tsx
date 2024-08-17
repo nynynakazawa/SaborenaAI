@@ -2,9 +2,9 @@ import React from "react";
 import { Platform, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
-import AppInfoDisplay from "../../components/main/mySetting/appInfoDisplay";
-import MyProfileIcon from "../../components/main/mySetting/myProfileIcon";
-import SettingButtonContainer from "../../components/main/mySetting/settingButtonContainer";
+import AppInfoDisplay from "../../features/main/mySetting/appInfoDisplay";
+import MyProfileIcon from "../../features/main/mySetting/myProfileIcon";
+import SettingButtonContainer from "../../features/main/mySetting/settingButtonContainer";
 
 const StyledView = styled(View);
 

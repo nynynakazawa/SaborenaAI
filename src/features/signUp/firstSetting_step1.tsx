@@ -1,12 +1,12 @@
 import React from "react";
 import { Platform, View } from "react-native";
 import { styled } from "nativewind";
-import NameInput from "../../layout/form/nameInput";
-import GenderInput from "../../layout/form/genderInput";
-import ResidentialInput from "../../layout/form/residentialInput";
+import NameInput from "../../components/form/nameInput";
+import GenderInput from "../../components/form/genderInput";
+import ResidentialInput from "../../components/form/residentialInput";
 import TransitionButton from "../firstSetting/transitionButton";
 import ProgressBar from "../firstSetting/progressBar";
-import BirthdayInput from "../../layout/form/birthInput";
+import BirthdayInput from "../../components/form/birthInput";
 import NowMatchHeader from "../../layout/header/nowMatchHeader";
 
 const StyledView = styled(View);

@@ -15,8 +15,8 @@ import {
   sendEmailVerification,
   onAuthStateChanged,
 } from "firebase/auth";
-import EmailInput from "../../layout/privateForm/emailInput";
-import PasswordInput from "../../layout/privateForm/passwordInput";
+import EmailInput from "../../components/privateForm/emailInput";
+import PasswordInput from "../../components/privateForm/passwordInput";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import { FirebaseError } from "firebase/app";

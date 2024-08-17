@@ -3,8 +3,8 @@ import { Platform, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PageBackHeader from "../../layout/header/pageBackHeader";
-import AccountManagement from "../../components/main/mySetting/accountManagement";
-import LogoutManegement from "../../components/main/mySetting/logoutManegement";
+import AccountManagement from "../../features/main/mySetting/accountManagement";
+import LogoutManegement from "../../features/main/mySetting/logoutManegement";
 
 const StyledView = styled(View);
 

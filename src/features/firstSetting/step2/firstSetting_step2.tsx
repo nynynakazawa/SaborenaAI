@@ -1,11 +1,11 @@
 import React from "react";
 import { Platform, View } from "react-native";
 import { styled } from "nativewind";
-import ProgressBar from "../firstSetting/progressBar";
-import TransitionButton from "../firstSetting/transitionButton";
-import MainImageInput from "../../layout/form/mainImageInput";
-import ImageCaution from "../firstSetting/step2/imageCaution";
-import NowMatchHeader from "../../layout/header/nowMatchHeader";
+import ProgressBar from "../progressBar";
+import TransitionButton from "../transitionButton";
+import MainImageInput from "../../../components/form/mainImageInput";
+import ImageCaution from "./imageCaution";
+import NowMatchHeader from "../../../layout/header/nowMatchHeader";
 
 const StyledView = styled(View);
 
@@ -21,7 +21,6 @@ const FirstSetting_step2 = ({
   setScene: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const isValid: boolean = mainImage != null;
-
   return (
     <StyledView className="h-screen">
       <NowMatchHeader />
@@ -30,12 +29,9 @@ const FirstSetting_step2 = ({
       <StyledView
         className={`absolute mt-[80px] w-screen ${Platform.OS == "android" ? "top-[10vh]" : "top-[18vh]"}`}
       >
-        <MainImageInput
-          mainImage={mainImage}
-          setMainImage={setMainImage}
-          isRequired={true}
-        />
+        <MainImageInput mainImage={mainImage} setMainImage={setMainImage} isRequired={true}/>
       </StyledView>
+
       <ImageCaution />
 
       <TransitionButton scene={scene} setScene={setScene} isValid={isValid} />
