@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

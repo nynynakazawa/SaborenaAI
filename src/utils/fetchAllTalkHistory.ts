@@ -15,9 +15,9 @@ const fetchTalkHistory = (uid: string, talkRoomId: string, dispatch: Dispatch) =
         (a: any, b: any) => a.timestamp - b.timestamp
       );
       // トークヒストリーに追加
-      console.log("###############################")
+      console.log("###############################");
       console.log(sortedMessages);
-      console.log("###############################")
+      console.log("###############################");
       dispatch(updateKey({ key: uid, data: sortedMessages }));
     } else {
       console.log("❌ No such talk data!");
@@ -27,7 +27,7 @@ const fetchTalkHistory = (uid: string, talkRoomId: string, dispatch: Dispatch) =
 
 export const fetchAllTalkHistory = (talkData: TalkData, dispatch: Dispatch) => {
   for(const uid in talkData) {
-    const talkRoomId = talkData[uid]?.talk_room_id
-    fetchTalkHistory(uid, talkRoomId as string, dispatch)
+    const talkRoomId = talkData[uid]?.talk_room_id;
+    fetchTalkHistory(uid, talkRoomId as string, dispatch);
   }
 }

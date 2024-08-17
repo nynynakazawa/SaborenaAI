@@ -6,7 +6,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PageBackHeader from "../layout/header/pageBackHeader";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 
 const ResettingPasswordPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;

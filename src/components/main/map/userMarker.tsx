@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { Image, View } from "react-native";
 import { styled } from "nativewind";
-import { CurrentData, UserData } from "../../../types/userDataTypes";
+import { CurrentData } from "../../../types/userDataTypes";
 import { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import Animated, {
@@ -15,7 +15,6 @@ import UserModal from "../../../layout/userModal/userModal";
 import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);
-const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledImage = styled(Image);
 
 const UserMarker = ({

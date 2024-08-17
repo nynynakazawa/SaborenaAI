@@ -1,4 +1,4 @@
-import { Tabs, useGlobalSearchParams, useRouter } from "expo-router";
+import { Tabs, useGlobalSearchParams } from "expo-router";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import { auth, db } from "../../firebase";
@@ -21,7 +21,6 @@ import {
   fetchTalkData,
   fetchUserData,
 } from "../../utils/fetchMyData";
-import { fetchAllTalkHistory } from "../../utils/fetchAllTalkHistory";
 
 export default function Layout() {
   const { isFetchUserData } = useGlobalSearchParams();

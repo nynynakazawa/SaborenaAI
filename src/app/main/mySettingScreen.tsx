@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Image, Platform, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { Platform, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppInfoDisplay from "../../components/main/mySetting/appInfoDisplay";

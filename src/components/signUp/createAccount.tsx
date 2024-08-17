@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   View,
   Modal,
-  ActivityIndicator,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
@@ -18,7 +17,7 @@ import {
 } from "firebase/auth";
 import EmailInput from "../../layout/privateForm/emailInput";
 import PasswordInput from "../../layout/privateForm/passwordInput";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import { FirebaseError } from "firebase/app";
 

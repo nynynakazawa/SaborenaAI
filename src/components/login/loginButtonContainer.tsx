@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import TermModal from "./termModal";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

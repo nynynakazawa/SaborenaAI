@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
-import { Alert, Button, Platform, Text, View } from "react-native";
+import React from "react";
+import { Text, View } from "react-native";
 import { styled } from "nativewind";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { auth } from "../../firebase"; // firebase.tsで初期化された認証モジュールをインポート
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

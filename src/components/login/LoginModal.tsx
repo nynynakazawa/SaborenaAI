@@ -3,7 +3,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput,
   Keyboard,
 } from "react-native";
 import { styled } from "nativewind";

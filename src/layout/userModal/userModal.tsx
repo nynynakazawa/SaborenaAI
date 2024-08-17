@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Image,
   Modal,
   ScrollView,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";

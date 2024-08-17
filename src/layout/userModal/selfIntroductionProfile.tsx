@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
-  TextInput,
   View,
-  TouchableOpacity,
-  Keyboard,
 } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";

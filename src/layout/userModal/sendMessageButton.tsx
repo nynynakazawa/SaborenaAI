@@ -3,10 +3,6 @@ import { TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/Entypo";
 import { useRouter } from "expo-router";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../firebase";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import { UserData } from "../../types/userDataTypes";
 
 const StyledView = styled(View);

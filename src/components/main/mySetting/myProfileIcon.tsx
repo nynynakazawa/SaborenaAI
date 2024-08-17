@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { Image, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-import { UserData } from "../../../types/userDataTypes";
 import Icon from "react-native-vector-icons/Entypo";
 import NameDisplayComponent from "../../../layout/display/nameDisplayComponent";
 import { useSelector } from "react-redux";

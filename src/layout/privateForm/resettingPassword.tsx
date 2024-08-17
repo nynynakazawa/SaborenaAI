@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Platform, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { auth } from "../../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";

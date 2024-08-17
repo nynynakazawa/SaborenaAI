@@ -120,7 +120,6 @@ const TalkPage = () => {
 
   // レンダリング時
   useEffect(() => {
-    console.log("🔔")
     if (talkData && uid) {
       const existingTalkRoomId = talkData[uid as string]?.talk_room_id;
       if (existingTalkRoomId) {

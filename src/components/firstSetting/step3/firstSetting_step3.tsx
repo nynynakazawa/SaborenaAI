@@ -8,7 +8,6 @@ import GoalInput from "../../../layout/form/goalInput";
 import NowMatchHeader from "../../../layout/header/nowMatchHeader";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 
 const FirstSetting_step3 = ({
   selfIntroduction,

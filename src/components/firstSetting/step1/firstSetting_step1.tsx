@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, Text, View } from "react-native";
+import { Platform, View } from "react-native";
 import { styled } from "nativewind";
 import NameInput from "../../../layout/form/nameInput";
 import GenderInput from "../../../layout/form/genderInput";
