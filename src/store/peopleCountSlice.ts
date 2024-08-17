@@ -1,3 +1,8 @@
+// 
+// peopleCount
+// 自分の人数ステータス
+// 
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const peopleCountSlice = createSlice({

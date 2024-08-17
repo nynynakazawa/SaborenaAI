@@ -21,6 +21,7 @@ import {
   fetchTalkData,
   fetchUserData,
 } from "../../utils/fetchMyData";
+import { fetchAllTalkHistory } from "../../utils/fetchAllTalkHistory";
 
 export default function Layout() {
   const { isFetchUserData } = useGlobalSearchParams();

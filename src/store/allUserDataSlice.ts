@@ -1,3 +1,9 @@
+// 
+// allUserData (辞書)
+// key: uid 
+// value: そのユーザー(uid)のuserData
+// 
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserData } from "../types/userDataTypes";
 

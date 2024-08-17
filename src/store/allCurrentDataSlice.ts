@@ -1,3 +1,9 @@
+// 
+// allCurrentData (辞書)
+// key: uid 
+// value: そのユーザー(uid)のcurrentData
+// 
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CurrentData } from "../types/userDataTypes";
 

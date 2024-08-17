@@ -1,3 +1,8 @@
+// 
+// location
+// 自分の位置情報
+// 
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import * as Location from "expo-location";
 

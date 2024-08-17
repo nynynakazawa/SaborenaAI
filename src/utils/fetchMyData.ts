@@ -8,6 +8,7 @@ import { set as setTalkData } from "../store/talkDataSlice";
 import * as Location from "expo-location";
 import { set as setLocation } from "../store/locationSlice";
 import { fetchAllTalkPartners } from "./fetchTalkAllPartner";
+import { fetchAllTalkHistory } from "./fetchAllTalkHistory";
 
 // location取得
 export const fetchLocation = async (dispatch: Dispatch) => {
@@ -56,6 +57,7 @@ export const fetchTalkData = (uid: string, dispatch: Dispatch) => {
       const talkData = doc.data();
       dispatch(setTalkData(talkData));
       fetchAllTalkPartners(talkData, dispatch);
+      fetchAllTalkHistory(talkData, dispatch);
     } else {
       console.log("❌no such talk data!");
     }

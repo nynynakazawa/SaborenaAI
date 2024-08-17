@@ -27,17 +27,21 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
 const TalkPage = () => {
+  const Container = Platform.OS === "android" ? SafeAreaView : View;
+  const { uid, name } = useGlobalSearchParams();
+  const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
+
   const myUid: string = useSelector((state: RootState) => state.myUid.value);
   const talkData: TalkData | null = useSelector(
     (state: RootState) => state.talkData.value,
   );
-  const Container = Platform.OS === "android" ? SafeAreaView : View;
-  const { uid, name } = useGlobalSearchParams();
-  const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
-  const dispatch = useDispatch()
+  const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
+    (state: RootState) => state.talkHistoryData.value,
+  );
+  const messages = myTalkHistroyData[uid as string]
 
   const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<any[]>([]);
+  // const [messages, setMessages] = useState<Message[] | null>(null);
   const [talkRoomId, setTalkRoomId] = useState<string | null>(null);
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
@@ -105,41 +109,22 @@ const TalkPage = () => {
 
   // 新しいメッセージが追加されたら自動的に一番下にスクロール
   useEffect(() => {
-    if (messages.length > 0) {
-      setTimeout(() => {
-        flatListRef.current?.scrollToEnd({ animated: true });
-      }, 200);
+    if(messages){
+      if (messages.length > 0) {
+        setTimeout(() => {
+          flatListRef.current?.scrollToEnd({ animated: true });
+        }, 200);
+      }
     }
   }, [messages]);
 
-  // メッセージを取得
-  const fetchMessages = (talkRoomId: string) => {
-    const talkRoomRef = doc(db, "talk_room", talkRoomId);
-    return onSnapshot(talkRoomRef, (doc) => {
-      if (doc.exists()) {
-        console.log("🟠 Fetched talkRoom data");
-        const talkRoomData: {[key: string]: Message}= doc.data();
-        const sortedMessages: Message[] = Object.values(talkRoomData).sort(
-          (a: any, b: any) => a.timestamp - b.timestamp
-        );
-        // トークヒストリーに追加
-        console.log("###############################")
-        console.log(sortedMessages);
-        setMessages(sortedMessages);
-        dispatch(updateKey({ key: uid as string, data: sortedMessages }));
-      } else {
-        console.log("❌ No such talk data!");
-      }
-    });
-  };
-
   // レンダリング時
   useEffect(() => {
+    console.log("🔔")
     if (talkData && uid) {
       const existingTalkRoomId = talkData[uid as string]?.talk_room_id;
       if (existingTalkRoomId) {
         setTalkRoomId(existingTalkRoomId);
-        fetchMessages(existingTalkRoomId);
       }
     }
   }, [talkData, uid]);

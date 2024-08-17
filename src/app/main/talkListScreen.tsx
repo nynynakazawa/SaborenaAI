@@ -31,7 +31,7 @@ const TalkDictScreen = () => {
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
   );
-
+  
   // トーク画面に遷移
   const handlePressTalkButton = (uid: string, userData: UserData | null) => {
     router.push({

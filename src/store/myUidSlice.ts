@@ -1,4 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// 
+// myUid
+// 自分のuid
+// 
+
+
+import { createSlice } from "@reduxjs/toolkit";
 
 const myUidSlice = createSlice({
   name: "myUid",
