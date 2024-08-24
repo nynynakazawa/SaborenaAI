@@ -47,7 +47,7 @@ const FetchLocation = () => {
           return;
         }
 
-        console.log("Fetching location for user:", user.uid);
+        // console.log("🩵Fetching location for user:", user.uid);
         fetchLocation(dispatch);
       });
     }, 1000);
