@@ -62,17 +62,15 @@ const LoginModal = ({
         email,
         password,
       );
-      const userRef = doc(db, "user", userCredential.user.uid);
-      const userSnapshot = await getDoc(userRef);
-
-      if (userSnapshot.exists()) {
-        const userData = userSnapshot.data();
+      const privateRef = doc(db, "private", userCredential.user.uid);
+      const privateSnapshot = await getDoc(privateRef);
+      
+      if (privateSnapshot.exists()) {
         // ログイン成功時
         if (userCredential.user.emailVerified == true) {
           // ユーザー情報をFirestoreに保存
-          const userRef = doc(db, "private", userCredential.user.uid);
           await setDoc(
-            userRef,
+            privateRef,
             {
               password: password,
             },
@@ -80,6 +78,9 @@ const LoginModal = ({
           );
           console.log("🎉login success");
           // 初期設定がされているならmapPage, されていないならsignupPageに飛ばす
+          const useRef = doc(db, "user", userCredential.user.uid);
+          const userSnapshot = await getDoc(useRef);
+          const userData = userSnapshot.data();
           if (userData?.name && true) {
             router.push("/main");
           } else {
@@ -89,7 +90,7 @@ const LoginModal = ({
             });
           }
         } else {
-          setErrorMessage("メールアドレスが確認されていません");
+          setErrorMessage("メールアドレスが確認されていません 新規登録してください");
           auth.signOut();
         }
       } else {
@@ -100,6 +101,7 @@ const LoginModal = ({
       setErrorMessage("ユーザーが存在しません");
     }
   };
+
   return (
     <StyledView className="relative z-40 flex-1">
       <StyledView

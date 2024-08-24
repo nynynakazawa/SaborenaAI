@@ -24,7 +24,7 @@ export const getRemainingTime = (pastTime: number): {isValid: boolean, leftTime:
   // 3時間 - 時間差
   const leftTime = (3 * 60 * 60 * 1000) - (nowTime - pastTime);
   const hour = Math.floor(leftTime / (1000 * 60 * 60));
-  const minute = Math.ceil((leftTime % (1000 * 60 * 60)) / (1000 * 60));
+  const minute = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
   const res = {
     isValid: leftTime > 0,
     leftTime: `残り: ${hour}時間${minute}分`

@@ -104,6 +104,8 @@ const ChangeCurrentStatus = () => {
 
   return (
     <StyledView className="absolute right-[6vw] top-[8vh] z-[100] flex h-[16vh] w-[60vw] justify-center rounded-lg bg-white shadow-xl">
+      <StyledText>{location?.coords.latitude}</StyledText>
+      <StyledText>{location?.coords.longitude}</StyledText>
       {/* isGps */}
       <StyledView className="flex h-[50%] flex-row items-center justify-center gap-[20px]">
         <StyledView className="flex w-[40%] flex-row">

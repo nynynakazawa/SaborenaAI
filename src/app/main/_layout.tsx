@@ -50,6 +50,7 @@ export default function Layout() {
 
   // 位置情報送信
   const sendLocation = async (uid: string, isGps: boolean) => {
+    console.log("aaaa")
     if (isGps === false) {
       return;
     }
@@ -86,6 +87,7 @@ export default function Layout() {
 
   // 10秒ごとに現在位置をdbに送る
   useEffect(() => {
+    console.log("location changed")
     const interval = setInterval(() => {
       // 位置が変化している場合
       if (prevLocationRef.current !== location) {
@@ -95,7 +97,7 @@ export default function Layout() {
     }, 10 * 1000); // 10秒
 
     return () => clearInterval(interval);
-  }, []);
+  }, [location?.coords.latitude, location?.coords.longitude]);
 
   return (
     <Tabs
