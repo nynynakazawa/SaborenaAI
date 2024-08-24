@@ -21,8 +21,8 @@ const ChangeCurrentStatus = () => {
   const peopleCount = useSelector(
     (state: RootState) => state.peopleCount.value,
   );
-  const isGps = useSelector((state: RootState) => state.isGps.value);
-  const myUid = useSelector((state: RootState) => state.myUid.value);
+  const isGps: boolean = useSelector((state: RootState) => state.isGps.value);
+  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
   const dispatch = useDispatch();
 
   const prevPeopleCountRef = useRef(peopleCount);
@@ -77,7 +77,7 @@ const ChangeCurrentStatus = () => {
   // peopleCountが10秒間変化がなかったときにだけ送信 (db通信量を減らすため)
   useEffect(() => {
     const interval = setInterval(() => {
-      if (prevPeopleCountRef.current !== peopleCount) {
+      if (prevPeopleCountRef.current !== peopleCount && myUid) {
         sendPeopleCount(myUid);
         prevPeopleCountRef.current = peopleCount;
       }
@@ -89,7 +89,7 @@ const ChangeCurrentStatus = () => {
   // isGpsが10秒間変化がなかったときにだけ送信 (db通信量を減らすため)
   useEffect(() => {
     const interval = setInterval(() => {
-      if (prevIsGpsRef.current !== isGps) {
+      if (prevIsGpsRef.current !== isGps && myUid) {
         sendLocation(myUid, isGps);
         prevIsGpsRef.current = isGps;
       }
@@ -104,8 +104,6 @@ const ChangeCurrentStatus = () => {
 
   return (
     <StyledView className="absolute right-[6vw] top-[8vh] z-[100] flex h-[16vh] w-[60vw] justify-center rounded-lg bg-white shadow-xl">
-      <StyledText>{location?.coords.latitude}</StyledText>
-      <StyledText>{location?.coords.longitude}</StyledText>
       {/* isGps */}
       <StyledView className="flex h-[50%] flex-row items-center justify-center gap-[20px]">
         <StyledView className="flex w-[40%] flex-row">

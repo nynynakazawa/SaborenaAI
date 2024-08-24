@@ -2,11 +2,17 @@ import React from "react";
 import { Slot } from "expo-router";
 import { Provider } from "react-redux";
 import store from "../store/store";
+import FetchLocation from "../features/fetchLocation/fetchLocation";
 
-const Layout = () => (
-  <Provider store={store}>
-    <Slot />
-  </Provider>
-);
+
+const Layout = () => {
+
+  return (
+    <Provider store={store}>
+      <FetchLocation />
+      <Slot />
+    </Provider>
+  )
+};
 
 export default Layout;

@@ -2,14 +2,11 @@ import { Tabs, useGlobalSearchParams } from "expo-router";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import { auth, db } from "../../firebase";
-import { doc, setDoc } from "firebase/firestore";
-import * as Location from "expo-location";
 import { set as setMyUid } from "../../store/myUidSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import BottomNavigation from "../../features/main/navigation/bottomNavigation";
-import { RootState } from "../../store/store";
 import {
   fetchAllCurrentData,
   monitorCurrentCollection,
@@ -26,13 +23,6 @@ export default function Layout() {
   const { isFetchUserData } = useGlobalSearchParams();
   const dispatch = useDispatch();
 
-  const location: Location.LocationObject | null = useSelector(
-    (state: RootState) => state.location.value,
-  );
-  const myUid: string = useSelector((state: RootState) => state.myUid.value);
-  const isGps: boolean = useSelector((state: RootState) => state.isGps.value);
-  const prevLocationRef = useRef(location);
-
   // 自身の情報を取得
   const fetchMyUser = async (dispatch: Dispatch) => {
     const user = auth.currentUser;
@@ -48,24 +38,6 @@ export default function Layout() {
     }
   };
 
-  // 位置情報送信
-  const sendLocation = async (uid: string, isGps: boolean) => {
-    console.log("aaaa")
-    if (isGps === false) {
-      return;
-    }
-    console.log("🎉send location");
-    const currentRef = doc(db, "current", uid);
-    await setDoc(
-      currentRef,
-      {
-        latitude: location?.coords.latitude,
-        longitude: location?.coords.longitude,
-      },
-      { merge: true },
-    );
-  };
-
   // レンダリング時に各ユーザーデータ取得
   useEffect(() => {
     if (isFetchUserData != "false") {
@@ -75,29 +47,6 @@ export default function Layout() {
       fetchMyUser(dispatch);
     }
   }, []);
-
-  // 1秒ごとに現在位置取得
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      fetchLocation(dispatch);
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  // 10秒ごとに現在位置をdbに送る
-  useEffect(() => {
-    console.log("location changed")
-    const interval = setInterval(() => {
-      // 位置が変化している場合
-      if (prevLocationRef.current !== location) {
-        sendLocation(myUid, isGps);
-        prevLocationRef.current = location;
-      }
-    }, 10 * 1000); // 10秒
-
-    return () => clearInterval(interval);
-  }, [location?.coords.latitude, location?.coords.longitude]);
 
   return (
     <Tabs

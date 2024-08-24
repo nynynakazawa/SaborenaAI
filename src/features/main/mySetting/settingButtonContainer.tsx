@@ -17,16 +17,6 @@ const SettingButtonContainer = () => {
       {/* 1列目 */}
       <StyledView className="flex w-full flex-row justify-between">
         <StyledTouchableOpacity
-          onPress={() => router.push("/mySetting/likeToPage")}
-          className="w-[30%]"
-        >
-          <StyledView className="flex items-center gap-[10px]">
-            <AntDesign name="like1" size={30} color="#333" />
-            <StyledText>自分から</StyledText>
-          </StyledView>
-        </StyledTouchableOpacity>
-
-        <StyledTouchableOpacity
           onPress={() => router.push("/mySetting/ageVerificationPage")}
           className="w-[30%]"
         >
@@ -45,10 +35,7 @@ const SettingButtonContainer = () => {
             <StyledText>プレミアム</StyledText>
           </StyledView>
         </StyledTouchableOpacity>
-      </StyledView>
-
-      {/* 2列目 */}
-      <StyledView className="mt-[6vh] flex w-full flex-row justify-between">
+        
         <StyledTouchableOpacity
           onPress={() => router.push("/mySetting/helpPage")}
           className="w-[30%]"
@@ -58,7 +45,10 @@ const SettingButtonContainer = () => {
             <StyledText>ヘルプ</StyledText>
           </StyledView>
         </StyledTouchableOpacity>
+      </StyledView>
 
+      {/* 2列目 */}
+      <StyledView className="mt-[6vh] flex w-full flex-row justify-between">
         <StyledTouchableOpacity
           onPress={() => router.push("/mySetting/variousSettingPage")}
           className="w-[30%]"

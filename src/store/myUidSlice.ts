@@ -9,7 +9,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const myUidSlice = createSlice({
   name: "myUid",
   initialState: {
-    value: "",
+    value: null,
   },
   reducers: {
     set: (state, action) => {
