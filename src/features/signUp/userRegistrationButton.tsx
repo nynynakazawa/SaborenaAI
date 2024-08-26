@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
-import { createUserWithEmailAndPassword, User } from "firebase/auth";
+import { User } from "firebase/auth";
 import { auth, db } from "../../firebase";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "expo-router";
+import { uploadImage } from "../../utils/uploadImage";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -50,26 +44,6 @@ const UserRegistationButton = ({
 }) => {
   // * ############################################################################## *
   const router = useRouter();
-  //  画像のアップロード
-  const uploadImage = async (path: string, uri: string) => {
-    const storage = getStorage();
-    const storageRef = ref(
-      storage,
-      `${path}/${auth.currentUser?.uid}/${Date.now()}.jpg`,
-    );
-
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    try {
-      await uploadBytesResumable(storageRef, blob);
-      const downloadURL = await getDownloadURL(storageRef);
-      return downloadURL;
-    } catch (error) {
-      console.error("Error uploading mainImage: ", error);
-      throw new Error("mainImage upload failed");
-    }
-  };
 
   // ユーザー登録
   const handleRegistration = async () => {
@@ -78,7 +52,7 @@ const UserRegistationButton = ({
       const user = auth.currentUser as User;
       let mainImageUrl = "";
       if (mainImage) {
-        mainImageUrl = await uploadImage("main_images", mainImage);
+        mainImageUrl = await uploadImage(user.uid, "main_images", mainImage);
       }
       // userData
       const userRef = doc(db, "user", user.uid);

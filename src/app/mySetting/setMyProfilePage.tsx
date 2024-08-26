@@ -15,14 +15,9 @@ import BirthdayInput from "../../components/form/birthInput";
 import GenderInput from "../../components/form/genderInput";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
 import ResidentialInput from "../../components/form/residentialInput";
 import { RootState } from "../../store/store";
+import { uploadImage } from "../../utils/uploadImage";
 
 const StyledView = styled(View);
 
@@ -68,25 +63,6 @@ const SetMyProfilePage = () => {
   // 変化したか判定
   const [isChange, setIsChange] = useState<boolean>(false);
 
-  // 画像のアップロード
-  // TODO: ローディング画面の作成
-  const uploadImage = async (path: string, uri: string) => {
-    console.log(`Uploading image to path: ${path}, uri: ${uri}`);
-    const storage = getStorage();
-    const storageRef = ref(storage, `${path}/${myUid}/${Date.now()}.jpg`);
-
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    try {
-      await uploadBytesResumable(storageRef, blob);
-      const downloadURL = await getDownloadURL(storageRef);
-      return downloadURL;
-    } catch (error) {
-      console.error("Error uploading image: ", error);
-      throw new Error("Image upload failed");
-    }
-  };
 
   // プロフィールを更新する
   const handleSaveMyProfile = async () => {
@@ -98,7 +74,7 @@ const SetMyProfilePage = () => {
     if (mainImage !== myUserData?.main_image_url && myUid) {
       let mainImageUrl = "";
       if (mainImage) {
-        mainImageUrl = await uploadImage("main_images", mainImage);
+        mainImageUrl = await uploadImage(myUid, "main_images", mainImage);
       }
       console.log("Main image has changed.");
       updates.main_image_url = mainImage ? mainImageUrl : null;
@@ -119,6 +95,7 @@ const SetMyProfilePage = () => {
         subImagesChanged = true;
         if (subImages[index]) {
           subImageUrls[index] = await uploadImage(
+            myUid,
             "sub_images",
             subImages[index]!,
           );
