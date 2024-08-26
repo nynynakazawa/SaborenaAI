@@ -24,11 +24,10 @@ const LogoutManegement = () => {
   };
 
   return (
-    <StyledView>
+    <StyledView className="mt-[6vh]">
       {/* ログアウトボタン */}
       <StyledTouchableOpacity
         onPress={() => setIsLogoutModalVisible(true)}
-        className="mt-[6vh]"
       >
         <StyledView className="w-screen border-b-[1px] border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">

@@ -33,7 +33,7 @@ const SetMyProfilePage = () => {
   const myUserData: UserData | null = useSelector(
     (state: RootState) => state.userData.value,
   );
-  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
 
   // 各種state
   // 基本設定
@@ -95,7 +95,7 @@ const SetMyProfilePage = () => {
 
     const updates: Partial<UserData> = {};
     // メイン画像
-    if (mainImage !== myUserData?.main_image_url) {
+    if (mainImage !== myUserData?.main_image_url && myUid) {
       let mainImageUrl = "";
       if (mainImage) {
         mainImageUrl = await uploadImage("main_images", mainImage);
@@ -147,7 +147,7 @@ const SetMyProfilePage = () => {
       updates.selected_goal = selectedGoal;
     }
 
-    if (Object.keys(updates).length > 0) {
+    if (Object.keys(updates).length > 0 && myUid) {
       const userRef = doc(db, "user", myUid);
       await updateDoc(userRef, updates);
     } else {

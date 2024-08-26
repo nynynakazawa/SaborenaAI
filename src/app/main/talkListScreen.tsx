@@ -27,7 +27,7 @@ const TalkDictScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   const router = useRouter();
 
-  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
   const talkData: TalkData | null = useSelector(
     (state: RootState) => state.talkData.value,
   );
@@ -88,7 +88,7 @@ const TalkDictScreen = () => {
       setTimeLeft(updatedTimes);
       // talkUser削除
       for (const uid in updatedValidity) {
-        if (updatedValidity[uid] == false) {
+        if (updatedValidity[uid] == false && myUid) {
           deleteTalkPartner(myUid, uid);
         }
       }

@@ -3,6 +3,8 @@ import { Platform, Text, View } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PageBackHeader from "../../layout/header/pageBackHeader";
+import AgeVerificationHelp from "../../features/main/mySetting/ageVerificationHelp";
+import FunctionHelp from "../../features/main/mySetting/functionHelp";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -18,8 +20,11 @@ const HelpPage = () => {
         isFetchUserProps="false"
       />
       <StyledView className="h-full w-full bg-[#f2f2f2]">
-        <StyledText>ヘルプ</StyledText>
+        <AgeVerificationHelp />
+        <FunctionHelp />
       </StyledView>
+
+      <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#c52fe3]"></StyledView>
     </Container>
   );
 };

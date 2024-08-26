@@ -21,9 +21,9 @@ const AccountManagement = () => {
 
   // * ############################################################################## *
   return (
-    <StyledView>
+    <StyledView className="mt-[10vh]">
       {/* アカウント管理 */}
-      <StyledText className="mx-auto mb-[12px] mt-[10vh] w-[90%] text-[18px] font-bold text-[#333]">
+      <StyledText className="mx-auto mb-[12px] w-[90%] text-[18px] font-bold text-[#333]">
         アカウント管理
       </StyledText>
       <StyledView>

@@ -57,6 +57,7 @@ const FetchLocation = () => {
 
   // 10秒ごとに現在位置をdbに送る
   useEffect(() => {
+    console.log(new Date())
     console.log("location changed")
     const interval = setInterval(() => {
       // 位置が変化している場合
