@@ -146,7 +146,7 @@ const CreateAccount = ({
       if (auth.currentUser) {
         await sendEmailVerification(auth.currentUser);
         console.log("send email");
-        setTimeout(() => setIsSendingEmail(false), 60000); // 1分間再送信ボタンを無効にする
+        // setTimeout(() => setIsSendingEmail(false), 60000); // 1分間再送信ボタンを無効にする
       } else {
         console.log("No user is signed in.");
       }
