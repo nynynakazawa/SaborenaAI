@@ -3,14 +3,13 @@ import { Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "expo-router";
-import { useDispatch } from "react-redux";
-import { set as setMyUid } from "../../../store/myUidSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const LogoutManegement = () => {
+  const router = useRouter();
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
 
   // ログアウト処理
@@ -18,6 +17,7 @@ const LogoutManegement = () => {
     try {
       const auth = getAuth();
       await signOut(auth);
+      router.push("/loginPage")
     } catch (error) {
       console.error("Logout failed", error);
     }
