@@ -23,7 +23,7 @@ const PasswordInput = ({
 
   const errorMessage =
     option === "first" && password && !isValid
-      ? "※ 英数字8文字以上である必要があります"
+      ? "※ 英数字6文字以上である必要があります"
       : option === "again" && password && !isValid
         ? "※ 一致しません"
         : "";

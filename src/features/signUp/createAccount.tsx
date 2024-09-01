@@ -74,7 +74,7 @@ const CreateAccount = ({
 
   // バリデーションチェック
   function isValiedPassword(password: string) {
-    const pattern = /^[A-Za-z1-9@]{8,}$/;
+    const pattern = /^[A-Za-z1-9@]{6,}$/;
     return pattern.test(password);
   }
 
