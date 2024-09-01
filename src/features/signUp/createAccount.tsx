@@ -20,6 +20,7 @@ import PasswordInput from "../../components/privateForm/passwordInput";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import { FirebaseError } from "firebase/app";
+import PrivacyPolicyModal from "../login/privacyPolicyModal";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -34,8 +35,10 @@ const CreateAccount = ({
   setPasswordAgain,
   isOver18,
   setIsOver18,
-  isAgreeTerms,
-  setIsAgreeTerms,
+  isAgreeTerm,
+  setIsAgreeTerm,
+  isAgreePrivacyPolicy,
+  setIsAgreePrivacyPolicy,
   scene,
   setScene,
   isLoading,
@@ -49,8 +52,10 @@ const CreateAccount = ({
   setPasswordAgain: React.Dispatch<React.SetStateAction<string>>;
   isOver18: boolean;
   setIsOver18: React.Dispatch<React.SetStateAction<boolean>>;
-  isAgreeTerms: boolean;
-  setIsAgreeTerms: React.Dispatch<React.SetStateAction<boolean>>;
+  isAgreeTerm: boolean;
+  setIsAgreeTerm: React.Dispatch<React.SetStateAction<boolean>>;
+  isAgreePrivacyPolicy: boolean;
+  setIsAgreePrivacyPolicy: React.Dispatch<React.SetStateAction<boolean>>;
   scene: number;
   setScene: React.Dispatch<React.SetStateAction<number>>;
   isLoading: boolean;
@@ -58,6 +63,7 @@ const CreateAccount = ({
 }) => {
   // * ############################################################################## *
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
+  const [isVisiblePrivacyPolicyModal, setIsVisiblePrivacyPolicyModal] = useState<boolean>(false);
   const [
     isVisibleWaitingVerificationModal,
     setIsVisibleWaitingVerificationModal,
@@ -77,7 +83,8 @@ const CreateAccount = ({
     password.trim() != "" &&
     password == passwordAgain &&
     isOver18 &&
-    isAgreeTerms &&
+    isAgreeTerm &&
+    isAgreePrivacyPolicy &&
     isValiedPassword(password);
 
   // タイマーのロジック
@@ -176,6 +183,7 @@ const CreateAccount = ({
           isFetchUserProps="true"
         />
 
+        {/* フォーム */}
         <StyledView className="mx-auto mt-[10vh] w-[90vw] flex-1 items-center">
           <StyledView className="mb-[56px] w-full">
             <EmailInput email={email} setEmail={setEmail} option={"black"} />
@@ -197,6 +205,7 @@ const CreateAccount = ({
           />
 
           <StyledView className="mt-[20px] flex w-full gap-[22px]">
+            {/* isOver18 */}
             <BouncyCheckbox
               size={25}
               fillColor="red"
@@ -206,25 +215,48 @@ const CreateAccount = ({
               isChecked={isOver18}
               onPress={(isChecked: boolean) => setIsOver18(isChecked)}
             />
-            <StyledView>
+            {/* isAgreeTerm */}
+            <StyledView className="flex h-[54px]">
               <BouncyCheckbox
                 size={25}
                 fillColor="red"
                 text="利用規約に同意します"
                 iconStyle={{ borderColor: "red" }}
                 textStyle={{ textDecorationLine: "none" }}
-                isChecked={isAgreeTerms}
-                onPress={(isChecked: boolean) => setIsAgreeTerms(isChecked)}
+                isChecked={isAgreeTerm}
+                onPress={(isChecked: boolean) => setIsAgreeTerm(isChecked)}
               />
               <StyledTouchableOpacity
                 onPress={() => {
                   setIsVisibleTermModal(true);
                 }}
-                className="absolute right-0"
+                className="absolute right-0 bottom-0"
               >
-                <StyledText className="text-[#1d4ed8]">利用規約</StyledText>
+                <StyledText className="text-[#1d4ed8] underline">利用規約</StyledText>
               </StyledTouchableOpacity>
             </StyledView>
+
+            {/* isAgreePrivacyPolicy */}
+            <StyledView className="flex h-[54px]">
+              <BouncyCheckbox
+                size={25}
+                fillColor="red"
+                text="プライバシーポリシーに同意します"
+                iconStyle={{ borderColor: "red" }}
+                textStyle={{ textDecorationLine: "none" }}
+                isChecked={isAgreePrivacyPolicy}
+                onPress={(isChecked: boolean) => setIsAgreePrivacyPolicy(isChecked)}
+              />
+              <StyledTouchableOpacity
+                onPress={() => {
+                  setIsVisiblePrivacyPolicyModal(true);
+                }}
+                className="absolute right-0 bottom-0"
+              >
+                <StyledText className="text-[#1d4ed8] underline">プライバシーポリシー</StyledText>
+              </StyledTouchableOpacity>
+            </StyledView>
+
             <StyledText
               className={`text-[#ff0000] ${!errorMessage && "opacity-0"}`}
             >
@@ -232,12 +264,10 @@ const CreateAccount = ({
             </StyledText>
           </StyledView>
         </StyledView>
-        <TermModal
-          visible={isVisibleTermModal}
-          onClose={() => setIsVisibleTermModal(false)}
-        />
+
       </StyledView>
 
+      {/* 新規登録ボタン */}
       <StyledView className="absolute bottom-[8vh] w-screen flex-1 items-center">
         <StyledView className="mx-auto mb-4 flex w-[75vw] flex-row justify-end">
           <StyledTouchableOpacity
@@ -309,6 +339,17 @@ const CreateAccount = ({
           </StyledView>
         </Modal>
       )}
+
+      {/* 利用規約モーダル */}
+      <TermModal
+        visible={isVisibleTermModal}
+        onClose={() => setIsVisibleTermModal(false)}
+        />
+      {/* プライバシーポリシーモーダル */}
+      <PrivacyPolicyModal
+        visible={isVisiblePrivacyPolicyModal}
+        onClose={() => setIsVisiblePrivacyPolicyModal(false)}
+        />
     </StyledView>
   );
 };

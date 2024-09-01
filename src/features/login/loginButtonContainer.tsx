@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import TermModal from "./termModal";
 import { useRouter } from "expo-router";
+import PrivacyPolicyModal from "./privacyPolicyModal";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -13,8 +14,9 @@ const LoginButtonContainer = ({
 }: {
   setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
   const router = useRouter();
+  const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
+  const [isVisiblePrivacyPolicyModal, setIsVisiblePrivacyPolicyModal] = useState<boolean>(false);
 
   return (
     <StyledView className="relative z-10 flex-1">
@@ -45,21 +47,42 @@ const LoginButtonContainer = ({
         </StyledTouchableOpacity>
       </StyledView>
 
-      {/* 利用規約 */}
-      <StyledView className="absolute flex h-screen w-screen">
-        <StyledTouchableOpacity
-          onPress={() => setIsVisibleTermModal(true)}
-          className="absolute bottom-0 flex w-full items-center"
-        >
-          <StyledText className="absolute bottom-[5vh] text-[#fff]">
-            利用規約
-          </StyledText>
-        </StyledTouchableOpacity>
+      <StyledView className="flex h-screen w-screen">
+        <StyledView className="absolute bottom-[5vh] w-full flex items-center">
+          <StyledView className="flex flex-row gap-[20px]">
+            {/* 利用規約 */}
+            <StyledTouchableOpacity
+              onPress={() => setIsVisibleTermModal(true)}
+            >
+              <StyledText className="text-[#fff]">
+                利用規約
+              </StyledText>
+            </StyledTouchableOpacity>
+            <StyledText className="text-[#fff]">|</StyledText>
+            
+            {/* プライバシーポリシー */}
+            <StyledTouchableOpacity
+              onPress={() => setIsVisiblePrivacyPolicyModal(true)}
+            >
+              <StyledText className="text-[#fff]">
+                プライバシーポリシー
+              </StyledText>
+            </StyledTouchableOpacity>
+          </StyledView>
+        </StyledView>
       </StyledView>
 
+      <StyledView className="absolute flex h-screen w-screen">
+      </StyledView>
+
+      {/* モーダル */}
       <TermModal
         visible={isVisibleTermModal}
         onClose={() => setIsVisibleTermModal(false)}
+      />
+      <PrivacyPolicyModal
+        visible={isVisiblePrivacyPolicyModal}
+        onClose={() => setIsVisiblePrivacyPolicyModal(false)}
       />
     </StyledView>
   );

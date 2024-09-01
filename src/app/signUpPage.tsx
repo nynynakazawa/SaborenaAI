@@ -31,7 +31,8 @@ const SignupPage = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordAgain, setPasswordAgain] = useState<string>("");
   const [isOver18, setIsOver18] = useState<boolean>(false);
-  const [isAgreeTerms, setIsAgreeTerms] = useState<boolean>(false);
+  const [isAgreeTerm, setIsAgreeTerm] = useState<boolean>(false);
+  const [isAgreePrivacyPolicy, setIsAgreePrivacyPolicy] = useState<boolean>(false);
 
   // FirstSetting_Step1
   const [name, setName] = useState<string>("");
@@ -64,8 +65,10 @@ const SignupPage = () => {
               setPasswordAgain={setPasswordAgain}
               isOver18={isOver18}
               setIsOver18={setIsOver18}
-              isAgreeTerms={isAgreeTerms}
-              setIsAgreeTerms={setIsAgreeTerms}
+              isAgreeTerm={isAgreeTerm}
+              setIsAgreeTerm={setIsAgreeTerm}
+              isAgreePrivacyPolicy={isAgreePrivacyPolicy}
+              setIsAgreePrivacyPolicy={setIsAgreePrivacyPolicy}
               scene={scene}
               setScene={setScene}
               isLoading={isLoading}
