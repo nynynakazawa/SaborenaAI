@@ -31,7 +31,7 @@ const TalkPage = () => {
   const { uid, name } = useGlobalSearchParams();
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
 
-  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
   const myTalkData: TalkData | null = useSelector(
     (state: RootState) => state.talkData.value,
   );
@@ -81,7 +81,7 @@ const TalkPage = () => {
   };
 
   // メッセージを送信処理
-  const handleSend = async (myUid: string, uid: string) => {
+  const handleSend = async (myUid: string | null, uid: string) => {
     const date = new Date();
     const timestamp = date.getTime();
     let talkRoomId: string = "";
@@ -89,7 +89,7 @@ const TalkPage = () => {
       talkRoomId = myTalkData[uid as string]?.talk_room_id as string;
     }
 
-    if (!talkRoomId) {
+    if (!talkRoomId && myUid) {
       talkRoomId = await createTalkRoom(myUid, uid);
     }
 

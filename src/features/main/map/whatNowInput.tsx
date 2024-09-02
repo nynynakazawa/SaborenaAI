@@ -20,7 +20,7 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
 const WhatNowInput = () => {
-  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
 
   const [isSendingWhatNow, setIsSendingWhatNow] = useState<boolean>(false);
@@ -28,18 +28,20 @@ const WhatNowInput = () => {
   const [whatNow, setWhatNow] = useState<string>("");
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
 
-  const handleSend = async () => {
-    console.log("🎉whatnow send");
-    const currentRef = doc(db, "current", myUid);
-    await setDoc(
-      currentRef,
-      {
-        what_now: whatNow,
-      },
-      { merge: true },
-    );
-    setIsSendingWhatNow(true);
-    setWhatNow("");
+  const handleSend = async (myUid: string | null) => {
+    if(myUid){
+      console.log("🎉whatnow send");
+      const currentRef = doc(db, "current", myUid);
+      await setDoc(
+        currentRef,
+        {
+          what_now: whatNow,
+        },
+        { merge: true },
+      );
+      setIsSendingWhatNow(true);
+      setWhatNow("");
+    }
   };
 
   useEffect(() => {
@@ -108,7 +110,7 @@ const WhatNowInput = () => {
         </StyledView>
         <StyledTouchableOpacity
           onPress={() => {
-            handleSend();
+            handleSend(myUid);
             setIsTextInputFocused(false);
             Keyboard.dismiss();
           }}

@@ -41,7 +41,7 @@ const UserModal = ({
   const myUserData: UserData | null = useSelector(
     (state: RootState) => state.userData.value,
   );
-  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
   const allCurrentData = useSelector(
     (state: RootState) => state.allCurrentData.value,
   );
