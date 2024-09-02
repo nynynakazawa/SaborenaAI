@@ -21,7 +21,7 @@ const TopProfile = ({
   uid: string;
 }) => {
   // * ################################################################################## *
-  const myUid: string = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
   const myPeopleCount: string = useSelector(
     (state: RootState) => state.peopleCount.value,
   );
