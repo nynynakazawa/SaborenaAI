@@ -14,8 +14,8 @@ const AccountManagement = () => {
     (state: RootState) => state.privateData.value,
   );
   const password = myPrivateData?.password || "";
-  let passwordDisplay: string = password[0] + password[1];
-  for (let i = 0; i < password.length; i += 1) {
+  let passwordDisplay: string = password[0];
+  for (let i = 0; i < password.length-1; i += 1) {
     passwordDisplay += "*";
   }
 
@@ -30,15 +30,15 @@ const AccountManagement = () => {
         {/* 会員情報表示 */}
         <StyledView className="w-screen border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
-            <StyledText className="text-[16px] text-[#333]">
+            <StyledText className="text-[16px] text-[#333] w-[40%]">
               会員情報
             </StyledText>
             {myPrivateData?.membership_status == "free" ? (
-              <StyledText className="text-[16px] font-bold text-[#8FE07A]">
+              <StyledText className="text-[16px] font-bold text-[#8FE07A] max-w-[60%]">
                 無料会員
               </StyledText>
             ) : (
-              <StyledText className="text-[16px] font-bold text-[#e0c07a]">
+              <StyledText className="text-[16px] font-bold text-[#e0c07a] max-w-[60%]">
                 有料会員
               </StyledText>
             )}
@@ -47,10 +47,10 @@ const AccountManagement = () => {
         {/* メールアドレス表示 */}
         <StyledView className="w-screen border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
-            <StyledText className="text-[16px] text-[#333]">
+            <StyledText className="text-[16px] text-[#333] w-[40%]">
               メールアドレス
             </StyledText>
-            <StyledText className="text-[12px] text-[#EF6B5C]">
+            <StyledText className="text-[12px] text-[#EF6B5C] max-w-[60%]">
               {myPrivateData?.email}
             </StyledText>
           </StyledView>
@@ -58,11 +58,11 @@ const AccountManagement = () => {
         {/* パスワード表示 */}
         <StyledView className="w-screen border-b-[1px] border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
-            <StyledText className="text-[16px] text-[#333]">
+            <StyledText className="text-[16px] text-[#333] w-[40%]">
               パスワード
             </StyledText>
             <StyledView className="flex flex-row items-center">
-              <StyledText className="text-[12px] text-[#333]">
+              <StyledText className="text-[12px] text-[#333] max-w-[60%]">
                 {passwordDisplay}
               </StyledText>
               <Icon name="chevron-right" size={40} color="#333" />

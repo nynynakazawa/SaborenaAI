@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import AccountManagement from "../../features/main/mySetting/accountManagement";
 import LogoutManegement from "../../features/main/mySetting/logoutManegement";
+import StatementFooter from "../../layout/footer/statementFooter";
 
 const StyledView = styled(View);
 
@@ -22,7 +23,10 @@ const HelpPage = () => {
         <AccountManagement />
         <LogoutManegement />
       </StyledView>
+
+      <StatementFooter />
       <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#E3422F]"></StyledView>
+      
     </Container>
   );
 };
