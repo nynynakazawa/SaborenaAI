@@ -1,7 +1,7 @@
-// 
+//
 // userData
 // 自分のuserData
-// 
+//
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserData } from "../types/userDataTypes";

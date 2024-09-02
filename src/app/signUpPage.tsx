@@ -32,7 +32,8 @@ const SignupPage = () => {
   const [passwordAgain, setPasswordAgain] = useState<string>("");
   const [isOver18, setIsOver18] = useState<boolean>(false);
   const [isAgreeTerm, setIsAgreeTerm] = useState<boolean>(false);
-  const [isAgreePrivacyPolicy, setIsAgreePrivacyPolicy] = useState<boolean>(false);
+  const [isAgreePrivacyPolicy, setIsAgreePrivacyPolicy] =
+    useState<boolean>(false);
 
   // FirstSetting_Step1
   const [name, setName] = useState<string>("");

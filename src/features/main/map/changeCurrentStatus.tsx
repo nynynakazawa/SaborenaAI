@@ -22,7 +22,9 @@ const ChangeCurrentStatus = () => {
     (state: RootState) => state.peopleCount.value,
   );
   const isGps: boolean = useSelector((state: RootState) => state.isGps.value);
-  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   const dispatch = useDispatch();
 
   const prevPeopleCountRef = useRef(peopleCount);

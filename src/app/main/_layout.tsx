@@ -1,9 +1,9 @@
 import { Tabs, useGlobalSearchParams } from "expo-router";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 import { set as setMyUid } from "../../store/myUidSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import BottomNavigation from "../../features/main/navigation/bottomNavigation";

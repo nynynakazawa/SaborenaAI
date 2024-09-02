@@ -1,11 +1,11 @@
-import React from "react"
-import { Platform, ScrollView, Text, View } from "react-native"
+import React from "react";
+import { Platform, ScrollView, Text, View } from "react-native";
 import { styled } from "nativewind";
 import PageBackHeader from "../../../layout/header/pageBackHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
 const talkFunctionAboutPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
@@ -18,17 +18,20 @@ const talkFunctionAboutPage = () => {
         isFetchUserProps="false"
       />
       <StyledView className="h-full w-full bg-[#f2f2f2]">
-        <StyledView className="mt-[5vh] w-[80vw] mx-auto h-[70vh]">
+        <StyledView className="mx-auto mt-[5vh] h-[70vh] w-[80vw]">
           <ScrollView>
-            <StyledView className="w-full border-b-2 mb-[24px] border-[#333]">
-              <StyledText className="text-[18px] mb-[8px]">トーク機能について</StyledText>
+            <StyledView className="mb-[24px] w-full border-b-2 border-[#333]">
+              <StyledText className="mb-[8px] text-[18px]">
+                トーク機能について
+              </StyledText>
             </StyledView>
             <StyledView>
               <StyledText>
                 画面下部のメールアイコンから選択できます。
               </StyledText>
               <StyledText>
-                Now Matchではすぐに出会えることを目的としているため、トーク履歴は3時間で削除されます。
+                Now
+                Matchではすぐに出会えることを目的としているため、トーク履歴は3時間で削除されます。
               </StyledText>
             </StyledView>
           </ScrollView>
@@ -37,7 +40,7 @@ const talkFunctionAboutPage = () => {
 
       <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#c52fe3]"></StyledView>
     </Container>
-  )
-}
+  );
+};
 
-export default talkFunctionAboutPage
+export default talkFunctionAboutPage;

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import React, { useEffect } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { useRouter } from "expo-router";
 
@@ -41,7 +41,9 @@ const FunctionHelp = () => {
         </StyledTouchableOpacity>
         {/* 設定機能について */}
         <StyledTouchableOpacity
-          onPress={() => router.push("/mySetting/help/settingFunctionAboutPage")}
+          onPress={() =>
+            router.push("/mySetting/help/settingFunctionAboutPage")
+          }
           className="w-screen border-t-[1px] border-[#ddd] bg-[#fff]"
         >
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
@@ -51,9 +53,8 @@ const FunctionHelp = () => {
           </StyledView>
         </StyledTouchableOpacity>
       </StyledView>
-
     </StyledView>
-  )
-}
+  );
+};
 
-export default FunctionHelp
+export default FunctionHelp;

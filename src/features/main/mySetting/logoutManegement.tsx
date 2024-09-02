@@ -3,6 +3,8 @@ import { Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "expo-router";
+import { useDispatch } from "react-redux";
+import { set as setMyUid } from "../../../store/myUidSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -10,6 +12,7 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const LogoutManegement = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
 
   // ログアウト処理
@@ -17,7 +20,9 @@ const LogoutManegement = () => {
     try {
       const auth = getAuth();
       await signOut(auth);
-      router.push("/loginPage")
+      router.push("/loginPage");
+      // myUidをなくす
+      dispatch(setMyUid(null));
     } catch (error) {
       console.error("Logout failed", error);
     }
@@ -26,9 +31,7 @@ const LogoutManegement = () => {
   return (
     <StyledView className="mt-[6vh]">
       {/* ログアウトボタン */}
-      <StyledTouchableOpacity
-        onPress={() => setIsLogoutModalVisible(true)}
-      >
+      <StyledTouchableOpacity onPress={() => setIsLogoutModalVisible(true)}>
         <StyledView className="w-screen border-b-[1px] border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
             <StyledText className="text-[16px] text-[#EF6B5C]">

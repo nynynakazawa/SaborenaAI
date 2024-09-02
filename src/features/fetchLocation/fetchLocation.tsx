@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Text, View } from "react-native"
+import { Text, View } from "react-native";
 import { styled } from "nativewind";
 import { useDispatch, useSelector } from "react-redux";
 import * as Location from "expo-location";
@@ -10,13 +10,14 @@ import { fetchLocation } from "../../utils/fetchMyData";
 import { onAuthStateChanged } from "firebase/auth";
 import { set as setMyUid } from "../../store/myUidSlice";
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+const StyledView = styled(View);
 
 const FetchLocation = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const isGps: boolean = useSelector((state: RootState) => state.isGps.value);
-  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   const location: Location.LocationObject | null = useSelector(
     (state: RootState) => state.location.value,
   );
@@ -24,6 +25,11 @@ const FetchLocation = () => {
 
   // 位置情報送信
   const sendLocation = async (uid: string, isGps: boolean) => {
+    // ログインしていない場合、以降実行しない
+    if (!myUid) {
+      return;
+    }
+    // 位置情報公開設定がOFFの場合、以降実行しない
     if (isGps === false) {
       return;
     }
@@ -57,11 +63,11 @@ const FetchLocation = () => {
 
   // 10秒ごとに現在位置をdbに送る
   useEffect(() => {
-    if(!auth.currentUser){
-      return
+    if (!auth.currentUser) {
+      return;
     }
-    console.log(new Date())
-    console.log("location changed")
+    console.log(new Date());
+    console.log("location changed");
     const interval = setInterval(() => {
       // 位置が変化している場合
       if (prevLocationRef.current !== location && myUid) {
@@ -73,11 +79,7 @@ const FetchLocation = () => {
     return () => clearInterval(interval);
   }, [location?.coords.latitude, location?.coords.longitude]);
 
-  return (
-    <StyledView>
+  return <StyledView></StyledView>;
+};
 
-    </StyledView>
-  )
-}
-
-export default FetchLocation
+export default FetchLocation;

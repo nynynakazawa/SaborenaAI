@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Keyboard,
-} from "react-native";
+import { Text, View, TouchableOpacity, Keyboard } from "react-native";
 import { styled } from "nativewind";
 import { auth, db } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -64,7 +59,7 @@ const LoginModal = ({
       );
       const privateRef = doc(db, "private", userCredential.user.uid);
       const privateSnapshot = await getDoc(privateRef);
-      
+
       if (privateSnapshot.exists()) {
         // ログイン成功時
         if (userCredential.user.emailVerified == true) {
@@ -90,7 +85,9 @@ const LoginModal = ({
             });
           }
         } else {
-          setErrorMessage("メールアドレスが確認されていません 新規登録してください");
+          setErrorMessage(
+            "メールアドレスが確認されていません 新規登録してください",
+          );
           auth.signOut();
         }
       } else {

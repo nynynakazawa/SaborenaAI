@@ -28,7 +28,9 @@ const SetMyProfilePage = () => {
   const myUserData: UserData | null = useSelector(
     (state: RootState) => state.userData.value,
   );
-  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
 
   // 各種state
   // 基本設定
@@ -62,7 +64,6 @@ const SetMyProfilePage = () => {
 
   // 変化したか判定
   const [isChange, setIsChange] = useState<boolean>(false);
-
 
   // プロフィールを更新する
   const handleSaveMyProfile = async () => {

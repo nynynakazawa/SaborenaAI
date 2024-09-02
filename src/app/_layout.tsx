@@ -4,15 +4,13 @@ import { Provider } from "react-redux";
 import store from "../store/store";
 import FetchLocation from "../features/fetchLocation/fetchLocation";
 
-
 const Layout = () => {
-
   return (
     <Provider store={store}>
       <FetchLocation />
       <Slot />
     </Provider>
-  )
+  );
 };
 
 export default Layout;

@@ -1,10 +1,10 @@
-// 
+//
 // talkData
 // 自分のtalkData
 // ※ talkData
 // key: uid
 // value: そのユーザー(uid)とのトークルームのid
-// 
+//
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TalkData } from "../types/userDataTypes";

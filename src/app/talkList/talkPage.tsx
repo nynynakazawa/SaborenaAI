@@ -39,7 +39,7 @@ const TalkPage = () => {
     (state: RootState) => state.talkHistoryData.value,
   );
 
-  const messages = myTalkHistroyData[uid as string]
+  const messages = myTalkHistroyData[uid as string];
   const [message, setMessage] = useState<string>("");
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
@@ -50,7 +50,7 @@ const TalkPage = () => {
     uid: string,
   ): Promise<string> => {
     const talkRoomId = uuid.v4() as string;
-    const date = new Date()
+    const date = new Date();
     const timestamp = date.getTime();
 
     if (myTalkData && !(uid in myTalkData)) {
@@ -82,11 +82,11 @@ const TalkPage = () => {
 
   // メッセージを送信処理
   const handleSend = async (myUid: string, uid: string) => {
-    const date = new Date()
+    const date = new Date();
     const timestamp = date.getTime();
-    let talkRoomId: string = ""
-    if(myTalkData) {
-      talkRoomId =  myTalkData[uid as string]?.talk_room_id as string;
+    let talkRoomId: string = "";
+    if (myTalkData) {
+      talkRoomId = myTalkData[uid as string]?.talk_room_id as string;
     }
 
     if (!talkRoomId) {
@@ -114,7 +114,7 @@ const TalkPage = () => {
 
   // 新しいメッセージが追加されたら自動的に一番下にスクロール
   useEffect(() => {
-    if(messages){
+    if (messages) {
       if (messages.length > 0) {
         setTimeout(() => {
           flatListRef.current?.scrollToEnd({ animated: true });
@@ -125,16 +125,21 @@ const TalkPage = () => {
 
   // Render item
   const renderItem = ({ item }: { item: any }) => (
-    <StyledView className={`${item.senderId === myUid ? "self-end" : "self-start"}`}>
+    <StyledView
+      className={`${item.senderId === myUid ? "self-end" : "self-start"}`}
+    >
       <StyledView
-        className={`rounded-[24px] mb-[4px] px-[20px] py-[16px] ${item.senderId === myUid
+        className={`mb-[4px] rounded-[24px] px-[20px] py-[16px] ${
+          item.senderId === myUid
             ? "rounded-br-[6px] bg-[#ff6767]"
             : "rounded-bl-[6px] bg-[#aaa]"
-          }`}
+        }`}
       >
         <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
       </StyledView>
-      <StyledText className={`text-[#aaa] mb-[12px] ${item.senderId === myUid ? "self-end mr-[12px]" : "self-start mr-[12px]"}`}>
+      <StyledText
+        className={`mb-[12px] text-[#aaa] ${item.senderId === myUid ? "mr-[12px] self-end" : "mr-[12px] self-start"}`}
+      >
         {convertTimestamp_hhmm(item.timestamp)}
       </StyledText>
     </StyledView>
@@ -206,8 +211,9 @@ const TalkPage = () => {
                   name="send"
                   size={34}
                   color="#73BBFD"
-                  className={`translate-y-[2px] ${message.trim() == "" && "opacity-30"
-                    }`}
+                  className={`translate-y-[2px] ${
+                    message.trim() == "" && "opacity-30"
+                  }`}
                 />
               </StyledTouchableOpacity>
             </StyledView>

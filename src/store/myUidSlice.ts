@@ -1,8 +1,7 @@
-// 
+//
 // myUid
 // 自分のuid
-// 
-
+//
 
 import { createSlice } from "@reduxjs/toolkit";
 

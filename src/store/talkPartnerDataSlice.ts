@@ -1,10 +1,10 @@
-// 
+//
 // talkPartnerData (辞書)
-// key: uid 
+// key: uid
 // value: そのユーザー(uid)のuserData
-// 
+//
 // ※ キーとなるuidは自分とトーク関係にあるユーザー
-// 
+//
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserData } from "../types/userDataTypes";

@@ -14,7 +14,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Message, TalkData, UserData } from "../../types/userDataTypes";
 import NameDisplayComponent from "../../components/display/nameDisplayComponent";
-import { convertTimestamp_hhmm, getRemainingTime } from "../../utils/convertTimestamp";
+import {
+  convertTimestamp_hhmm,
+  getRemainingTime,
+} from "../../utils/convertTimestamp";
 import { deleteDoc, deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -27,7 +30,9 @@ const TalkDictScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   const router = useRouter();
 
-  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   const talkData: TalkData | null = useSelector(
     (state: RootState) => state.talkData.value,
   );
@@ -55,22 +60,22 @@ const TalkDictScreen = () => {
 
   // トークデータから対象のユーザーを削除する
   const deleteTalkPartner = async (myUid: string, uid: string) => {
-    console.log("DELETE", uid)
-    let talkRoomId: string = ""
-    if(talkData && talkData[uid]){
+    console.log("DELETE", uid);
+    let talkRoomId: string = "";
+    if (talkData && talkData[uid]) {
       talkRoomId = talkData[uid]?.talk_room_id as string;
     }
-    const myTalkRef = doc(db, "talk", myUid)
+    const myTalkRef = doc(db, "talk", myUid);
     await updateDoc(myTalkRef, {
-      [uid]: deleteField()
+      [uid]: deleteField(),
     });
-    const partnerTalkRef = doc(db, "talk", uid)
+    const partnerTalkRef = doc(db, "talk", uid);
     await updateDoc(partnerTalkRef, {
-      [myUid]: deleteField()
+      [myUid]: deleteField(),
     });
-    const talkRoomRef = doc(db, "talk_room", talkRoomId)
-    await deleteDoc(talkRoomRef)
-  }
+    const talkRoomRef = doc(db, "talk_room", talkRoomId);
+    await deleteDoc(talkRoomRef);
+  };
 
   const updateTimesAndValidity = () => {
     if (talkData) {
@@ -111,7 +116,6 @@ const TalkDictScreen = () => {
       {/* トークリスト画面 */}
       <ScrollView className="h-full">
         <StyledView className="flex">
-
           {Object.entries(myTalkPartnerData).map(([uid, userData]) => (
             <StyledTouchableOpacity
               onPress={() => handlePressTalkButton(uid, userData)}
@@ -125,31 +129,39 @@ const TalkDictScreen = () => {
                 />
               )}
               <StyledView className="ml-[10px] flex flex-1 justify-center">
-                <StyledView className="w-full flex flex-row items-center mb-[6px]">
+                <StyledView className="mb-[6px] flex w-full flex-row items-center">
                   <NameDisplayComponent userData={userData} size="large" />
                   {myTalkHistroyData[uid] && (
                     <StyledText className="text-[#aaa]">
-                      {convertTimestamp_hhmm(myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].timestamp)}
+                      {convertTimestamp_hhmm(
+                        myTalkHistroyData[uid][
+                          myTalkHistroyData[uid].length - 1
+                        ].timestamp,
+                      )}
                     </StyledText>
                   )}
                 </StyledView>
                 {myTalkHistroyData[uid] ? (
                   <StyledText className="text-[#aaa]">
-                    {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.length > 16
+                    {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
+                      .text.length > 16
                       ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
-                      : myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text}
+                      : myTalkHistroyData[uid][
+                          myTalkHistroyData[uid].length - 1
+                        ].text}
                   </StyledText>
                 ) : (
-                  <StyledText className="text-[#7785ff]">メッセージが届きました</StyledText>
+                  <StyledText className="text-[#7785ff]">
+                    メッセージが届きました
+                  </StyledText>
                 )}
               </StyledView>
               {/* 残り時間表示 */}
-              <StyledText className="absolute right-[12px] bottom-[6px] text-[#aaa]">
+              <StyledText className="absolute bottom-[6px] right-[12px] text-[#aaa]">
                 {timeLeft[uid] || "N/A"}
               </StyledText>
             </StyledTouchableOpacity>
           ))}
-
         </StyledView>
       </ScrollView>
     </Container>

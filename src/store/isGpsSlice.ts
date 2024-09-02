@@ -1,7 +1,7 @@
-// 
+//
 // isGps
 // 自分の位置情報公開設定
-// 
+//
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

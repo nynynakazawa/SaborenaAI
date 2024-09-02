@@ -35,7 +35,7 @@ const SettingButtonContainer = () => {
             <StyledText>プレミアム</StyledText>
           </StyledView>
         </StyledTouchableOpacity>
-        
+
         <StyledTouchableOpacity
           onPress={() => router.push("/mySetting/helpPage")}
           className="w-[30%]"

@@ -1,7 +1,7 @@
-// 
+//
 // privateData
 // 自分のprivateData
-// 
+//
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PrivateData } from "../types/userDataTypes";

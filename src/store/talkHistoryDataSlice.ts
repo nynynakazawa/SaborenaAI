@@ -1,9 +1,8 @@
-// 
+//
 // talkHistoryData (辞書)
 // key: uid
 // value: そのユーザー(uid)のトーク履歴
-// 
-
+//
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Message } from "../types/userDataTypes";

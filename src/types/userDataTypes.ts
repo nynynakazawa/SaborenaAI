@@ -31,7 +31,7 @@ export type Message = {
   text: string;
   senderId: string;
   timestamp: number;
-}
+};
 
 export type ChatroomData = {
   chatroom_id?: {

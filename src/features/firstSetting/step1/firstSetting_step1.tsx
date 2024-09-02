@@ -81,9 +81,13 @@ const FirstSetting_step1 = ({
       <StyledView
         className={`absolute mt-[80px] w-screen ${Platform.OS == "android" ? "top-[10vh]" : "top-[18vh]"}`}
       >
-        <NameInput name={name} setName={setName} isEditable={true}/>
-        <BirthdayInput birthday={birthday} setBirthday={setBirthday} isEditable={true}/>
-        <GenderInput gender={gender} setGender={setGender} isEditable={true}/>
+        <NameInput name={name} setName={setName} isEditable={true} />
+        <BirthdayInput
+          birthday={birthday}
+          setBirthday={setBirthday}
+          isEditable={true}
+        />
+        <GenderInput gender={gender} setGender={setGender} isEditable={true} />
         <ResidentialInput
           selectedPrefecture={selectedPrefecture}
           setSelectedPrefecture={setSelectedPrefecture}

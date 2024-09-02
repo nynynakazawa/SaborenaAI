@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  Modal,
-} from "react-native";
+import { Text, TouchableOpacity, View, Modal } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -63,7 +58,8 @@ const CreateAccount = ({
 }) => {
   // * ############################################################################## *
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
-  const [isVisiblePrivacyPolicyModal, setIsVisiblePrivacyPolicyModal] = useState<boolean>(false);
+  const [isVisiblePrivacyPolicyModal, setIsVisiblePrivacyPolicyModal] =
+    useState<boolean>(false);
   const [
     isVisibleWaitingVerificationModal,
     setIsVisibleWaitingVerificationModal,
@@ -107,7 +103,7 @@ const CreateAccount = ({
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("🎉sign up success");
-        const date = new Date()
+        const date = new Date();
         const timestamp = date.getTime();
         handleSendEmail();
         setIsVisibleWaitingVerificationModal(true);
@@ -230,9 +226,11 @@ const CreateAccount = ({
                 onPress={() => {
                   setIsVisibleTermModal(true);
                 }}
-                className="absolute right-0 bottom-0"
+                className="absolute bottom-0 right-0"
               >
-                <StyledText className="text-[#1d4ed8] underline">利用規約</StyledText>
+                <StyledText className="text-[#1d4ed8] underline">
+                  利用規約
+                </StyledText>
               </StyledTouchableOpacity>
             </StyledView>
 
@@ -245,15 +243,19 @@ const CreateAccount = ({
                 iconStyle={{ borderColor: "red" }}
                 textStyle={{ textDecorationLine: "none" }}
                 isChecked={isAgreePrivacyPolicy}
-                onPress={(isChecked: boolean) => setIsAgreePrivacyPolicy(isChecked)}
+                onPress={(isChecked: boolean) =>
+                  setIsAgreePrivacyPolicy(isChecked)
+                }
               />
               <StyledTouchableOpacity
                 onPress={() => {
                   setIsVisiblePrivacyPolicyModal(true);
                 }}
-                className="absolute right-0 bottom-0"
+                className="absolute bottom-0 right-0"
               >
-                <StyledText className="text-[#1d4ed8] underline">プライバシーポリシー</StyledText>
+                <StyledText className="text-[#1d4ed8] underline">
+                  プライバシーポリシー
+                </StyledText>
               </StyledTouchableOpacity>
             </StyledView>
 
@@ -264,7 +266,6 @@ const CreateAccount = ({
             </StyledText>
           </StyledView>
         </StyledView>
-
       </StyledView>
 
       {/* 新規登録ボタン */}
@@ -344,12 +345,12 @@ const CreateAccount = ({
       <TermModal
         visible={isVisibleTermModal}
         onClose={() => setIsVisibleTermModal(false)}
-        />
+      />
       {/* プライバシーポリシーモーダル */}
       <PrivacyPolicyModal
         visible={isVisiblePrivacyPolicyModal}
         onClose={() => setIsVisiblePrivacyPolicyModal(false)}
-        />
+      />
     </StyledView>
   );
 };

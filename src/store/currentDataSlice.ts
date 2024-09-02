@@ -1,7 +1,7 @@
-// 
+//
 // currentData
 // 自分のcurrentData
-// 
+//
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CurrentData } from "../types/userDataTypes";

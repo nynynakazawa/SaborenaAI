@@ -1,11 +1,11 @@
-import React from "react"
-import { Platform, ScrollView, Text, View } from "react-native"
+import React from "react";
+import { Platform, ScrollView, Text, View } from "react-native";
 import { styled } from "nativewind";
 import PageBackHeader from "../../../layout/header/pageBackHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
 const MapFunctionAboutPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
@@ -17,22 +17,23 @@ const MapFunctionAboutPage = () => {
         text="マップ機能について"
         isFetchUserProps="false"
       />
-      <StyledView className="h-full w-full bg-[#f2f2f2] flex">
-        <StyledView className="mt-[5vh] w-[80vw] mx-auto h-[70vh]">
+      <StyledView className="flex h-full w-full bg-[#f2f2f2]">
+        <StyledView className="mx-auto mt-[5vh] h-[70vh] w-[80vw]">
           <ScrollView>
-            <StyledView className="w-full border-b-2 mb-[24px] border-[#333]">
-              <StyledText className="text-[18px] mb-[8px]">マップ機能について</StyledText>
+            <StyledView className="mb-[24px] w-full border-b-2 border-[#333]">
+              <StyledText className="mb-[8px] text-[18px]">
+                マップ機能について
+              </StyledText>
             </StyledView>
             <StyledView className="mx-[6px]">
               <StyledText>
-                Now Matchに新規登録したときやログインしたときに一番最初にこの画面が表示されます。
+                Now
+                Matchに新規登録したときやログインしたときに一番最初にこの画面が表示されます。
               </StyledText>
               <StyledText className="mb-[12px]">
                 画面下部のマップアイコンから選択できます。
               </StyledText>
-              <StyledText>
-                ・ユーザーピン
-              </StyledText>
+              <StyledText>・ユーザーピン</StyledText>
               <StyledText>
                 現在渋谷上にいるユーザーにユーザーピンが刺さります。
               </StyledText>
@@ -45,9 +46,7 @@ const MapFunctionAboutPage = () => {
               <StyledText className="mb-[12px]">
                 メールのアイコンからメッセージを送信することも可能です。
               </StyledText>
-              <StyledText>
-                ・現在ステータス
-              </StyledText>
+              <StyledText>・現在ステータス</StyledText>
               <StyledText>
                 右上のポップアップより、現在のあなたの状態を設定することができます。
               </StyledText>
@@ -63,18 +62,14 @@ const MapFunctionAboutPage = () => {
               <StyledText className="mb-[12px]">
                 すなわち自分のユーザーピンが他のユーザーの画面に表示されなくなります。
               </StyledText>
-              <StyledText>
-                ・いまなにしてる？
-              </StyledText>
+              <StyledText>・いまなにしてる？</StyledText>
               <StyledText>
                 下側のメッセージボックスに文字を打って送信することで、メッセージを送信することが出来ます。
               </StyledText>
               <StyledText>
                 自分の送ったメッセージや他人のメッセージはユーザーピンをタップすることで閲覧することが出来ます。
               </StyledText>
-              <StyledText>
-                送信できる間隔は60秒です。
-              </StyledText>
+              <StyledText>送信できる間隔は60秒です。</StyledText>
               <StyledText className="mb-[12px]">
                 すなわち自分のユーザーピンが他のユーザーの画面に表示されなくなります。
               </StyledText>
@@ -85,7 +80,7 @@ const MapFunctionAboutPage = () => {
 
       <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#c52fe3]"></StyledView>
     </Container>
-  )
-}
+  );
+};
 
-export default MapFunctionAboutPage
+export default MapFunctionAboutPage;
