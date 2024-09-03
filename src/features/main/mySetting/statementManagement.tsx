@@ -1,11 +1,11 @@
-import React, { useState } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import TermModal from "../../login/termModal";
 import PrivacyPolicyModal from "../../login/privacyPolicyModal";
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+const StyledView = styled(View);
+const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const StatementManagement = () => {
@@ -54,7 +54,7 @@ const StatementManagement = () => {
         onClose={() => setIsVisiblePrivacyPolicyModal(false)}
       />
     </StyledView>
-  )
-}
+  );
+};
 
-export default StatementManagement
+export default StatementManagement;

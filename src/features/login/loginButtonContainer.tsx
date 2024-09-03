@@ -44,7 +44,6 @@ const LoginButtonContainer = ({
           <StyledText className="text-[16px] text-[#fff]">ログイン</StyledText>
         </StyledTouchableOpacity>
       </StyledView>
-
     </StyledView>
   );
 };

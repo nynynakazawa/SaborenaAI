@@ -31,7 +31,9 @@ const TalkPage = () => {
   const { uid, name } = useGlobalSearchParams();
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
 
-  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   const myTalkData: TalkData | null = useSelector(
     (state: RootState) => state.talkData.value,
   );

@@ -25,7 +25,6 @@ const HelpPage = () => {
         <LogoutManegement />
       </StyledView>
       <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#E3422F]"></StyledView>
-      
     </Container>
   );
 };

@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import TermModal from "../../features/login/termModal";
 import PrivacyPolicyModal from "../../features/login/privacyPolicyModal";
@@ -13,7 +13,7 @@ const StateFooter = () => {
   const [isVisiblePrivacyPolicyModal, setIsVisiblePrivacyPolicyModal] =
     useState<boolean>(false);
   return (
-    <StyledView className="relative z-10 flex-1 h-[4vh]">
+    <StyledView className="relative z-10 h-[4vh] flex-1">
       {/* 規約 */}
       <StyledView className="absolute top-[92vh] w-screen flex-1 items-center">
         <StyledView className="flex flex-row gap-[20px]">
@@ -42,7 +42,7 @@ const StateFooter = () => {
         onClose={() => setIsVisiblePrivacyPolicyModal(false)}
       />
     </StyledView>
-  )
-}
+  );
+};
 
-export default StateFooter
+export default StateFooter;

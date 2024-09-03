@@ -69,7 +69,7 @@ const PasswordInput = ({
       )}
       {option === "first" && (
         <StyledText
-          className={`mb-[18px] ml-[4px] text-[12px] text-[#FF0000] ${
+          className={`ml-[4px] text-[12px] text-[#FF0000] ${
             !shouldShowError ? "opacity-0" : ""
           }`}
         >
@@ -104,7 +104,7 @@ const PasswordInput = ({
             </StyledTouchableOpacity>
           </StyledView>
           <StyledText
-            className={`mb-[24px] ml-[4px] text-[12px] text-[#FF0000] ${
+            className={`ml-[4px] text-[12px] text-[#FF0000] ${
               !shouldShowError ? "opacity-0" : ""
             }`}
           >

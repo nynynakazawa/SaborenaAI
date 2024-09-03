@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  View,
-} from "react-native";
-import Modal from 'react-native-modal';
+import { ActivityIndicator, ScrollView, View } from "react-native";
+import Modal from "react-native-modal";
 import { styled } from "nativewind";
 import { CurrentData, UserData } from "../../types/userDataTypes";
 import TopProfile from "./topProfile";
@@ -38,7 +34,9 @@ const UserModal = ({
   const myUserData: UserData | null = useSelector(
     (state: RootState) => state.userData.value,
   );
-  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   const allCurrentData = useSelector(
     (state: RootState) => state.allCurrentData.value,
   );
@@ -72,42 +70,42 @@ const UserModal = ({
   return (
     <StyledView className="flex-1 items-center justify-center bg-gray-100">
       <Modal isVisible={visible} onBackdropPress={onClose}>
-          <StyledView className="bg-[#fff] p-4 rounded-lg max-h-[50vh] w-full">
-            {userData ? (
-              <>
-                {/* メッセージ送信ボタン */}
-                {uid != myUid && (
-                  <SendMessageButton
-                    userData={userData}
-                    uid={uid}
-                    setIsVisibleUserModal={onClose}
-                  />
-                )}
-                {/* プロフィールを表示する */}
-                <StyledScrollView
-                  showsVerticalScrollIndicator={false}
-                  className="h-full w-full pt-[10%]"
-                >
-                  <TopProfile
-                    currentData={currentData}
-                    userData={userData}
-                    uid={uid}
-                  />
-                  <WhatNowProfile whatNow={currentData?.what_now} />
-                  <SelfIntroductionProfile
-                    selfIntroduction={userData?.self_introduction}
-                  />
-                  <WorkProfile selectedWork={userData?.selected_work} />
-                  <GoalProfile selectedGoal={userData?.selected_goal} />
-                  <StyledView className="h-[30px]" />
-                </StyledScrollView>
-              </>
-            ) : (
-              <StyledView className="flex h-full items-center justify-center">
-                <ActivityIndicator size="large" />
-              </StyledView>
-            )}
-          </StyledView>
+        <StyledView className="max-h-[50vh] w-full rounded-lg bg-[#fff] p-4">
+          {userData ? (
+            <>
+              {/* メッセージ送信ボタン */}
+              {uid != myUid && (
+                <SendMessageButton
+                  userData={userData}
+                  uid={uid}
+                  setIsVisibleUserModal={onClose}
+                />
+              )}
+              {/* プロフィールを表示する */}
+              <StyledScrollView
+                showsVerticalScrollIndicator={false}
+                className="h-full w-full pt-[10%]"
+              >
+                <TopProfile
+                  currentData={currentData}
+                  userData={userData}
+                  uid={uid}
+                />
+                <WhatNowProfile whatNow={currentData?.what_now} />
+                <SelfIntroductionProfile
+                  selfIntroduction={userData?.self_introduction}
+                />
+                <WorkProfile selectedWork={userData?.selected_work} />
+                <GoalProfile selectedGoal={userData?.selected_goal} />
+                <StyledView className="h-[30px]" />
+              </StyledScrollView>
+            </>
+          ) : (
+            <StyledView className="flex h-full items-center justify-center">
+              <ActivityIndicator size="large" />
+            </StyledView>
+          )}
+        </StyledView>
       </Modal>
     </StyledView>
   );

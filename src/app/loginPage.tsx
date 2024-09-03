@@ -32,7 +32,7 @@ const LoginPage = () => {
           setIsVisibleLoginModal={setIsVisibleLoginModal}
         />
       )}
-      
+
       {/* 規約 */}
       <StateFooter />
       {/* 背景画像 */}

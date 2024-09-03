@@ -180,12 +180,12 @@ const CreateAccount = ({
         />
 
         {/* フォーム */}
-        <StyledView className="mx-auto mt-[10vh] w-[90vw] flex-1 items-center">
-          <StyledView className="mb-[56px] w-full">
+        <StyledView className="mx-auto mt-[8vh] w-[90vw] flex-1 items-center">
+          <StyledView className="mb-[36px] w-full">
             <EmailInput email={email} setEmail={setEmail} option={"black"} />
           </StyledView>
 
-          <StyledView className="w-full">
+          <StyledView className="mb-[20px] w-full">
             <PasswordInput
               password={password}
               setPassword={setPassword}
@@ -193,21 +193,23 @@ const CreateAccount = ({
               isValid={isValiedPassword(password)}
             />
           </StyledView>
-          <PasswordInput
-            password={passwordAgain}
-            setPassword={setPasswordAgain}
-            option={"again"}
-            isValid={passwordAgain.trim() != "" && passwordAgain == password}
-          />
+          <StyledView className="mb-[20px] w-full">
+            <PasswordInput
+              password={passwordAgain}
+              setPassword={setPasswordAgain}
+              option={"again"}
+              isValid={passwordAgain.trim() != "" && passwordAgain == password}
+            />
+          </StyledView>
 
-          <StyledView className="mt-[20px] flex w-full gap-[22px]">
+          <StyledView className="flex w-full gap-[22px]">
             {/* isOver18 */}
             <BouncyCheckbox
               size={25}
               fillColor="red"
               text="18歳以上です"
               iconStyle={{ borderColor: "red" }}
-              textStyle={{ textDecorationLine: "none" }}
+              textStyle={{ textDecorationLine: "none", fontSize: 14 }}
               isChecked={isOver18}
               onPress={(isChecked: boolean) => setIsOver18(isChecked)}
             />
@@ -218,7 +220,7 @@ const CreateAccount = ({
                 fillColor="red"
                 text="利用規約に同意します"
                 iconStyle={{ borderColor: "red" }}
-                textStyle={{ textDecorationLine: "none" }}
+                textStyle={{ textDecorationLine: "none", fontSize: 14 }}
                 isChecked={isAgreeTerm}
                 onPress={(isChecked: boolean) => setIsAgreeTerm(isChecked)}
               />
@@ -228,7 +230,7 @@ const CreateAccount = ({
                 }}
                 className="absolute bottom-0 right-0"
               >
-                <StyledText className="text-[#1d4ed8] underline">
+                <StyledText className="text-[12px] text-[#1d4ed8] underline">
                   利用規約
                 </StyledText>
               </StyledTouchableOpacity>
@@ -241,7 +243,7 @@ const CreateAccount = ({
                 fillColor="red"
                 text="プライバシーポリシーに同意します"
                 iconStyle={{ borderColor: "red" }}
-                textStyle={{ textDecorationLine: "none" }}
+                textStyle={{ textDecorationLine: "none", fontSize: 14 }}
                 isChecked={isAgreePrivacyPolicy}
                 onPress={(isChecked: boolean) =>
                   setIsAgreePrivacyPolicy(isChecked)
@@ -253,7 +255,7 @@ const CreateAccount = ({
                 }}
                 className="absolute bottom-0 right-0"
               >
-                <StyledText className="text-[#1d4ed8] underline">
+                <StyledText className="text-[12px] text-[#1d4ed8] underline">
                   プライバシーポリシー
                 </StyledText>
               </StyledTouchableOpacity>

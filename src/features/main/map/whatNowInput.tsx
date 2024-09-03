@@ -20,7 +20,9 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
 const WhatNowInput = () => {
-  const myUid: string | null = useSelector((state: RootState) => state.myUid.value);
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
 
   const [isSendingWhatNow, setIsSendingWhatNow] = useState<boolean>(false);
@@ -29,7 +31,7 @@ const WhatNowInput = () => {
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
 
   const handleSend = async (myUid: string | null) => {
-    if(myUid){
+    if (myUid) {
       console.log("🎉whatnow send");
       const currentRef = doc(db, "current", myUid);
       await setDoc(
