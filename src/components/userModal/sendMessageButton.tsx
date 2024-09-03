@@ -33,7 +33,7 @@ const SendMessageButton = ({
   return (
     <StyledTouchableOpacity
       onPress={() => handleSendMessage()}
-      className="absolute bottom-[6%] right-[10%] z-[200] gap-[20px]"
+      className="absolute bottom-[8%] right-[8%] z-[200] gap-[20px]"
     >
       <StyledView className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#448FFF] shadow-2xl">
         <Icon name="mail" size={30} color="#fff" />

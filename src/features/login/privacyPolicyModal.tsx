@@ -16,7 +16,7 @@ const PrivacyPolicyModal = ({ visible, onClose }: PrivacyPolicyModalProps) => {
   return (
     <StyledView className="flex-1 items-center justify-center bg-gray-100">
       <Modal isVisible={visible} onBackdropPress={onClose}>
-        <StyledView className="bg-white p-4 rounded-lg max-h-[50vh] w-full">
+        <StyledView className="bg-[#fff] p-4 rounded-lg max-h-[50vh] w-full">
           <StyledText className="text-lg font-bold text-black fong-bold py-[4px]">プライバシーポリシー</StyledText>
           <StyledScrollView>
             <StyledView className="space-y-4">

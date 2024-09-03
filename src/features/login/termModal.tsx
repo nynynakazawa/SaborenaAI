@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, Button } from 'react-native';
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { styled } from 'nativewind';
 

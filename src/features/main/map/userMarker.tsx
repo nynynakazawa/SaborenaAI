@@ -102,8 +102,8 @@ const UserMarker = ({
       {isVisibleUserModal && (
         <UserModal
           uid={uid}
-          isVisibleUserModal={isVisibleUserModal}
-          setIsVisibleUserModal={setIsVisibleUserModal}
+          visible={isVisibleUserModal}
+          onClose={() => setIsVisibleUserModal(false)}
         />
       )}
     </Marker>
