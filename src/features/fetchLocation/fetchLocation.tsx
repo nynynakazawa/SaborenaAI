@@ -66,8 +66,6 @@ const FetchLocation = () => {
     if (!auth.currentUser) {
       return;
     }
-    console.log(new Date());
-    console.log("location changed");
     const interval = setInterval(() => {
       // 位置が変化している場合
       if (prevLocationRef.current !== location && myUid) {
