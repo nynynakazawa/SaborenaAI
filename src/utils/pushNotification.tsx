@@ -39,16 +39,16 @@ export default function Push() {
           // トーク中の相手には通知を送らない
           if (senderId === currentTalkPartnerUid) {
             return {
-              shouldShowAlert: false,
-              shouldPlaySound: false,
-              shouldSetBadge: false,
+              shouldShowAlert: false, // アラート
+              shouldPlaySound: false, // 音
+              shouldSetBadge: false, // バッジ表示
             };
           }
           else{
             return {
               shouldShowAlert: true,
-              shouldPlaySound: false,
-              shouldSetBadge: false,
+              shouldPlaySound: true,
+              shouldSetBadge: true,
             };
           }
         // type: other
