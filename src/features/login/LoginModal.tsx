@@ -69,11 +69,19 @@ const LoginModal = ({
       if (privateSnapshot.exists()) {
         // ログイン成功時
         if (userCredential.user.emailVerified == true) {
-          // ユーザー情報をFirestoreに保存
+          // パスワードをprivateに保存
           await setDoc(
             privateRef,
             {
               password: password,
+            },
+            { merge: true },
+          );
+          // ExpoPushTokenをuserに保存
+          const userRef = doc(db, "user", userCredential.user.uid);
+          await setDoc(
+            userRef,
+            {
               expo_push_token: myExpoPushToken,
             },
             { merge: true },

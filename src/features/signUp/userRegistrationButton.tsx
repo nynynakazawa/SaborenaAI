@@ -46,6 +46,9 @@ const UserRegistationButton = ({
 }) => {
   // * ############################################################################## *
   const router = useRouter();
+  const myExpoPushToken: string | null = useSelector(
+    (state: RootState) => state.myExpoPushToken.value,
+  );
 
   // ユーザー登録
   const handleRegistration = async () => {
@@ -62,6 +65,7 @@ const UserRegistationButton = ({
         userRef,
         {
           name: name,
+          expo_push_token: myExpoPushToken,
           gender: gender,
           birthday: birthday,
           selected_residential: `${selectedPrefecture},${selectedCity}`,

@@ -107,6 +107,7 @@ const TalkDictScreen = () => {
       params: {
         uid: uid,
         name: userData?.name,
+        expoPushToken: userData?.expo_push_token
       },
     });
   };

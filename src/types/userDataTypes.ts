@@ -4,6 +4,7 @@ export type UserData = {
   main_image_url?: string | null;
   sub_images_url?: (string | null)[];
   name?: string;
+  expo_push_token?: string;
   selected_goal?: string;
   selected_residential?: string;
   selected_work?: string;
@@ -15,7 +16,6 @@ export type PrivateData = {
   email?: string;
   email_verified?: boolean;
   uid?: string;
-  expo_push_token?: string;
   password?: string;
   membership_status?: "free" | "premium";
 };

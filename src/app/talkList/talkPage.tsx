@@ -26,11 +26,44 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledTextInput = styled(TextInput);
 
-const TalkPage = () => {
-  const Container = Platform.OS === "android" ? SafeAreaView : View;
-  const { uid, name } = useGlobalSearchParams();
-  const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
+type PushNotification = {
+  to: string;
+  sound: "default" | null;
+  title: string;
+  body: string;
+  data?: Record<string, any>;
+}
 
+// Expo Push通知を送信する関数
+async function sendPushNotification(expoPushToken: string, myName: string, message: string): Promise<void> {
+  const notification: PushNotification = {
+    to: expoPushToken, // ExpoPushTokenを指定
+    sound: "default", // 通知サウンド
+    title: `${myName} からのメッセージ`, // 通知のタイトル
+    body: `${message}`, // 通知の本文
+    data: { someData: "通知データ" }, // 追加データ
+  };
+
+  try {
+    // Expo Push通知サービスにリクエストを送信
+    const response = await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(notification),
+    });
+
+    const data = await response.json();
+    console.log(data); // レスポンスデータをログに出力
+  } catch (error) {
+    console.error("Push Notification Error: ", error);
+  }
+}
+
+const TalkPage = () => {
+  // reduxから値を取得
   const myUid: string | null = useSelector(
     (state: RootState) => state.myUid.value,
   );
@@ -40,12 +73,15 @@ const TalkPage = () => {
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
   );
+  const myUserData = useSelector((state: RootState) => state.userData.value);
 
+  const Container = Platform.OS === "android" ? SafeAreaView : View;
+  const { uid, name, expoPushToken } = useGlobalSearchParams();
+  const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
   const messages = myTalkHistroyData[uid as string];
   const [message, setMessage] = useState<string>("");
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
-
   // talkRoom作成
   const createTalkRoom = async (
     myUid: string,
@@ -83,7 +119,9 @@ const TalkPage = () => {
   };
 
   // メッセージを送信処理
-  const handleSend = async (myUid: string | null, uid: string) => {
+  const handleSend = async (myUid: string | null, myName: string, uid: string) => {
+    // myUid: 自分のUID
+    // uid: 相手のUID
     const date = new Date();
     const timestamp = date.getTime();
     let talkRoomId: string = "";
@@ -95,6 +133,7 @@ const TalkPage = () => {
       talkRoomId = await createTalkRoom(myUid, uid);
     }
 
+    // メッセージを追加
     if (talkRoomId) {
       setMessage("");
       const talkRoomRef = doc(db, "talk_room", talkRoomId);
@@ -111,6 +150,9 @@ const TalkPage = () => {
         },
         { merge: true },
       );
+
+      // 相手に通知を送る
+      sendPushNotification(expoPushToken as string, myName, message)
     }
   };
 
@@ -125,28 +167,6 @@ const TalkPage = () => {
     }
   }, [messages]);
 
-  // Render item
-  const renderItem = ({ item }: { item: any }) => (
-    <StyledView
-      className={`${item.senderId === myUid ? "self-end" : "self-start"}`}
-    >
-      <StyledView
-        className={`mb-[4px] rounded-[24px] px-[20px] py-[16px] ${
-          item.senderId === myUid
-            ? "rounded-br-[6px] bg-[#ff6767]"
-            : "rounded-bl-[6px] bg-[#aaa]"
-        }`}
-      >
-        <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
-      </StyledView>
-      <StyledText
-        className={`mb-[12px] text-[#aaa] ${item.senderId === myUid ? "mr-[12px] self-end" : "mr-[12px] self-start"}`}
-      >
-        {convertTimestamp_hhmm(item.timestamp)}
-      </StyledText>
-    </StyledView>
-  );
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -159,6 +179,28 @@ const TalkPage = () => {
       keyboardDidShowListener.remove();
     };
   }, []);
+
+  // Render item
+  const renderItem = ({ item }: { item: any }) => (
+    <StyledView
+      className={`pt-6 ${item.senderId === myUid ? "self-end" : "self-start"}`}
+    >
+      <StyledView
+        className={`rounded-[24px] px-[20px] py-[16px] ${
+          item.senderId === myUid
+            ? "rounded-br-[6px] bg-[#ff6767]"
+            : "rounded-bl-[6px] bg-[#aaa]"
+        }`}
+      >
+        <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
+      </StyledView>
+      <StyledText
+        className={`text-[#aaa] ${item.senderId === myUid ? "mr-[12px] self-end" : "mr-[12px] self-start"}`}
+      >
+        {convertTimestamp_hhmm(item.timestamp)}
+      </StyledText>
+    </StyledView>
+  );
 
   return (
     <Container style={{ flex: 1 }}>
@@ -200,9 +242,10 @@ const TalkPage = () => {
                 onFocus={() => setIsTextInputFocused(true)}
                 onBlur={() => setIsTextInputFocused(false)}
               />
+              {/* メッセージ送信 */}
               <StyledTouchableOpacity
                 onPress={() => {
-                  handleSend(myUid, uid as string);
+                  handleSend(myUid, myUserData?.name as string, uid as string);
                   setIsTextInputFocused(false);
                   Keyboard.dismiss();
                 }}
