@@ -1,30 +1,29 @@
 //
-// talkHistoryData (辞書)
+// TalkLastSeenData (辞書)
 // key: uid
-// value: そのユーザー(uid)との会話履歴
+// value: そのユーザー(uid)との会話を自分が最後に閲覧した時間
 //
 // ※ キーとなるuidは自分とトーク関係にあるユーザー
 //
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Message } from "../types/userDataTypes";
 
-interface TalkHistoryDataState {
-  value: { [key: string]: Message[] | null };
+interface TalkLastSeenDataState {
+  value: { [key: string]: number };
 }
 
-const initialState: TalkHistoryDataState = {
+const initialState: TalkLastSeenDataState = {
   value: {},
 };
 
-const talkHistoryDataSlice = createSlice({
-  name: "talkHistoryData",
+const talkLastSeenDataSlice = createSlice({
+  name: "talkLastSeenData",
   initialState,
   reducers: {
     // 特定のキーだけを更新するリデューサー
     updateKey: (
       state,
-      action: PayloadAction<{ key: string; data: Message[] | null }>,
+      action: PayloadAction<{ key: string; data: number }>,
     ) => {
       const { key, data } = action.payload;
       state.value[key] = data;
@@ -37,5 +36,5 @@ const talkHistoryDataSlice = createSlice({
   },
 });
 
-export const { updateKey, deleteKey } = talkHistoryDataSlice.actions;
-export default talkHistoryDataSlice.reducer;
+export const { updateKey, deleteKey } = talkLastSeenDataSlice.actions;
+export default talkLastSeenDataSlice.reducer;

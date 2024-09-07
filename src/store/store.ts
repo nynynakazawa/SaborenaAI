@@ -5,6 +5,7 @@ import currentDataReducer from "./currentDataSlice";
 import talkDataReducer from "./talkDataSlice";
 import talkPartnerDataReducer from "./talkPartnerDataSlice";
 import talkHistoryDataReducer from "./talkHistoryDataSlice";
+import talkLastSeenReducer from "./talkLastSeenSlice";
 import locationReducer from "./locationSlice";
 import myUidReducer from "./myUidSlice";
 import currentTalkPartnerUidReducer from "./currentTalkPartnerUidSlice";
@@ -22,6 +23,7 @@ const store = configureStore({
     talkData: talkDataReducer,
     talkPartnerData: talkPartnerDataReducer,
     talkHistoryData: talkHistoryDataReducer,
+    talkLastSeen: talkLastSeenReducer,
     location: locationReducer,
     myUid: myUidReducer,
     myExpoPushToken: myExpoPushTokenReducer,

@@ -21,6 +21,7 @@ import uuid from "react-native-uuid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { convertTimestamp_hhmm } from "../../utils/convertTimestamp";
 import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
+import { updateKey as updateKeyTalkLastSeen } from "../../store/talkLastSeenSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -43,12 +44,12 @@ async function sendPushNotification(expoPushToken: string, myUid: string, myName
     title: `${myName} からのメッセージ`, // 通知のタイトル
     body: `${message}`, // 通知の本文
     // 詳細
-    data: { 
+    data: {
       type: "message",
       message: {
         senderId: `${myUid}`,
-        }
-      },
+      }
+    },
   };
 
   try {
@@ -80,9 +81,6 @@ const TalkPage = () => {
   );
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
-  );
-  const currentTalkPartnerUid: string | null = useSelector(
-    (state: RootState) => state.currentTalkPartnerUid.value,
   );
   const myUserData = useSelector((state: RootState) => state.userData.value);
 
@@ -169,7 +167,7 @@ const TalkPage = () => {
   };
 
   // レンダリング時
-  useEffect(() => { 
+  useEffect(() => {
     // CurrentTalkPartnerを設定
     dispatch(setCurrentTalkPartnerUid(uid));
     // 新しいメッセージが追加されたら自動的に一番下にスクロール
@@ -181,6 +179,18 @@ const TalkPage = () => {
       }
     }
 
+    const date = new Date();
+    const timestamp = date.getTime();
+    dispatch(updateKeyTalkLastSeen({ key: uid as string, data: timestamp }));
+    // 最終閲覧時刻を定期的に更新する処理
+    const intervalId = setInterval(() => {
+      const date = new Date();
+      const timestamp = date.getTime();
+      dispatch(updateKeyTalkLastSeen({ key: uid as string, data: timestamp }));
+    }, 1000); // 1秒ごとに実行
+
+    // クリーンアップ処理
+    return () => clearInterval(intervalId); // コンポーネントのアンマウント時にタイマーを解除
   }, [messages]);
 
   useEffect(() => {
@@ -202,11 +212,10 @@ const TalkPage = () => {
       className={`pt-6 ${item.senderId === myUid ? "self-end" : "self-start"}`}
     >
       <StyledView
-        className={`rounded-[24px] px-[20px] py-[16px] ${
-          item.senderId === myUid
+        className={`rounded-[24px] px-[20px] py-[16px] ${item.senderId === myUid
             ? "rounded-br-[6px] bg-[#ff6767]"
             : "rounded-bl-[6px] bg-[#aaa]"
-        }`}
+          }`}
       >
         <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
       </StyledView>
@@ -272,9 +281,8 @@ const TalkPage = () => {
                   name="send"
                   size={34}
                   color="#73BBFD"
-                  className={`translate-y-[2px] ${
-                    message.trim() == "" && "opacity-30"
-                  }`}
+                  className={`translate-y-[2px] ${message.trim() == "" && "opacity-30"
+                    }`}
                 />
               </StyledTouchableOpacity>
             </StyledView>

@@ -32,6 +32,7 @@ const TalkDictScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   const router = useRouter();
   const dispatch = useDispatch();
+  // reduxから値を取得
   const myUid: string | null = useSelector(
     (state: RootState) => state.myUid.value,
   );
@@ -45,6 +46,9 @@ const TalkDictScreen = () => {
     (state: RootState) => state.talkHistoryData.value,
   );
   const [timeLeft, setTimeLeft] = useState<{ [key: string]: string }>({});
+  const myTalkLastSeen: { [key: string]: number } = useSelector(
+    (state: RootState) => state.talkLastSeen.value,
+  );
 
   // レンダリング時
   useEffect(() => {
@@ -152,13 +156,22 @@ const TalkDictScreen = () => {
                   )}
                 </StyledView>
                 {myTalkHistroyData[uid] ? (
-                  <StyledText className="text-[#aaa]">
+                  <StyledText
+                  // 未読かによって色を変える
+                  className={`
+                    ${
+                      myTalkHistroyData[uid][
+                        myTalkHistroyData[uid].length - 1
+                      ].timestamp <= myTalkLastSeen[uid] ?
+                      "text-[#aaa]" : "text-[#555]"
+                    }`}
+                  >
                     {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
                       .text.length > 16
                       ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
                       : myTalkHistroyData[uid][
-                          myTalkHistroyData[uid].length - 1
-                        ].text}
+                        myTalkHistroyData[uid].length - 1
+                      ].text}
                   </StyledText>
                 ) : (
                   <StyledText className="text-[#7785ff]">
