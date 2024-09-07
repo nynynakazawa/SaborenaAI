@@ -16,6 +16,8 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import { FirebaseError } from "firebase/app";
 import PrivacyPolicyModal from "../login/privacyPolicyModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -57,6 +59,10 @@ const CreateAccount = ({
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // * ############################################################################## *
+  const myExpoPushToken: string | null = useSelector(
+    (state: RootState) => state.myExpoPushToken.value,
+  );
+
   const [isVisibleTermModal, setIsVisibleTermModal] = useState<boolean>(false);
   const [isVisiblePrivacyPolicyModal, setIsVisiblePrivacyPolicyModal] =
     useState<boolean>(false);
@@ -115,6 +121,7 @@ const CreateAccount = ({
           password: password,
           created_at: timestamp,
           uid: userCredential.user.uid,
+          expo_push_token: myExpoPushToken,
           membership_status: "free",
         });
       })

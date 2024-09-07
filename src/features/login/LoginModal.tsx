@@ -7,6 +7,8 @@ import { useRouter } from "expo-router";
 import EmailInput from "../../components/privateForm/emailInput";
 import PasswordInput from "../../components/privateForm/passwordInput";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -25,6 +27,10 @@ const LoginModal = ({
   setPassword: React.Dispatch<React.SetStateAction<string>>;
   setIsVisibleLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const myExpoPushToken: string | null = useSelector(
+    (state: RootState) => state.myExpoPushToken.value,
+  );
+
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
@@ -68,6 +74,7 @@ const LoginModal = ({
             privateRef,
             {
               password: password,
+              expo_push_token: myExpoPushToken,
             },
             { merge: true },
           );

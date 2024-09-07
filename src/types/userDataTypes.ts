@@ -15,6 +15,7 @@ export type PrivateData = {
   email?: string;
   email_verified?: boolean;
   uid?: string;
+  expo_push_token?: string;
   password?: string;
   membership_status?: "free" | "premium";
 };

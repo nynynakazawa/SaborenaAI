@@ -4,7 +4,6 @@ import { styled } from "nativewind";
 import { auth, db } from "../firebase";
 import { useRouter } from "expo-router";
 import { doc, getDoc } from "firebase/firestore";
-
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
@@ -54,9 +53,7 @@ const Index = () => {
   }, []);
 
   return (
-    <StyledView className="flex-1 items-center justify-center">
-      <StyledText></StyledText>
-    </StyledView>
+    <></>
   );
 };
 

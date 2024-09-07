@@ -6,6 +6,8 @@ import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "expo-router";
 import { uploadImage } from "../../utils/uploadImage";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -66,7 +68,7 @@ const UserRegistationButton = ({
           main_image_url: mainImageUrl,
           sub_images_url: [null, null, null],
           self_introduction:
-            selfIntroduction == "" ? "はじめまして" : selfIntroduction,
+          selfIntroduction == "" ? "はじめまして" : selfIntroduction,
           selected_work: selectedWork,
           selected_goal: selectedGoal,
         },
