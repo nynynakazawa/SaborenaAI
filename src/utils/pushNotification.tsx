@@ -11,27 +11,56 @@ import { RootState } from "../store/store";
 const StyledView = styled(View)
 const StyledText = styled(Text)
 
-// 通知ハンドラーの設定。通知が受信されたときにアラートを表示するが、音やバッジは設定しない
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,  // アラートを表示する
-    shouldPlaySound: false, // 音は鳴らさない
-    shouldSetBadge: false,  // バッジは設定しない
-  }),
-});
-
 export default function Push() {
+  // reduxから値を取得
   const dispatch = useDispatch();
+  const myExpoPushToken: string | null = useSelector(
+    (state: RootState) => state.myExpoPushToken.value,
+  );
+  let currentTalkPartnerUid: string | null = useSelector(
+    (state: RootState) => state.currentTalkPartnerUid.value,
+  );
+  
   const [channels, setChannels] = useState<Notifications.NotificationChannel[]>([]); // Androidの通知チャンネルを格納
   const [notification, setNotification] = useState<Notifications.Notification | undefined>(undefined); // 最新の通知を格納
   const notificationListener = useRef<Notifications.Subscription>(); // 通知リスナーの参照
   const responseListener = useRef<Notifications.Subscription>(); // 通知応答リスナーの参照
 
-  const myExpoPushToken: string | null = useSelector(
-    (state: RootState) => state.myExpoPushToken.value,
-  );
-
   useEffect(() => {
+    // 通知ハンドラーの設定    
+    Notifications.setNotificationHandler({
+      handleNotification: async (notification) => {
+        const type = notification.request.content.data?.type;
+        // type: message
+        if(type === "message"){
+          const senderId = notification.request.content.data?.message?.senderId;
+          // 送られたメッセージ
+          console.log(JSON.stringify(notification.request.content.data))
+          // トーク中の相手には通知を送らない
+          if (senderId === currentTalkPartnerUid) {
+            return {
+              shouldShowAlert: false,
+              shouldPlaySound: false,
+              shouldSetBadge: false,
+            };
+          }
+          else{
+            return {
+              shouldShowAlert: true,
+              shouldPlaySound: false,
+              shouldSetBadge: false,
+            };
+          }
+        // type: other
+        } else {
+          return {
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+          };
+        }
+      },
+    });
 
     // Push通知の登録を行い、トークンを取得
     registerForPushNotificationsAsync().then(token => token && 
@@ -58,13 +87,15 @@ export default function Push() {
       notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
       responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
     };
-  }, []);
+  }, [currentTalkPartnerUid]);
 
   return (
+    // ? テスト用 ?
     // <StyledView>
     //   {/* Pushトークンを表示 */}
     //   <StyledText className="mt-[10vh]">Now Match</StyledText>
-      
+    //   <StyledText className="text-red-300">currentTalkPartnerUid: {currentTalkPartnerUid} </StyledText>
+
     //   <StyledText>Your expo push token: {myExpoPushToken}</StyledText>
 
     //   <StyledView>
@@ -82,6 +113,7 @@ export default function Push() {
     //     }}
     //   />
     // </StyledView>
+    // ? テスト用 ?
     <></>
   );
 }

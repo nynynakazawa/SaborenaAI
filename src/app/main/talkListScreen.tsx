@@ -10,7 +10,7 @@ import {
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Message, TalkData, UserData } from "../../types/userDataTypes";
 import NameDisplayComponent from "../../components/display/nameDisplayComponent";
@@ -20,6 +20,7 @@ import {
 } from "../../utils/convertTimestamp";
 import { deleteDoc, deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import currentTalkPartnerUidSlice, { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -29,7 +30,7 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const TalkDictScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const myUid: string | null = useSelector(
     (state: RootState) => state.myUid.value,
   );
@@ -42,10 +43,17 @@ const TalkDictScreen = () => {
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
   );
+  const currentTalkPartnerUid: string | null = useSelector(
+    (state: RootState) => state.currentTalkPartnerUid.value,
+  );
 
   const [timeLeft, setTimeLeft] = useState<{ [key: string]: string }>({});
 
+  // レンダリング時
   useEffect(() => {
+    // currentTalkPartnerを初期化
+    dispatch(setCurrentTalkPartnerUid(null));
+
     // 初回の残り時間と有効期限を設定
     updateTimesAndValidity();
 

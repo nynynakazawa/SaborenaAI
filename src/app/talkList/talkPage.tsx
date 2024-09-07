@@ -12,7 +12,7 @@ import { styled } from "nativewind";
 import { useGlobalSearchParams } from "expo-router";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { RootState } from "../../store/store";
@@ -20,6 +20,7 @@ import { Message, TalkData } from "../../types/userDataTypes";
 import uuid from "react-native-uuid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { convertTimestamp_hhmm } from "../../utils/convertTimestamp";
+import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -35,13 +36,19 @@ type PushNotification = {
 }
 
 // Expo Push通知を送信する関数
-async function sendPushNotification(expoPushToken: string, myName: string, message: string): Promise<void> {
+async function sendPushNotification(expoPushToken: string, myUid: string, myName: string, message: string): Promise<void> {
   const notification: PushNotification = {
     to: expoPushToken, // ExpoPushTokenを指定
     sound: "default", // 通知サウンド
     title: `${myName} からのメッセージ`, // 通知のタイトル
     body: `${message}`, // 通知の本文
-    data: { someData: "通知データ" }, // 追加データ
+    // 詳細
+    data: { 
+      type: "message",
+      message: {
+        senderId: `${myUid}`,
+        }
+      },
   };
 
   try {
@@ -64,6 +71,7 @@ async function sendPushNotification(expoPushToken: string, myName: string, messa
 
 const TalkPage = () => {
   // reduxから値を取得
+  const dispatch = useDispatch();
   const myUid: string | null = useSelector(
     (state: RootState) => state.myUid.value,
   );
@@ -72,6 +80,9 @@ const TalkPage = () => {
   );
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
+  );
+  const currentTalkPartnerUid: string | null = useSelector(
+    (state: RootState) => state.currentTalkPartnerUid.value,
   );
   const myUserData = useSelector((state: RootState) => state.userData.value);
 
@@ -82,6 +93,7 @@ const TalkPage = () => {
   const [message, setMessage] = useState<string>("");
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
+
   // talkRoom作成
   const createTalkRoom = async (
     myUid: string,
@@ -152,12 +164,15 @@ const TalkPage = () => {
       );
 
       // 相手に通知を送る
-      sendPushNotification(expoPushToken as string, myName, message)
+      sendPushNotification(expoPushToken as string, myUid as string, myName, message)
     }
   };
 
-  // 新しいメッセージが追加されたら自動的に一番下にスクロール
-  useEffect(() => {
+  // レンダリング時
+  useEffect(() => { 
+    // CurrentTalkPartnerを設定
+    dispatch(setCurrentTalkPartnerUid(uid));
+    // 新しいメッセージが追加されたら自動的に一番下にスクロール
     if (messages) {
       if (messages.length > 0) {
         setTimeout(() => {
@@ -165,6 +180,7 @@ const TalkPage = () => {
         }, 200);
       }
     }
+
   }, [messages]);
 
   useEffect(() => {
