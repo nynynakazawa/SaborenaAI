@@ -21,6 +21,7 @@ import {
 import { deleteDoc, deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import currentTalkPartnerUidSlice, { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
+import { deleteKey } from "../../store/talkHistoryDataSlice";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -43,10 +44,6 @@ const TalkDictScreen = () => {
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
   );
-  const currentTalkPartnerUid: string | null = useSelector(
-    (state: RootState) => state.currentTalkPartnerUid.value,
-  );
-
   const [timeLeft, setTimeLeft] = useState<{ [key: string]: string }>({});
 
   // レンダリング時
@@ -73,16 +70,20 @@ const TalkDictScreen = () => {
     if (talkData && talkData[uid]) {
       talkRoomId = talkData[uid]?.talk_room_id as string;
     }
+    // 自分 to 相手
     const myTalkRef = doc(db, "talk", myUid);
     await updateDoc(myTalkRef, {
       [uid]: deleteField(),
     });
+    // 相手 to 自分
     const partnerTalkRef = doc(db, "talk", uid);
     await updateDoc(partnerTalkRef, {
       [myUid]: deleteField(),
     });
     const talkRoomRef = doc(db, "talk_room", talkRoomId);
     await deleteDoc(talkRoomRef);
+    // reduxに入っているトーク履歴を消す
+    dispatch(deleteKey(uid));
   };
 
   const updateTimesAndValidity = () => {

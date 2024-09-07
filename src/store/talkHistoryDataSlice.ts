@@ -1,9 +1,3 @@
-//
-// talkHistoryData (辞書)
-// key: uid
-// value: そのユーザー(uid)のトーク履歴
-//
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Message } from "../types/userDataTypes";
 
@@ -27,8 +21,13 @@ const talkHistoryDataSlice = createSlice({
       const { key, data } = action.payload;
       state.value[key] = data;
     },
+    // 特定のキーを削除するリデューサー
+    deleteKey: (state, action: PayloadAction<string>) => {
+      const key = action.payload;
+      delete state.value[key];
+    },
   },
 });
 
-export const { updateKey } = talkHistoryDataSlice.actions;
+export const { updateKey, deleteKey } = talkHistoryDataSlice.actions;
 export default talkHistoryDataSlice.reducer;
