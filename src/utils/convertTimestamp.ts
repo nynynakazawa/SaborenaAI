@@ -29,7 +29,7 @@ export const getRemainingTime = (
   const minute = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
   const res = {
     isValid: leftTime > 0,
-    leftTime: `残り: ${hour}時間${minute}分`,
+    leftTime: `${hour}時間${minute}分`,
   };
   return res;
 };

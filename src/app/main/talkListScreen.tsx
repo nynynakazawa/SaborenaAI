@@ -61,7 +61,7 @@ const TalkDictScreen = () => {
     // 1分ごとに残り時間とトークの有効期限を更新
     const intervalId = setInterval(() => {
       updateTimesAndValidity();
-    }, 60000);
+    }, 30 * 10000);
     // クリーンアップ
     return () => clearInterval(intervalId);
   }, [talkData]);
@@ -130,6 +130,7 @@ const TalkDictScreen = () => {
       params: {
         uid: uid,
         name: userData?.name,
+        createAt: talkData && talkData[uid].created_at,
         expoPushToken: userData?.expo_push_token,
       },
     });
@@ -194,7 +195,7 @@ const TalkDictScreen = () => {
                 </StyledView>
                 {/* 残り時間表示 */}
                 <StyledText className="absolute bottom-[6px] right-[12px] text-[12px] text-[#aaa]">
-                  {timeLeft[uid] || "N/A"}
+                  残り: {timeLeft[uid] || "N/A"}
                 </StyledText>
               </StyledTouchableOpacity>
             ))}

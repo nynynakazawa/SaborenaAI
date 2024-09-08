@@ -9,7 +9,7 @@ import {
   Keyboard,
 } from "react-native";
 import { styled } from "nativewind";
-import { useGlobalSearchParams } from "expo-router";
+import { router, useGlobalSearchParams } from "expo-router";
 import PageBackHeader from "../../layout/header/pageBackHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ import { RootState } from "../../store/store";
 import { Message, TalkData } from "../../types/userDataTypes";
 import uuid from "react-native-uuid";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { convertTimestamp_hhmm } from "../../utils/convertTimestamp";
+import { convertTimestamp_hhmm, getRemainingTime } from "../../utils/convertTimestamp";
 import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
 import { updateKey as updateKeyTalkLastSeen } from "../../store/talkLastSeenSlice";
 
@@ -34,6 +34,11 @@ type PushNotification = {
   title: string;
   body: string;
   data?: Record<string, any>;
+};
+
+type RemainType = {
+  leftTime: string;
+  isValid: boolean;
 };
 
 // Expo Push通知を送信する関数
@@ -90,12 +95,15 @@ const TalkPage = () => {
   const myUserData = useSelector((state: RootState) => state.userData.value);
 
   const Container = Platform.OS === "android" ? SafeAreaView : View;
-  const { uid, name, expoPushToken } = useGlobalSearchParams();
+  // パラメータを受け取る
+  const { uid, name, createAt, expoPushToken } = useGlobalSearchParams();
+
   const [defaultKeyboardHeight, setDefaultKeyboardHeight] = useState<number>();
   const messages = myTalkHistroyData[uid as string];
   const [message, setMessage] = useState<string>("");
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
+  const [remain, setRemain] = useState<RemainType>({leftTime: "3時間0分", isValid: true})
 
   // talkRoom作成
   const createTalkRoom = async (
@@ -193,14 +201,22 @@ const TalkPage = () => {
       }
     }
 
+    // ### 定期実行 ###
     const date = new Date();
     const timestamp = date.getTime();
     dispatch(updateKeyTalkLastSeen({ key: uid as string, data: timestamp }));
+    setRemain(getRemainingTime(parseInt(createAt as string)))
     // 最終閲覧時刻を定期的に更新する処理
     const intervalId = setInterval(() => {
       const date = new Date();
       const timestamp = date.getTime();
       dispatch(updateKeyTalkLastSeen({ key: uid as string, data: timestamp }));
+      const tmpRemain = getRemainingTime(parseInt(createAt as string))
+      setRemain(tmpRemain)
+      // 有効期限が切れたらページをもどす。
+      if(tmpRemain.isValid == false){
+        router.push("main/talkListScreen")
+      }
     }, 1000); // 1秒ごとに実行
 
     // クリーンアップ処理
@@ -261,6 +277,9 @@ const TalkPage = () => {
 
         {/* メッセージ入力 */}
         <StyledView className="bg-[fff]">
+          <StyledText className="ml-[30px] translate-y-[10px] text-[#aaa] text-[12px]">
+            トーク残り有効期限: {remain.leftTime ? remain.leftTime : ""}
+          </StyledText>
           <StyledView
             className={`mx-auto my-[14px] w-[90vw] rounded-full border-[1px] border-[#aaa] bg-[#fff] ${isTextInputFocused ? "border-2 border-blue-500" : ""}`}
             style={
