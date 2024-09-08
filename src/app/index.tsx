@@ -52,9 +52,7 @@ const Index = () => {
     return () => unsubscribe();
   }, []);
 
-  return (
-    <></>
-  );
+  return <></>;
 };
 
 export default Index;

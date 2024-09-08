@@ -72,7 +72,7 @@ const UserRegistationButton = ({
           main_image_url: mainImageUrl,
           sub_images_url: [null, null, null],
           self_introduction:
-          selfIntroduction == "" ? "はじめまして" : selfIntroduction,
+            selfIntroduction == "" ? "はじめまして" : selfIntroduction,
           selected_work: selectedWork,
           selected_goal: selectedGoal,
         },

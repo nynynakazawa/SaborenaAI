@@ -2,7 +2,7 @@
 // currentTalkPartnerUid
 // 現在トーク中の相手のuid
 // 現在トーク中の相手からのメッセージからのプッシュ通知を受け取らないようにする
-// 
+//
 
 import { createSlice } from "@reduxjs/toolkit";
 

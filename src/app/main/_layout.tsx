@@ -27,7 +27,9 @@ const StyledView = styled(View);
 export default function Layout() {
   const { isFetchUserData } = useGlobalSearchParams();
   const dispatch = useDispatch();
-  const isUnreadTalk: boolean = useSelector((state: RootState) => state.isUnreadTalk.value)
+  const isUnreadTalk: boolean = useSelector(
+    (state: RootState) => state.isUnreadTalk.value,
+  );
 
   // 自身の情報を取得
   const fetchMyUser = async (dispatch: Dispatch) => {
@@ -86,9 +88,9 @@ export default function Layout() {
                 size={30}
                 color={focused ? "#1a8cd8" : "#333"}
               />
-              {isUnreadTalk &&
-                <StyledView className="absolute w-[12px] h-[12px] [z-10] bg-[#e3422e] rounded-full right-[-6px]"></StyledView>
-              }
+              {isUnreadTalk && (
+                <StyledView className="[z-10] absolute right-[-6px] h-[12px] w-[12px] rounded-full bg-[#f85e49]"></StyledView>
+              )}
             </StyledView>
           ),
           headerShown: true,

@@ -111,7 +111,7 @@ const WhatNowInput = () => {
           )}
         </StyledView>
         {/* 送信ボタン */}
-        <StyledView className="w-[2px] bg-[#ccc] h-[40px]"></StyledView>
+        <StyledView className="h-[40px] w-[2px] bg-[#ccc]"></StyledView>
         <StyledTouchableOpacity
           onPress={() => {
             handleSend(myUid);

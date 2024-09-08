@@ -8,7 +8,7 @@ import talkHistoryDataReducer from "./talkHistoryDataSlice";
 import talkLastSeenReducer from "./talkLastSeenSlice";
 import locationReducer from "./locationSlice";
 import myUidReducer from "./myUidSlice";
-import isUnreadTalkReducer from "./isUnreadTalkSlice"
+import isUnreadTalkReducer from "./isUnreadTalkSlice";
 import currentTalkPartnerUidReducer from "./currentTalkPartnerUidSlice";
 import myExpoPushTokenReducer from "./myExpoPushTokenSlice";
 import isGpsReducer from "./isGpsSlice";

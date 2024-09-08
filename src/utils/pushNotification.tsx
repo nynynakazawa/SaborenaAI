@@ -7,10 +7,10 @@ import { styled } from "nativewind";
 import { useDispatch, useSelector } from "react-redux";
 import { set as setMyExpoPushToken } from "../store/myExpoPushTokenSlice";
 import { RootState } from "../store/store";
-import { set as setIsUnreadTalk} from "../store/isUnreadTalkSlice";
+import { set as setIsUnreadTalk } from "../store/isUnreadTalkSlice";
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
 export default function Push() {
   // reduxから値を取得
@@ -21,22 +21,26 @@ export default function Push() {
   let currentTalkPartnerUid: string | null = useSelector(
     (state: RootState) => state.currentTalkPartnerUid.value,
   );
-  
-  const [channels, setChannels] = useState<Notifications.NotificationChannel[]>([]); // Androidの通知チャンネルを格納
-  const [notification, setNotification] = useState<Notifications.Notification | undefined>(undefined); // 最新の通知を格納
+
+  const [channels, setChannels] = useState<Notifications.NotificationChannel[]>(
+    [],
+  ); // Androidの通知チャンネルを格納
+  const [notification, setNotification] = useState<
+    Notifications.Notification | undefined
+  >(undefined); // 最新の通知を格納
   const notificationListener = useRef<Notifications.Subscription>(); // 通知リスナーの参照
   const responseListener = useRef<Notifications.Subscription>(); // 通知応答リスナーの参照
 
   useEffect(() => {
-    // 通知ハンドラーの設定    
+    // 通知ハンドラーの設定
     Notifications.setNotificationHandler({
       handleNotification: async (notification) => {
         const type = notification.request.content.data?.type;
         // type: message
-        if(type === "message"){
+        if (type === "message") {
           const senderId = notification.request.content.data?.message?.senderId;
           // 送られたメッセージ
-          console.log(JSON.stringify(notification.request.content.data))
+          console.log(JSON.stringify(notification.request.content.data));
           // トークバッジをつける
           dispatch(setIsUnreadTalk(true));
           // トーク中の相手には通知を送らない
@@ -46,15 +50,14 @@ export default function Push() {
               shouldPlaySound: false, // 音
               shouldSetBadge: false, // バッジ表示
             };
-          }
-          else{
+          } else {
             return {
               shouldShowAlert: true,
               shouldPlaySound: true,
               shouldSetBadge: true,
             };
           }
-        // type: other
+          // type: other
         } else {
           return {
             shouldShowAlert: true,
@@ -66,29 +69,37 @@ export default function Push() {
     });
 
     // Push通知の登録を行い、トークンを取得
-    registerForPushNotificationsAsync().then(token => token && 
-      dispatch(setMyExpoPushToken(token))
+    registerForPushNotificationsAsync().then(
+      (token) => token && dispatch(setMyExpoPushToken(token)),
     );
 
     // Androidプラットフォームの場合は通知チャンネルを取得
     if (Platform.OS === "android") {
-      Notifications.getNotificationChannelsAsync().then(value => setChannels(value ?? []));
+      Notifications.getNotificationChannelsAsync().then((value) =>
+        setChannels(value ?? []),
+      );
     }
 
     // 通知が受信されたときのリスナーを追加
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification); // 受信した通知を保存
-    });
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification); // 受信した通知を保存
+      });
 
     // 通知の応答が行われたときのリスナーを追加
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response); // 通知応答の内容をログに出力
-    });
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response); // 通知応答の内容をログに出力
+      });
 
     // コンポーネントがアンマウントされたときにリスナーを削除
     return () => {
-      notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
-      responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
+      notificationListener.current &&
+        Notifications.removeNotificationSubscription(
+          notificationListener.current,
+        );
+      responseListener.current &&
+        Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, [currentTalkPartnerUid]);
 
@@ -107,7 +118,7 @@ export default function Push() {
     //     {/* 通知の本文を表示 */}
     //     <StyledText>Body: {notification && notification.request.content.body}</StyledText>
     //     {/* 通知のデータを表示 */}
-    //     <StyledText>Data: {notification && JSON.stringify(notification.request.content.data)}</StyledText> 
+    //     <StyledText>Data: {notification && JSON.stringify(notification.request.content.data)}</StyledText>
     //   </StyledView>
     //   <Button
     //     title="Press to schedule a notification"
@@ -150,9 +161,10 @@ async function registerForPushNotificationsAsync() {
   // デバイスが物理デバイスかどうか確認（エミュレータではPush通知は動作しない）
   if (Device.isDevice) {
     // 現在の通知権限を取得
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
-    
+
     // 権限が未取得の場合は、ユーザーに権限をリクエスト
     if (existingStatus !== "granted") {
       const { status } = await Notifications.requestPermissionsAsync();
@@ -168,7 +180,8 @@ async function registerForPushNotificationsAsync() {
     // Expo Pushトークンを取得
     try {
       const projectId =
-        Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId; // プロジェクトIDを取得
+        Constants?.expoConfig?.extra?.eas?.projectId ??
+        Constants?.easConfig?.projectId; // プロジェクトIDを取得
 
       if (!projectId) {
         throw new Error("Project ID not found");

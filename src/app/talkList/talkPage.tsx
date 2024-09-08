@@ -34,10 +34,15 @@ type PushNotification = {
   title: string;
   body: string;
   data?: Record<string, any>;
-}
+};
 
 // Expo Push通知を送信する関数
-async function sendPushNotification(expoPushToken: string, myUid: string, myName: string, message: string): Promise<void> {
+async function sendPushNotification(
+  expoPushToken: string,
+  myUid: string,
+  myName: string,
+  message: string,
+): Promise<void> {
   const notification: PushNotification = {
     to: expoPushToken, // ExpoPushTokenを指定
     sound: "default", // 通知サウンド
@@ -48,7 +53,7 @@ async function sendPushNotification(expoPushToken: string, myUid: string, myName
       type: "message",
       message: {
         senderId: `${myUid}`,
-      }
+      },
     },
   };
 
@@ -129,7 +134,11 @@ const TalkPage = () => {
   };
 
   // メッセージを送信処理
-  const handleSend = async (myUid: string | null, myName: string, uid: string) => {
+  const handleSend = async (
+    myUid: string | null,
+    myName: string,
+    uid: string,
+  ) => {
     // myUid: 自分のUID
     // uid: 相手のUID
     const date = new Date();
@@ -162,7 +171,12 @@ const TalkPage = () => {
       );
 
       // 相手に通知を送る
-      sendPushNotification(expoPushToken as string, myUid as string, myName, message)
+      sendPushNotification(
+        expoPushToken as string,
+        myUid as string,
+        myName,
+        message,
+      );
     }
   };
 
@@ -212,10 +226,11 @@ const TalkPage = () => {
       className={`pt-6 ${item.senderId === myUid ? "self-end" : "self-start"}`}
     >
       <StyledView
-        className={`rounded-[24px] px-[20px] py-[16px] ${item.senderId === myUid
+        className={`rounded-[24px] px-[20px] py-[16px] ${
+          item.senderId === myUid
             ? "rounded-br-[6px] bg-[#ff6767]"
             : "rounded-bl-[6px] bg-[#aaa]"
-          }`}
+        }`}
       >
         <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
       </StyledView>
@@ -268,7 +283,7 @@ const TalkPage = () => {
                 onBlur={() => setIsTextInputFocused(false)}
               />
               {/* 送信ボタン */}
-              <StyledView className="w-[2px] bg-[#ccc] h-[40px]"></StyledView>
+              <StyledView className="h-[40px] w-[2px] bg-[#ccc]"></StyledView>
               <StyledTouchableOpacity
                 onPress={() => {
                   handleSend(myUid, myUserData?.name as string, uid as string);
@@ -282,8 +297,9 @@ const TalkPage = () => {
                   name="send"
                   size={34}
                   color="#73BBFD"
-                  className={`translate-y-[2px] ${message.trim() == "" && "opacity-30"
-                    }`}
+                  className={`translate-y-[2px] ${
+                    message.trim() == "" && "opacity-30"
+                  }`}
                 />
               </StyledTouchableOpacity>
             </StyledView>

@@ -21,7 +21,7 @@ import {
 import { deleteDoc, deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
-import { set as setIsUnreadTalk} from "../../store/isUnreadTalkSlice";
+import { set as setIsUnreadTalk } from "../../store/isUnreadTalkSlice";
 import { deleteKey } from "../../store/talkHistoryDataSlice";
 
 const StyledView = styled(View);
@@ -111,15 +111,17 @@ const TalkDictScreen = () => {
   // そのトークが未読か判定
   const judegIsUnreadTalk = (uid: string) => {
     let isUnread: boolean = false;
-    if( myTalkHistroyData[uid]){
-      isUnread = myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].timestamp > myTalkLastSeen[uid]
-      if(isUnread){
+    if (myTalkHistroyData[uid]) {
+      isUnread =
+        myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].timestamp >
+        myTalkLastSeen[uid];
+      if (isUnread) {
         // 未読のトークがあればトークバッジをつける
         dispatch(setIsUnreadTalk(true));
       }
     }
     return isUnread;
-  }
+  };
 
   // トーク画面に遷移
   const handlePressTalkButton = (uid: string, userData: UserData | null) => {
@@ -128,7 +130,7 @@ const TalkDictScreen = () => {
       params: {
         uid: uid,
         name: userData?.name,
-        expoPushToken: userData?.expo_push_token
+        expoPushToken: userData?.expo_push_token,
       },
     });
   };
@@ -166,24 +168,22 @@ const TalkDictScreen = () => {
 
                 <StyledView className="flex flex-row">
                   {/* 未読印 */}
-                  {judegIsUnreadTalk(uid) &&
-                    <StyledView className="bg-blue-400 w-[12px] h-[12px] rounded-full mx-[4px]">
-                    </StyledView>
-                  }
+                  {judegIsUnreadTalk(uid) && (
+                    <StyledView className="mx-[4px] h-[12px] w-[12px] rounded-full bg-blue-400"></StyledView>
+                  )}
                   {myTalkHistroyData[uid] ? (
                     <StyledText
-                    // 未読かによって色を変える
-                    className={` leading-[14px] ml-[2px]
-                      ${judegIsUnreadTalk(uid) ?
-                          "text-[#666]" : "text-[#aaa]"
-                        }`}
+                      // 未読かによって色を変える
+                      className={`ml-[2px] leading-[14px] ${
+                        judegIsUnreadTalk(uid) ? "text-[#666]" : "text-[#aaa]"
+                      }`}
                     >
                       {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
                         .text.length > 16
                         ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
                         : myTalkHistroyData[uid][
-                          myTalkHistroyData[uid].length - 1
-                        ].text}
+                            myTalkHistroyData[uid].length - 1
+                          ].text}
                     </StyledText>
                   ) : (
                     <StyledText className="text-[#7785ff]">
@@ -193,7 +193,7 @@ const TalkDictScreen = () => {
                 </StyledView>
               </StyledView>
               {/* 残り時間表示 */}
-              <StyledText className="absolute bottom-[6px] right-[12px] text-[#aaa] text-[12px]">
+              <StyledText className="absolute bottom-[6px] right-[12px] text-[12px] text-[#aaa]">
                 {timeLeft[uid] || "N/A"}
               </StyledText>
             </StyledTouchableOpacity>

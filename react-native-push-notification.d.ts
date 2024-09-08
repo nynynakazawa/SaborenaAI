@@ -1,5 +1,5 @@
-declare module 'react-native-push-notification' {
-  import { Component } from 'react';
+declare module "react-native-push-notification" {
+  import { Component } from "react";
 
   interface Notification {
     title: string;
@@ -16,7 +16,7 @@ declare module 'react-native-push-notification' {
     static createChannel(
       channelId: string,
       channelName: string,
-      options?: object
+      options?: object,
     ): Promise<void>;
   }
 
