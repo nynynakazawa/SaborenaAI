@@ -170,7 +170,7 @@ const TalkDictScreen = () => {
                   <StyledView className="flex flex-row">
                     {/* 未読印 */}
                     {judegIsUnreadTalk(uid) && (
-                      <StyledView className="mx-[4px] h-[12px] w-[12px] rounded-full bg-blue-400"></StyledView>
+                      <StyledView className="mx-[4px] h-[8px] w-[8px] mt-[2px] rounded-full bg-[#f88373]"></StyledView>
                     )}
                     {myTalkHistroyData[uid] ? (
                       <StyledText
