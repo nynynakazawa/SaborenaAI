@@ -138,68 +138,73 @@ const TalkDictScreen = () => {
   return (
     <Container edges={["left", "right"]}>
       {/* トークリスト画面 */}
-      <ScrollView className="h-full">
-        <StyledView className="flex">
-          {Object.entries(myTalkPartnerData).map(([uid, userData]) => (
-            <StyledTouchableOpacity
-              onPress={() => handlePressTalkButton(uid, userData)}
-              key={uid}
-              className="border-1 flex flex-row border-b border-[#aaa] p-4"
-            >
-              {userData?.main_image_url && (
-                <StyledImage
-                  source={{ uri: userData.main_image_url }}
-                  className="h-16 w-16 rounded-full"
-                />
-              )}
-              <StyledView className="ml-[10px] flex flex-1 justify-center">
-                <StyledView className="mb-[6px] flex w-full flex-row items-center">
-                  <NameDisplayComponent userData={userData} size="large" />
-                  {myTalkHistroyData[uid] && (
-                    <StyledText className="text-[#aaa]">
-                      {convertTimestamp_hhmm(
-                        myTalkHistroyData[uid][
-                          myTalkHistroyData[uid].length - 1
-                        ].timestamp,
-                      )}
-                    </StyledText>
-                  )}
-                </StyledView>
+      {myTalkPartnerData ? (
+        <ScrollView className="h-full">
+          <StyledView className="flex">
+            {Object.entries(myTalkPartnerData).map(([uid, userData]) => (
+              <StyledTouchableOpacity
+                onPress={() => handlePressTalkButton(uid, userData)}
+                key={uid}
+                className="border-1 flex flex-row border-b border-[#aaa] p-4"
+              >
+                {userData?.main_image_url && (
+                  <StyledImage
+                    source={{ uri: userData.main_image_url }}
+                    className="h-16 w-16 rounded-full"
+                  />
+                )}
+                <StyledView className="ml-[10px] flex flex-1 justify-center">
+                  <StyledView className="mb-[6px] flex w-full flex-row items-center">
+                    <NameDisplayComponent userData={userData} size="large" />
+                    {myTalkHistroyData[uid] && (
+                      <StyledText className="text-[#aaa]">
+                        {convertTimestamp_hhmm(
+                          myTalkHistroyData[uid][
+                            myTalkHistroyData[uid].length - 1
+                          ].timestamp,
+                        )}
+                      </StyledText>
+                    )}
+                  </StyledView>
 
-                <StyledView className="flex flex-row">
-                  {/* 未読印 */}
-                  {judegIsUnreadTalk(uid) && (
-                    <StyledView className="mx-[4px] h-[12px] w-[12px] rounded-full bg-blue-400"></StyledView>
-                  )}
-                  {myTalkHistroyData[uid] ? (
-                    <StyledText
-                      // 未読かによって色を変える
-                      className={`ml-[2px] leading-[14px] ${
-                        judegIsUnreadTalk(uid) ? "text-[#666]" : "text-[#aaa]"
-                      }`}
-                    >
-                      {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
-                        .text.length > 16
-                        ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
-                        : myTalkHistroyData[uid][
+                  <StyledView className="flex flex-row">
+                    {/* 未読印 */}
+                    {judegIsUnreadTalk(uid) && (
+                      <StyledView className="mx-[4px] h-[12px] w-[12px] rounded-full bg-blue-400"></StyledView>
+                    )}
+                    {myTalkHistroyData[uid] ? (
+                      <StyledText
+                        // 未読かによって色を変える
+                        className={`ml-[2px] leading-[14px] ${judegIsUnreadTalk(uid) ? "text-[#666]" : "text-[#aaa]"
+                          }`}
+                      >
+                        {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
+                          .text.length > 16
+                          ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
+                          : myTalkHistroyData[uid][
                             myTalkHistroyData[uid].length - 1
                           ].text}
-                    </StyledText>
-                  ) : (
-                    <StyledText className="text-[#7785ff]">
-                      メッセージが届きました
-                    </StyledText>
-                  )}
+                      </StyledText>
+                    ) : (
+                      <StyledText className="text-[#7785ff]">
+                        メッセージが届きました
+                      </StyledText>
+                    )}
+                  </StyledView>
                 </StyledView>
-              </StyledView>
-              {/* 残り時間表示 */}
-              <StyledText className="absolute bottom-[6px] right-[12px] text-[12px] text-[#aaa]">
-                {timeLeft[uid] || "N/A"}
-              </StyledText>
-            </StyledTouchableOpacity>
-          ))}
+                {/* 残り時間表示 */}
+                <StyledText className="absolute bottom-[6px] right-[12px] text-[12px] text-[#aaa]">
+                  {timeLeft[uid] || "N/A"}
+                </StyledText>
+              </StyledTouchableOpacity>
+            ))}
+          </StyledView>
+        </ScrollView>
+      ) :
+        <StyledView className="flex items-center justify-center h-full">
+          <StyledText className="text-[#666]">まだトーク相手がいません</StyledText>
         </StyledView>
-      </ScrollView>
+      }
     </Container>
   );
 };
