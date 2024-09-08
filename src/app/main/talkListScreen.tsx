@@ -79,11 +79,6 @@ const TalkDictScreen = () => {
     await updateDoc(myTalkRef, {
       [uid]: deleteField(),
     });
-    // 相手 to 自分
-    const partnerTalkRef = doc(db, "talk", uid);
-    await updateDoc(partnerTalkRef, {
-      [myUid]: deleteField(),
-    });
     const talkRoomRef = doc(db, "talk_room", talkRoomId);
     await deleteDoc(talkRoomRef);
     // reduxに入っているトーク履歴を消す
