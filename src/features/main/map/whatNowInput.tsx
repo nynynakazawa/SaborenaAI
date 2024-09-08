@@ -110,13 +110,15 @@ const WhatNowInput = () => {
             />
           )}
         </StyledView>
+        {/* 送信ボタン */}
+        <StyledView className="w-[2px] bg-[#ccc] h-[40px]"></StyledView>
         <StyledTouchableOpacity
           onPress={() => {
             handleSend(myUid);
             setIsTextInputFocused(false);
             Keyboard.dismiss();
           }}
-          className="h-[40px] border-l-2 border-[#ccc] pl-[16px]"
+          className="h-[40px] pl-[16px]"
           disabled={whatNow?.trim() == "" || isSendingWhatNow}
         >
           <Icon
