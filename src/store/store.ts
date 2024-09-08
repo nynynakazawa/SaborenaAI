@@ -8,6 +8,7 @@ import talkHistoryDataReducer from "./talkHistoryDataSlice";
 import talkLastSeenReducer from "./talkLastSeenSlice";
 import locationReducer from "./locationSlice";
 import myUidReducer from "./myUidSlice";
+import isUnreadTalkReducer from "./isUnreadTalkSlice"
 import currentTalkPartnerUidReducer from "./currentTalkPartnerUidSlice";
 import myExpoPushTokenReducer from "./myExpoPushTokenSlice";
 import isGpsReducer from "./isGpsSlice";
@@ -29,6 +30,7 @@ const store = configureStore({
     myExpoPushToken: myExpoPushTokenReducer,
     currentTalkPartnerUid: currentTalkPartnerUidReducer,
     isGps: isGpsReducer,
+    isUnreadTalk: isUnreadTalkReducer,
     peopleCount: peopleCountReducer,
     allCurrentData: allCurrentDataReducer,
     allUserData: allUserDataReducer,

@@ -20,7 +20,8 @@ import {
 } from "../../utils/convertTimestamp";
 import { deleteDoc, deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import currentTalkPartnerUidSlice, { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
+import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
+import { set as setIsUnreadTalk} from "../../store/isUnreadTalkSlice";
 import { deleteKey } from "../../store/talkHistoryDataSlice";
 
 const StyledView = styled(View);
@@ -52,17 +53,15 @@ const TalkDictScreen = () => {
 
   // レンダリング時
   useEffect(() => {
+    dispatch(setIsUnreadTalk(false));
     // currentTalkPartnerを初期化
     dispatch(setCurrentTalkPartnerUid(null));
-
     // 初回の残り時間と有効期限を設定
     updateTimesAndValidity();
-
     // 1分ごとに残り時間とトークの有効期限を更新
     const intervalId = setInterval(() => {
       updateTimesAndValidity();
     }, 60000);
-
     // クリーンアップ
     return () => clearInterval(intervalId);
   }, [talkData]);
@@ -85,6 +84,7 @@ const TalkDictScreen = () => {
     dispatch(deleteKey(uid));
   };
 
+  // すべての残り有効期限を更新する
   const updateTimesAndValidity = () => {
     if (talkData) {
       const updatedTimes: { [key: string]: string } = {};
@@ -107,6 +107,19 @@ const TalkDictScreen = () => {
       }
     }
   };
+
+  // そのトークが未読か判定
+  const judegIsUnreadTalk = (uid: string) => {
+    let isUnread: boolean = false;
+    if( myTalkHistroyData[uid]){
+      isUnread = myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].timestamp > myTalkLastSeen[uid]
+      if(isUnread){
+        // 未読のトークがあればトークバッジをつける
+        dispatch(setIsUnreadTalk(true));
+      }
+    }
+    return isUnread;
+  }
 
   // トーク画面に遷移
   const handlePressTalkButton = (uid: string, userData: UserData | null) => {
@@ -150,32 +163,37 @@ const TalkDictScreen = () => {
                     </StyledText>
                   )}
                 </StyledView>
-                {myTalkHistroyData[uid] ? (
-                  <StyledText
-                  // 未読かによって色を変える
-                  className={`
-                    ${
-                      myTalkHistroyData[uid][
-                        myTalkHistroyData[uid].length - 1
-                      ].timestamp <= myTalkLastSeen[uid] ?
-                      "text-[#aaa]" : "text-[#555]"
-                    }`}
-                  >
-                    {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
-                      .text.length > 16
-                      ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
-                      : myTalkHistroyData[uid][
-                        myTalkHistroyData[uid].length - 1
-                      ].text}
-                  </StyledText>
-                ) : (
-                  <StyledText className="text-[#7785ff]">
-                    メッセージが届きました
-                  </StyledText>
-                )}
+
+                <StyledView className="flex flex-row">
+                  {/* 未読印 */}
+                  {judegIsUnreadTalk(uid) &&
+                    <StyledView className="bg-blue-400 w-[12px] h-[12px] rounded-full mx-[4px]">
+                    </StyledView>
+                  }
+                  {myTalkHistroyData[uid] ? (
+                    <StyledText
+                    // 未読かによって色を変える
+                    className={` leading-[14px] ml-[2px]
+                      ${judegIsUnreadTalk(uid) ?
+                          "text-[#666]" : "text-[#aaa]"
+                        }`}
+                    >
+                      {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
+                        .text.length > 16
+                        ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
+                        : myTalkHistroyData[uid][
+                          myTalkHistroyData[uid].length - 1
+                        ].text}
+                    </StyledText>
+                  ) : (
+                    <StyledText className="text-[#7785ff]">
+                      メッセージが届きました
+                    </StyledText>
+                  )}
+                </StyledView>
               </StyledView>
               {/* 残り時間表示 */}
-              <StyledText className="absolute bottom-[6px] right-[12px] text-[#aaa]">
+              <StyledText className="absolute bottom-[6px] right-[12px] text-[#aaa] text-[12px]">
                 {timeLeft[uid] || "N/A"}
               </StyledText>
             </StyledTouchableOpacity>

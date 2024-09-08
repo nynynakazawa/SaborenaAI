@@ -7,6 +7,7 @@ import { styled } from "nativewind";
 import { useDispatch, useSelector } from "react-redux";
 import { set as setMyExpoPushToken } from "../store/myExpoPushTokenSlice";
 import { RootState } from "../store/store";
+import { set as setIsUnreadTalk} from "../store/isUnreadTalkSlice";
 
 const StyledView = styled(View)
 const StyledText = styled(Text)
@@ -36,6 +37,8 @@ export default function Push() {
           const senderId = notification.request.content.data?.message?.senderId;
           // 送られたメッセージ
           console.log(JSON.stringify(notification.request.content.data))
+          // トークバッジをつける
+          dispatch(setIsUnreadTalk(true));
           // トーク中の相手には通知を送らない
           if (senderId === currentTalkPartnerUid) {
             return {

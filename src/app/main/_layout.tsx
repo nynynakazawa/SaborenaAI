@@ -3,7 +3,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import { auth } from "../../firebase";
 import { set as setMyUid } from "../../store/myUidSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import BottomNavigation from "../../features/main/navigation/bottomNavigation";
@@ -18,10 +18,16 @@ import {
   fetchTalkData,
   fetchUserData,
 } from "../../utils/fetchMyData";
+import { styled } from "nativewind";
+import { View } from "react-native";
+import { RootState } from "../../store/store";
+
+const StyledView = styled(View);
 
 export default function Layout() {
   const { isFetchUserData } = useGlobalSearchParams();
   const dispatch = useDispatch();
+  const isUnreadTalk: boolean = useSelector((state: RootState) => state.isUnreadTalk.value)
 
   // 自身の情報を取得
   const fetchMyUser = async (dispatch: Dispatch) => {
@@ -74,11 +80,16 @@ export default function Layout() {
         name="talkListScreen"
         options={{
           tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="mail"
-              size={30}
-              color={focused ? "#1a8cd8" : "#333"}
-            />
+            <StyledView>
+              <Entypo
+                name="mail"
+                size={30}
+                color={focused ? "#1a8cd8" : "#333"}
+              />
+              {isUnreadTalk &&
+                <StyledView className="absolute w-[12px] h-[12px] [z-10] bg-[#e3422e] rounded-full right-[-6px]"></StyledView>
+              }
+            </StyledView>
           ),
           headerShown: true,
           headerTitleAlign: "center",
