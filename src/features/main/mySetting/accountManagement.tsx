@@ -62,31 +62,30 @@ const AccountManagement = () => {
         </StyledView>
 
         {/* パスワード表示 */}
-        <StyledView className="w-screen border-b-[1px] border-t-[1px] border-[#ddd] bg-[#fff]">
+        <StyledTouchableOpacity
+          onPress={() => {
+            router.push({
+              pathname: "/resettingPasswordPage",
+              params: { pageBack: "/main/mySetting/variousSettingPage" },
+            });
+          }}
+          className="w-screen border-b-[1px] border-t-[1px] border-[#ddd] bg-[#fff]"
+        >
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
             {/* 左側のテキスト */}
             <StyledText className="text-[16px] text-[#333]">
               パスワード
             </StyledText>
 
-            {/* 右側のボタン */}
-            <StyledTouchableOpacity
-              onPress={() => {
-                router.push({
-                  pathname: "/resettingPasswordPage",
-                  params: { pageBack: "/main/mySetting/variousSettingPage" },
-                });
-              }}
-              className="flex flex-row items-center  w-[30%] justify-end"
-            >
+            {/* 右側のテキストとアイコン */}
+            <StyledView className="flex flex-row items-center w-[30%] justify-end">
               <StyledText className="text-[12px] text-[#333]">
                 {passwordDisplay}
               </StyledText>
               <Icon name="chevron-right" size={40} color="#333" />
-            </StyledTouchableOpacity>
+            </StyledView>
           </StyledView>
-        </StyledView>
-
+        </StyledTouchableOpacity>
 
       </StyledView>
     </StyledView>
