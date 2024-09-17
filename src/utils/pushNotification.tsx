@@ -15,6 +15,9 @@ const StyledText = styled(Text);
 export default function Push() {
   // reduxから値を取得
   const dispatch = useDispatch();
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   const myExpoPushToken: string | null = useSelector(
     (state: RootState) => state.myExpoPushToken.value,
   );
@@ -41,16 +44,16 @@ export default function Push() {
           const senderId = notification.request.content.data?.message?.senderId;
           // 送られたメッセージ
           console.log(JSON.stringify(notification.request.content.data));
-          // トークバッジをつける
-          dispatch(setIsUnreadTalk(true));
-          // トーク中の相手には通知を送らない
-          if (senderId === currentTalkPartnerUid) {
+          // トーク中の相手 / 自分には通知を送らない
+          if (senderId === currentTalkPartnerUid || senderId === myUid) {
             return {
               shouldShowAlert: false, // アラート
               shouldPlaySound: false, // 音
               shouldSetBadge: false, // バッジ表示
             };
           } else {
+            // トークバッジをつける
+            dispatch(setIsUnreadTalk(true));
             return {
               shouldShowAlert: true,
               shouldPlaySound: true,

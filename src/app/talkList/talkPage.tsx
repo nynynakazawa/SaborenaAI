@@ -103,7 +103,7 @@ const TalkPage = () => {
   const [message, setMessage] = useState<string>("");
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
-  const [remain, setRemain] = useState<RemainType>({leftTime: "3時間0分", isValid: true})
+  const [remain, setRemain] = useState<RemainType>({ leftTime: "3時間0分", isValid: true })
 
   // talkRoom作成
   const createTalkRoom = async (
@@ -213,8 +213,8 @@ const TalkPage = () => {
       dispatch(updateKeyTalkLastSeen({ key: uid as string, data: timestamp }));
       const tmpRemain = getRemainingTime(parseInt(createAt as string))
       setRemain(tmpRemain)
-      // 有効期限が切れたらページをもどす。
-      if(tmpRemain.isValid == false){
+      // 有効期限が切れたらページをもどす
+      if (tmpRemain.isValid == false && remain.leftTime === "0時間0分") {
         router.push("main/talkListScreen")
       }
     }, 1000); // 1秒ごとに実行
@@ -242,11 +242,10 @@ const TalkPage = () => {
       className={`pt-6 ${item.senderId === myUid ? "self-end" : "self-start"}`}
     >
       <StyledView
-        className={`rounded-[24px] px-[20px] py-[16px] ${
-          item.senderId === myUid
+        className={`rounded-[24px] px-[20px] py-[16px] ${item.senderId === myUid
             ? "rounded-br-[6px] bg-[#ff6767]"
             : "rounded-bl-[6px] bg-[#aaa]"
-        }`}
+          }`}
       >
         <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
       </StyledView>
@@ -278,7 +277,8 @@ const TalkPage = () => {
         {/* メッセージ入力 */}
         <StyledView className="bg-[fff]">
           <StyledText className="ml-[30px] translate-y-[10px] text-[#aaa] text-[12px]">
-            トーク残り有効期限: {remain.leftTime ? remain.leftTime : ""}
+            {remain.leftTime !== "NaN時間NaN分" &&
+              `トーク残り有効期限: ${remain.leftTime || ""}`}
           </StyledText>
           <StyledView
             className={`mx-auto my-[14px] w-[90vw] rounded-full border-[1px] border-[#aaa] bg-[#fff] ${isTextInputFocused ? "border-2 border-blue-500" : ""}`}
@@ -316,9 +316,8 @@ const TalkPage = () => {
                   name="send"
                   size={34}
                   color="#73BBFD"
-                  className={`translate-y-[2px] ${
-                    message.trim() == "" && "opacity-30"
-                  }`}
+                  className={`translate-y-[2px] ${message.trim() == "" && "opacity-30"
+                    }`}
                 />
               </StyledTouchableOpacity>
             </StyledView>

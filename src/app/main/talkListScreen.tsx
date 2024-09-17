@@ -58,10 +58,10 @@ const TalkDictScreen = () => {
     dispatch(setCurrentTalkPartnerUid(null));
     // 初回の残り時間と有効期限を設定
     updateTimesAndValidity();
-    // 1分ごとに残り時間とトークの有効期限を更新
+    // 1秒ごとに残り時間とトークの有効期限を更新
     const intervalId = setInterval(() => {
       updateTimesAndValidity();
-    }, 30 * 10000);
+    }, 1000);
     // クリーンアップ
     return () => clearInterval(intervalId);
   }, [talkData]);
@@ -139,7 +139,7 @@ const TalkDictScreen = () => {
   return (
     <Container edges={["left", "right"]}>
       {/* トークリスト画面 */}
-      {myTalkPartnerData ? (
+      {myTalkPartnerData && Object.keys(myTalkPartnerData).length > 0  ? (
         <ScrollView className="h-full">
           <StyledView className="flex">
             {Object.entries(myTalkPartnerData).map(([uid, userData]) => (
