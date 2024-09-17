@@ -1,18 +1,22 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { PrivateData } from "../../../types/userDataTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const AccountManagement = () => {
+  const router = useRouter();
   const myPrivateData: PrivateData | null = useSelector(
     (state: RootState) => state.privateData.value,
   );
+
   const password = myPrivateData?.password || "";
   let passwordDisplay: string = password[0];
   for (let i = 0; i < password.length - 1; i += 1) {
@@ -44,6 +48,7 @@ const AccountManagement = () => {
             )}
           </StyledView>
         </StyledView>
+
         {/* メールアドレス表示 */}
         <StyledView className="w-screen border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
@@ -55,20 +60,34 @@ const AccountManagement = () => {
             </StyledText>
           </StyledView>
         </StyledView>
+
         {/* パスワード表示 */}
         <StyledView className="w-screen border-b-[1px] border-t-[1px] border-[#ddd] bg-[#fff]">
           <StyledView className="mx-auto flex h-[6vh] w-[90%] flex-row items-center justify-between">
-            <StyledText className="w-[40%] text-[16px] text-[#333]">
+            {/* 左側のテキスト */}
+            <StyledText className="text-[16px] text-[#333]">
               パスワード
             </StyledText>
-            <StyledView className="flex flex-row items-center">
-              <StyledText className="max-w-[60%] text-[12px] text-[#333]">
+
+            {/* 右側のボタン */}
+            <StyledTouchableOpacity
+              onPress={() => {
+                router.push({
+                  pathname: "/resettingPasswordPage",
+                  params: { pageBack: "/main/mySetting/variousSettingPage" },
+                });
+              }}
+              className="flex flex-row items-center  w-[30%] justify-end"
+            >
+              <StyledText className="text-[12px] text-[#333]">
                 {passwordDisplay}
               </StyledText>
               <Icon name="chevron-right" size={40} color="#333" />
-            </StyledView>
+            </StyledTouchableOpacity>
           </StyledView>
         </StyledView>
+
+
       </StyledView>
     </StyledView>
   );

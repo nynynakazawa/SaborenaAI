@@ -156,7 +156,10 @@ const LoginModal = ({
             パスワードを忘れた方は
             <StyledTouchableOpacity
               onPress={() => {
-                router.push("resettingPasswordPage");
+                router.push({
+                  pathname: "/resettingPasswordPagee",
+                  params: { pageBack: "login" },
+                });
               }}
             >
               <StyledText className="translate-y-[4px] text-[#1d4ed8] underline">

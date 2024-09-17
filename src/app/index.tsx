@@ -4,8 +4,6 @@ import { styled } from "nativewind";
 import { auth, db } from "../firebase";
 import { useRouter } from "expo-router";
 import { doc, getDoc } from "firebase/firestore";
-const StyledView = styled(View);
-const StyledText = styled(Text);
 
 const Index = () => {
   const router = useRouter();
