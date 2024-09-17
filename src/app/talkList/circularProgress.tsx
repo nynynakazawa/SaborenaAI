@@ -12,7 +12,7 @@ interface CircleProgressProps {
 }
 
 export const CircleProgress: React.FC<CircleProgressProps> = ({
-  timeString,
+  timeString = '0時間0分',
   totalMinutes,
   size = 64,
   strokeWidth = 5,
