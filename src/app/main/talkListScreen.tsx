@@ -12,7 +12,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { Message, TalkData, UserData } from "../../types/userDataTypes";
+import {
+  Message,
+  PrivateData,
+  TalkData,
+  UserData,
+} from "../../types/userDataTypes";
 import NameDisplayComponent from "../../components/display/nameDisplayComponent";
 import {
   convertTimestamp_hhmm,
@@ -46,10 +51,15 @@ const TalkDictScreen = () => {
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
   );
-  const [timeLeft, setTimeLeft] = useState<{ [key: string]: string }>({});
+  // reduxから値を取得
+  const myPrivateData: PrivateData | null = useSelector(
+    (state: RootState) => state.privateData.value,
+  );
   const myTalkLastSeen: { [key: string]: number } = useSelector(
     (state: RootState) => state.talkLastSeen.value,
   );
+
+  const [timeLeft, setTimeLeft] = useState<{ [key: string]: string }>({});
 
   // レンダリング時
   useEffect(() => {
@@ -137,75 +147,97 @@ const TalkDictScreen = () => {
   };
 
   return (
-    <Container edges={["left", "right"]}>
-      {/* トークリスト画面 */}
-      {myTalkPartnerData && Object.keys(myTalkPartnerData).length > 0  ? (
-        <ScrollView className="h-full">
-          <StyledView className="flex">
-            {Object.entries(myTalkPartnerData).map(([uid, userData]) => (
-              <StyledTouchableOpacity
-                onPress={() => handlePressTalkButton(uid, userData)}
-                key={uid}
-                className="border-1 flex flex-row border-b border-[#aaa] p-4"
-              >
-                {userData?.main_image_url && (
-                  <StyledImage
-                    source={{ uri: userData.main_image_url }}
-                    className="h-16 w-16 rounded-full"
-                  />
-                )}
-                <StyledView className="ml-[10px] flex flex-1 justify-center">
-                  <StyledView className="mb-[6px] flex w-full flex-row items-center">
-                    <NameDisplayComponent userData={userData} size="large" />
-                    {myTalkHistroyData[uid] && (
-                      <StyledText className="text-[#aaa]">
-                        {convertTimestamp_hhmm(
-                          myTalkHistroyData[uid][
-                            myTalkHistroyData[uid].length - 1
-                          ].timestamp,
-                        )}
-                      </StyledText>
-                    )}
-                  </StyledView>
+    <Container edges={["left", "right"]} className="flex-1">
+      <StyledView className="flex-1">
+        {/* トークリスト画面 */}
+        {myTalkPartnerData && Object.keys(myTalkPartnerData).length > 0 ? (
+          <ScrollView className="flex-1">
+            <StyledView className="flex">
+              {Object.entries(myTalkPartnerData).map(([uid, userData]) => (
+                <StyledTouchableOpacity
+                  onPress={() => handlePressTalkButton(uid, userData)}
+                  key={uid}
+                  className="border-1 flex flex-row border-b border-[#aaa] p-4"
+                >
+                  {userData?.main_image_url && (
+                    <StyledImage
+                      source={{ uri: userData.main_image_url }}
+                      className="h-16 w-16 rounded-full"
+                    />
+                  )}
+                  <StyledView className="ml-[10px] flex flex-1 justify-center">
+                    <StyledView className="mb-[6px] flex w-full flex-row items-center">
+                      <NameDisplayComponent userData={userData} size="large" />
+                      {myTalkHistroyData[uid] && (
+                        <StyledText className="text-[#aaa]">
+                          {convertTimestamp_hhmm(
+                            myTalkHistroyData[uid][
+                              myTalkHistroyData[uid].length - 1
+                            ].timestamp,
+                          )}
+                        </StyledText>
+                      )}
+                    </StyledView>
 
-                  <StyledView className="flex flex-row">
-                    {/* 未読印 */}
-                    {judegIsUnreadTalk(uid) && (
-                      <StyledView className="mx-[4px] h-[8px] w-[8px] mt-[2px] rounded-full bg-[#f88373]"></StyledView>
-                    )}
-                    {myTalkHistroyData[uid] ? (
-                      <StyledText
-                        // 未読かによって色を変える
-                        className={`ml-[2px] leading-[14px] ${judegIsUnreadTalk(uid) ? "text-[#666]" : "text-[#aaa]"
-                          }`}
-                      >
-                        {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
-                          .text.length > 16
-                          ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
-                          : myTalkHistroyData[uid][
+                    <StyledView className="flex flex-row">
+                      {/* 未読印 */}
+                      {judegIsUnreadTalk(uid) && (
+                        <StyledView className="mx-[4px] mt-[2px] h-[8px] w-[8px] rounded-full bg-[#f88373]"></StyledView>
+                      )}
+                      {myTalkHistroyData[uid] ? (
+                        <StyledText
+                          // 未読かによって色を変える
+                          className={`ml-[2px] leading-[14px] ${judegIsUnreadTalk(uid) ? "text-[#666]" : "text-[#aaa]"}`}
+                        >
+                          {myTalkHistroyData[uid][
                             myTalkHistroyData[uid].length - 1
-                          ].text}
-                      </StyledText>
-                    ) : (
-                      <StyledText className="text-[#7785ff]">
-                        メッセージが届きました
-                      </StyledText>
-                    )}
+                          ].text.length > 16
+                            ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
+                            : myTalkHistroyData[uid][
+                                myTalkHistroyData[uid].length - 1
+                              ].text}
+                        </StyledText>
+                      ) : (
+                        <StyledText className="text-[#7785ff]">
+                          メッセージが届きました
+                        </StyledText>
+                      )}
+                    </StyledView>
                   </StyledView>
-                </StyledView>
-                {/* 残り時間表示 */}
-                <StyledText className="absolute bottom-[6px] right-[12px] text-[12px] text-[#aaa]">
-                  残り: {timeLeft[uid] || "N/A"}
-                </StyledText>
-              </StyledTouchableOpacity>
-            ))}
+                  {/* 残り時間表示 */}
+                  <StyledText className="absolute bottom-[6px] right-[12px] text-[12px] text-[#aaa]">
+                    残り: {timeLeft[uid] || "N/A"}
+                  </StyledText>
+                </StyledTouchableOpacity>
+              ))}
+            </StyledView>
+          </ScrollView>
+        ) : (
+          <StyledView className="flex h-full items-center justify-center">
+            <StyledText className="text-[#666]">
+              まだトーク相手がいません
+            </StyledText>
           </StyledView>
-        </ScrollView>
-      ) :
-        <StyledView className="flex items-center justify-center h-full">
-          <StyledText className="text-[#666]">まだトーク相手がいません</StyledText>
+        )}
+      </StyledView>
+
+      {/* トーク人数表示 */}
+      <StyledView className="absolute bottom-[2%] right-[4%] rounded-xl bg-[#fff] p-4 shadow-2xl">
+        <StyledView className="mb-[2px] h-[30px]">
+          <StyledText>トーク人数</StyledText>
         </StyledView>
-      }
+        <StyledText className="font-bold text-[#448FFF]">
+          {/* 大きいXの部分 */}
+          <StyledText className="text-[24px]">
+            {Object.keys(myTalkPartnerData).length}
+          </StyledText>
+          {/* 小さい / OO人の部分 */}
+          <StyledText className="text-[12px]">
+            {" "}
+            / {myPrivateData?.membership_status === "free" ? 10 : 30} 人
+          </StyledText>
+        </StyledText>
+      </StyledView>
     </Container>
   );
 };

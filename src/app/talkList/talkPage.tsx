@@ -19,7 +19,10 @@ import { RootState } from "../../store/store";
 import { Message, TalkData } from "../../types/userDataTypes";
 import uuid from "react-native-uuid";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { convertTimestamp_hhmm, getRemainingTime } from "../../utils/convertTimestamp";
+import {
+  convertTimestamp_hhmm,
+  getRemainingTime,
+} from "../../utils/convertTimestamp";
 import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
 import { updateKey as updateKeyTalkLastSeen } from "../../store/talkLastSeenSlice";
 
@@ -103,7 +106,10 @@ const TalkPage = () => {
   const [message, setMessage] = useState<string>("");
   const [isTextInputFocused, setIsTextInputFocused] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
-  const [remain, setRemain] = useState<RemainType>({ leftTime: "3時間0分", isValid: true })
+  const [remain, setRemain] = useState<RemainType>({
+    leftTime: "3時間0分",
+    isValid: true,
+  });
 
   // talkRoom作成
   const createTalkRoom = async (
@@ -205,17 +211,17 @@ const TalkPage = () => {
     const date = new Date();
     const timestamp = date.getTime();
     dispatch(updateKeyTalkLastSeen({ key: uid as string, data: timestamp }));
-    setRemain(getRemainingTime(parseInt(createAt as string)))
+    setRemain(getRemainingTime(parseInt(createAt as string)));
     // 最終閲覧時刻を定期的に更新する処理
     const intervalId = setInterval(() => {
       const date = new Date();
       const timestamp = date.getTime();
       dispatch(updateKeyTalkLastSeen({ key: uid as string, data: timestamp }));
-      const tmpRemain = getRemainingTime(parseInt(createAt as string))
-      setRemain(tmpRemain)
+      const tmpRemain = getRemainingTime(parseInt(createAt as string));
+      setRemain(tmpRemain);
       // 有効期限が切れたらページをもどす
       if (tmpRemain.isValid == false && remain.leftTime === "0時間0分") {
-        router.push("main/talkListScreen")
+        router.push("main/talkListScreen");
       }
     }, 1000); // 1秒ごとに実行
 
@@ -242,10 +248,11 @@ const TalkPage = () => {
       className={`pt-6 ${item.senderId === myUid ? "self-end" : "self-start"}`}
     >
       <StyledView
-        className={`rounded-[24px] px-[20px] py-[16px] ${item.senderId === myUid
+        className={`rounded-[24px] px-[20px] py-[16px] ${
+          item.senderId === myUid
             ? "rounded-br-[6px] bg-[#ff6767]"
             : "rounded-bl-[6px] bg-[#aaa]"
-          }`}
+        }`}
       >
         <StyledText className="text-[16px] text-[#fff]">{item.text}</StyledText>
       </StyledView>
@@ -276,7 +283,7 @@ const TalkPage = () => {
 
         {/* メッセージ入力 */}
         <StyledView className="bg-[fff]">
-          <StyledText className="ml-[30px] translate-y-[10px] text-[#aaa] text-[12px]">
+          <StyledText className="ml-[30px] translate-y-[10px] text-[12px] text-[#aaa]">
             {remain.leftTime !== "NaN時間NaN分" &&
               `トーク残り有効期限: ${remain.leftTime || ""}`}
           </StyledText>
@@ -316,8 +323,9 @@ const TalkPage = () => {
                   name="send"
                   size={34}
                   color="#73BBFD"
-                  className={`translate-y-[2px] ${message.trim() == "" && "opacity-30"
-                    }`}
+                  className={`translate-y-[2px] ${
+                    message.trim() == "" && "opacity-30"
+                  }`}
                 />
               </StyledTouchableOpacity>
             </StyledView>

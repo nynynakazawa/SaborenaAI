@@ -138,8 +138,8 @@ const CreateAccount = ({
 
   // email送信処理
   const handleSendEmail = async () => {
-    if(timer != 60){
-      return
+    if (timer != 60) {
+      return;
     }
     setIsSendingEmail(true);
     try {

@@ -24,12 +24,12 @@ export const getRemainingTime = (
   const date = new Date();
   const nowTime = date.getTime();
   // 3時間 - 時間差
-  const leftTime =  3 * 60 * 60 * 1000 - (nowTime - pastTime);
+  const leftTime = 3 * 60 * 60 * 1000 - (nowTime - pastTime);
   const hour = Math.floor(leftTime / (1000 * 60 * 60));
   const minute = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
   const res = {
     isValid: leftTime > 0,
-    leftTime: `${hour}時間${minute || "-1"}分`,
+    leftTime: `${hour}時間${minute}分`,
   };
   return res;
 };

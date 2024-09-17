@@ -78,7 +78,7 @@ const AccountManagement = () => {
             </StyledText>
 
             {/* 右側のテキストとアイコン */}
-            <StyledView className="flex flex-row items-center w-[30%] justify-end">
+            <StyledView className="flex w-[30%] flex-row items-center justify-end">
               <StyledText className="text-[12px] text-[#333]">
                 {passwordDisplay}
               </StyledText>
@@ -86,7 +86,6 @@ const AccountManagement = () => {
             </StyledView>
           </StyledView>
         </StyledTouchableOpacity>
-
       </StyledView>
     </StyledView>
   );

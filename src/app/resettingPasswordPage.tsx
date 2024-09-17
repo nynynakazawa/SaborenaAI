@@ -11,7 +11,7 @@ const StyledView = styled(View);
 const ResettingPasswordPage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   const { pageBack } = useGlobalSearchParams();
-  
+
   return (
     <Container style={{ flex: 1 }}>
       <PageBackHeader
