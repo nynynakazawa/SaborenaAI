@@ -12,12 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import {
-  Message,
-  PrivateData,
-  TalkData,
-  UserData,
-} from "../../types/userDataTypes";
+import { Message, PrivateData, TalkData, UserData } from "../../types/userDataTypes";
 import NameDisplayComponent from "../../components/display/nameDisplayComponent";
 import {
   convertTimestamp_hhmm,
@@ -28,6 +23,7 @@ import { db } from "../../firebase";
 import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
 import { set as setIsUnreadTalk } from "../../store/isUnreadTalkSlice";
 import { deleteKey } from "../../store/talkHistoryDataSlice";
+import { CircleProgress } from "../talkList/circularProgress";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -182,20 +178,19 @@ const TalkDictScreen = () => {
                     <StyledView className="flex flex-row">
                       {/* 未読印 */}
                       {judegIsUnreadTalk(uid) && (
-                        <StyledView className="mx-[4px] mt-[2px] h-[8px] w-[8px] rounded-full bg-[#f88373]"></StyledView>
+                        <StyledView className="mx-[4px] h-[8px] w-[8px] mt-[2px] rounded-full bg-[#f88373]"></StyledView>
                       )}
                       {myTalkHistroyData[uid] ? (
                         <StyledText
                           // 未読かによって色を変える
                           className={`ml-[2px] leading-[14px] ${judegIsUnreadTalk(uid) ? "text-[#666]" : "text-[#aaa]"}`}
                         >
-                          {myTalkHistroyData[uid][
-                            myTalkHistroyData[uid].length - 1
-                          ].text.length > 16
+                          {myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1]
+                            .text.length > 16
                             ? `${myTalkHistroyData[uid][myTalkHistroyData[uid].length - 1].text.substring(0, 16)} ...`
                             : myTalkHistroyData[uid][
-                                myTalkHistroyData[uid].length - 1
-                              ].text}
+                              myTalkHistroyData[uid].length - 1
+                            ].text}
                         </StyledText>
                       ) : (
                         <StyledText className="text-[#7785ff]">
@@ -205,37 +200,33 @@ const TalkDictScreen = () => {
                     </StyledView>
                   </StyledView>
                   {/* 残り時間表示 */}
-                  <StyledText className="absolute bottom-[6px] right-[12px] text-[12px] text-[#aaa]">
-                    残り: {timeLeft[uid] || "N/A"}
-                  </StyledText>
+                  <StyledView className="h-16">
+                    <CircleProgress
+                      timeString={timeLeft[uid]}
+                      totalMinutes={180}
+                    />
+                  </StyledView>
                 </StyledTouchableOpacity>
               ))}
             </StyledView>
           </ScrollView>
-        ) : (
-          <StyledView className="flex h-full items-center justify-center">
-            <StyledText className="text-[#666]">
-              まだトーク相手がいません
-            </StyledText>
+        ) :
+          <StyledView className="flex items-center justify-center h-full">
+            <StyledText className="text-[#666]">まだトーク相手がいません</StyledText>
           </StyledView>
-        )}
+        }
       </StyledView>
 
       {/* トーク人数表示 */}
-      <StyledView className="absolute bottom-[2%] right-[4%] rounded-xl bg-[#fff] p-4 shadow-2xl">
+      <StyledView className="absolute bottom-[2%] bg-[#fff] rounded-xl right-[2%] p-4 shadow-lg">
         <StyledView className="mb-[2px] h-[30px]">
           <StyledText>トーク人数</StyledText>
         </StyledView>
         <StyledText className="font-bold text-[#448FFF]">
           {/* 大きいXの部分 */}
-          <StyledText className="text-[24px]">
-            {Object.keys(myTalkPartnerData).length}
-          </StyledText>
+          <StyledText className="text-[24px]">{Object.keys(myTalkPartnerData).length}</StyledText>
           {/* 小さい / OO人の部分 */}
-          <StyledText className="text-[12px]">
-            {" "}
-            / {myPrivateData?.membership_status === "free" ? 10 : 30} 人
-          </StyledText>
+          <StyledText className="text-[12px]"> / {myPrivateData?.membership_status === "free" ? 10 : 30} 人</StyledText>
         </StyledText>
       </StyledView>
     </Container>
