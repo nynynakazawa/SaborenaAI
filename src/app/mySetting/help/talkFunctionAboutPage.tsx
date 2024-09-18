@@ -29,9 +29,11 @@ const talkFunctionAboutPage = () => {
               <StyledText>
                 画面下部のメールアイコンから選択できます。
               </StyledText>
+              <StyledText className="mb-[12px]">
+                NowMatchではすぐに出会えることを目的としているため、トーク履歴は3時間で削除されます。
+              </StyledText>
               <StyledText>
-                Now
-                Matchではすぐに出会えることを目的としているため、トーク履歴は3時間で削除されます。
+                フリープランでは最大10人、プレミアムプランでは最大30人の人とやりとりを行うことが出来ます。
               </StyledText>
             </StyledView>
           </ScrollView>

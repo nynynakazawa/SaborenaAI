@@ -23,7 +23,7 @@ import { db } from "../../firebase";
 import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
 import { set as setIsUnreadTalk } from "../../store/isUnreadTalkSlice";
 import { deleteKey } from "../../store/talkHistoryDataSlice";
-import { CircleProgress } from "../talkList/circularProgress";
+import { CircleProgress } from "../talkList/circuleProgress";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);

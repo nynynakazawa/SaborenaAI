@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Svg, { Circle } from 'react-native-svg';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import Svg, { Circle } from "react-native-svg";
 
 interface CircleProgressProps {
   timeString: string; // 例: "0時間2分"
@@ -12,12 +12,12 @@ interface CircleProgressProps {
 }
 
 export const CircleProgress: React.FC<CircleProgressProps> = ({
-  timeString = '0時間0分',
+  timeString = "0時間0分",
   totalMinutes,
   size = 64,
   strokeWidth = 5,
-  strokeColor = '#4169e1',
-  backgroundColor = '#F6FBF6',
+  strokeColor = "#e3422e",
+  backgroundColor = "#F6FBF6",
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -43,12 +43,12 @@ export const CircleProgress: React.FC<CircleProgressProps> = ({
   const formatTime = (minutes: number) => {
     const hrs = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+    return `${hrs.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`;
   };
 
   return (
     <View style={styles.container}>
-      <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ transform: [{ rotate: '-90deg' }] }}>
+      <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ transform: [{ rotate: "-90deg" }] }}>
         <Circle
           r={radius}
           cx={size / 2}
@@ -76,14 +76,14 @@ export const CircleProgress: React.FC<CircleProgressProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
   },
   timeText: {
-    position: 'absolute',
+    position: "absolute",
     fontSize: 12,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
   },
 });
