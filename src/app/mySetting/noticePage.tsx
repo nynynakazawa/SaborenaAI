@@ -51,7 +51,7 @@ const NoticePage = () => {
                   >
                     {/* 左側にタイトル */}
                     <StyledText className="font-bold text-lg">{notice.title}</StyledText>
-                    
+
                     {/* 右側にアイコン */}
                     <Icon
                       name={expanded.includes(idx) ? "remove" : "add"} // 開閉によってアイコンを切り替え
@@ -62,7 +62,13 @@ const NoticePage = () => {
 
                   {/* アコーディオンコンテンツ（クリックされた場合に本文を表示） */}
                   {expanded.includes(idx) && (
-                    <StyledText className="mt-2">{notice.contents}</StyledText>
+                    <>
+                      {notice.contents.split('<br>').map((content, index) => (
+                        <StyledText className="mt-2" key={index}>
+                          {content}
+                        </StyledText>
+                      ))}
+                    </>
                   )}
 
                   {/* 日時表示 */}
