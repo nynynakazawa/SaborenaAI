@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   Platform,
   ScrollView,
   Text,
@@ -12,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { Message, PrivateData, TalkData, UserData } from "../../types/userDataTypes";
+import { CurrentData, Message, PrivateData, TalkData, UserData } from "../../types/userDataTypes";
 import NameDisplayComponent from "../../components/display/nameDisplayComponent";
 import {
   convertTimestamp_hhmm,
@@ -23,11 +22,12 @@ import { db } from "../../firebase";
 import { set as setCurrentTalkPartnerUid } from "../../store/currentTalkPartnerUidSlice";
 import { set as setIsUnreadTalk } from "../../store/isUnreadTalkSlice";
 import { deleteKey } from "../../store/talkHistoryDataSlice";
-import { CircleProgress } from "../talkList/circuleProgress";
+import { CircleProgress } from "../../features/main/talkList/circuleProgress";
+import UserIcon from "../../features/main/talkList/userIcon";
+import { current } from "@reduxjs/toolkit";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledImage = styled(Image);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const TalkDictScreen = () => {
@@ -47,6 +47,10 @@ const TalkDictScreen = () => {
   const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
     (state: RootState) => state.talkHistoryData.value,
   );
+  const allCurrentData: { [key: string]: CurrentData | null } = useSelector(
+    (state: RootState) => state.allCurrentData.value,
+  );
+
   // reduxから値を取得
   const myPrivateData: PrivateData | null = useSelector(
     (state: RootState) => state.privateData.value,
@@ -155,12 +159,10 @@ const TalkDictScreen = () => {
                   key={uid}
                   className="border-1 flex flex-row border-b border-[#aaa] p-4"
                 >
-                  {userData?.main_image_url && (
-                    <StyledImage
-                      source={{ uri: userData.main_image_url }}
-                      className="h-16 w-16 rounded-full"
-                    />
-                  )}
+                  {/* アイコン */}
+                  <UserIcon uid={uid} userData={userData} currentData={allCurrentData[uid]} />
+
+                  {/* テキスト表示 */}
                   <StyledView className="ml-[10px] flex flex-1 justify-center">
                     <StyledView className="mb-[6px] flex w-full flex-row items-center">
                       <NameDisplayComponent userData={userData} size="large" />

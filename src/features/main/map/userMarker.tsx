@@ -28,13 +28,13 @@ const UserMarker = ({
   const location: Location.LocationObject | null = useSelector(
     (state: RootState) => state.location.value,
   );
-  const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
   const gender = currentData?.gender;
   const myUid: string | null = useSelector(
     (state: RootState) => state.myUid.value,
   );
   const isGps: boolean = useSelector((state: RootState) => state.isGps.value);
-
+  const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
+  
   let frameColor;
   if (uid == myUid) {
     frameColor = "bg-[#ffc179]";
