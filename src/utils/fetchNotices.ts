@@ -33,7 +33,6 @@ export const fetchNotices = (dispatch: Dispatch) => {
     });
     
     // 状態を更新
-    console.log("Updated Notices:", currentNotices);
     dispatch(setNotices(currentNotices));
   });
 };

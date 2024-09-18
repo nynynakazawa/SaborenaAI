@@ -35,15 +35,26 @@ const SendMessageButton = ({
   const myPrivateData: PrivateData | null = useSelector(
     (state: RootState) => state.privateData.value,
   );
+  const myUserData: UserData | null = useSelector(
+    (state: RootState) => state.userData.value,
+  );
 
   const [isWarningVisible, setIsWarningVisible] = useState(false);
-  const isLocked: boolean =
-    Object.keys(myTalkPartnerData).length >=
+  
+  // トーク人数が限界に達していないか
+  const flag1: boolean =
+    Object.keys(myTalkPartnerData).length <
     (myPrivateData?.membership_status === "free" ? 10 : 30);
+  // 自分が年齢確認済か
+  const flag2 = myUserData?.is_age_verified;
+  // 相手が年齢確認済か
+  const flag3 = userData?.is_age_verified;
+  const canSend = flag1 && flag2 && flag3;
 
   // アニメーション用のshared value
   const lockOpacity = useSharedValue(0);
   const warningScale = useSharedValue(0);
+  const warningTranslateY = useSharedValue(20); // 初期位置を下に設定
 
   // 鍵ボタンのアニメーションスタイル
   const lockAnimatedStyle = useAnimatedStyle(() => ({
@@ -53,36 +64,52 @@ const SendMessageButton = ({
     }),
   }));
 
-  // 警告メッセージのアニメーションスタイル（拡縮アニメーション）
+  // 警告メッセージのアニメーションスタイル（拡縮＋移動アニメーション）
   const warningAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: withTiming(warningScale.value, { duration: 300 }) }],
+    transform: [
+      { scale: withTiming(warningScale.value, { duration: 300 }) },
+      { translateY: withTiming(warningTranslateY.value, { duration: 300 }) }, // Y軸の移動
+    ],
   }));
+
+  // 警告メッセージ内容生成
+  const warningMessages: string[] = [];
+  if (!flag1) warningMessages.push("トーク人数が上限に達しています。");
+  if (!flag2) warningMessages.push("あなたの年齢確認が完了していません。");
+  if (!flag3) warningMessages.push("相手の年齢確認が完了していません。");
+
+  const warningMessage = warningMessages.join("\n");
 
   // メッセージ送信処理
   const handleSendMessage = async () => {
-    setIsVisibleUserModal(false);
-    router.push({
-      pathname: "/talkList/talkPage",
-      params: { uid: uid, name: userData?.name },
-    });
+    if (canSend) {
+      setIsVisibleUserModal(false);
+      router.push({
+        pathname: "/talkList/talkPage",
+        params: { uid: uid, name: userData?.name },
+      });
+    }
   };
 
   // 鍵マークを押したときの処理
   const handleLockPress = () => {
     setIsWarningVisible(true);
     warningScale.value = 1; // 拡大表示
+    warningTranslateY.value = 0; // 下から上に移動
+
     setTimeout(() => {
       warningScale.value = 0; // 縮小して非表示
+      warningTranslateY.value = 20; // 元の位置に戻す
       setIsWarningVisible(false);
-    }, 1500); // 1.5秒後に自動で消える
+    }, 3000); // 3秒後に自動で消える
   };
 
   // 鍵の表示アニメーション開始
   React.useEffect(() => {
-    if (isLocked) {
+    if (!canSend) {
       lockOpacity.value = 1;
     }
-  }, [isLocked]);
+  }, [canSend]);
 
   return (
     <>
@@ -97,7 +124,7 @@ const SendMessageButton = ({
       </StyledTouchableOpacity>
 
       {/* ロックボタン（別のTouchableOpacity） */}
-      {isLocked && (
+      {!canSend && (
         <TouchableOpacity
           onPress={handleLockPress}
           className="absolute bottom-[8%] right-[8%] z-[300]" // メッセージボタンの上に配置
@@ -121,21 +148,23 @@ const SendMessageButton = ({
         </TouchableOpacity>
       )}
 
-      {/* 自動で消える警告メッセージ（ボタンの上に表示・拡縮アニメーション） */}
+      {/* 自動で消える警告メッセージ（ふきだしスタイル） */}
       {isWarningVisible && (
-        <StyledView className="absolute bottom-[30%] right-[8%] z-[300] items-center justify-center">
+        <StyledView className="absolute bottom-[26%] right-[8%] z-[300] items-end justify-center">
           <Animated.View
             style={[
               warningAnimatedStyle,
               {
                 backgroundColor: "rgba(0, 0, 0, 0.8)",
-                padding: 20,
+                padding: 15,
                 borderRadius: 10,
+                maxWidth: 250,
+                position: "relative",
               },
             ]}
           >
             <StyledText className="text-center text-white">
-              メッセージ上限に達したため、メッセージを送信できません。
+              {warningMessage}
             </StyledText>
           </Animated.View>
         </StyledView>

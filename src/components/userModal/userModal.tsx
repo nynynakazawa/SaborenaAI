@@ -13,6 +13,7 @@ import SendMessageButton from "./sendMessageButton";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import { RootState } from "../../store/store";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
@@ -70,7 +71,21 @@ const UserModal = ({
   return (
     <StyledView className="flex-1 items-center justify-center bg-gray-100">
       <Modal isVisible={visible} onBackdropPress={onClose}>
+        {/* 白枠 */}
         <StyledView className="max-h-[50vh] w-full rounded-lg bg-[#fff] p-4">
+
+        {/* 年齢認証バッジ */}
+        {userData?.is_age_verified && (
+          <StyledView className="absolute top-[6px] left-[6px] flex h-[40px] w-[40px] items-center justify-center">
+            <MaterialIcons
+              name="verified-user"
+              size={26}
+              color="#448fff"
+              className="bottom-0 right-0"
+            />
+          </StyledView>
+        )}
+
           {userData ? (
             <>
               {/* メッセージ送信ボタン */}

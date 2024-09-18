@@ -75,6 +75,7 @@ const UserRegistationButton = ({
             selfIntroduction == "" ? "はじめまして" : selfIntroduction,
           selected_work: selectedWork,
           selected_goal: selectedGoal,
+          is_age_verified: false,
         },
         { merge: true },
       );

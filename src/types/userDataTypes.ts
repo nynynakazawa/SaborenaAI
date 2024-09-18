@@ -9,6 +9,7 @@ export type UserData = {
   selected_residential?: string;
   selected_work?: string;
   self_introduction?: string;
+  is_age_verified?: boolean;
 };
 
 export type PrivateData = {

@@ -36,7 +36,7 @@ const AgeVerificationAboutPage = () => {
                 本人の年齢確認の手続きが完了しないと、一部の機能が制限されます。
               </StyledText>
               <StyledText>
-                年齢確認の方法は、画面下部の自分のアイコンをタップし、「年齢確認」より以下が分かる画像をお送りください。
+                年齢確認の方法は、設定画面の「年齢確認」より以下が分かる画像をお送りください。
               </StyledText>
               <StyledText>・生年月日、または年齢</StyledText>
               <StyledText>・書面の名称</StyledText>

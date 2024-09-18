@@ -3,7 +3,7 @@ import { FlatList, Image, ListRenderItemInfo, Text, View } from "react-native";
 import { styled } from "nativewind";
 import NameDisplayComponent from "../display/nameDisplayComponent";
 import { CurrentData, UserData } from "../../types/userDataTypes";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
@@ -37,24 +37,26 @@ const TopProfile = ({
   );
 
   return (
-    <StyledView className="mb-[24px] flex w-full flex-1 flex-row">
+    <StyledView className="mb-[24px] flex w-full flex-1 flex-row ">
       {/* メイン画像 */}
-      <StyledImage
-        source={{ uri: userData?.main_image_url || undefined }}
-        style={{ width: 140, height: 140 }}
-        className="rounded-lg"
-      />
+      <StyledView>
+        <StyledImage
+          source={{ uri: userData?.main_image_url || undefined }}
+          style={{ width: 140, height: 140 }}
+          className="rounded-lg"
+        />
+      </StyledView>
 
       <StyledView className="ml-[12px] flex flex-1 items-end">
         <StyledView className="mb-[12px] w-full flex-1 justify-between">
           {/* 名前 */}
           <StyledView className="w-full border-b-2 border-[#aaa] pb-[8px]">
-            <NameDisplayComponent userData={userData} size={"small"} />
+            <NameDisplayComponent userData={userData} size={"large"} />
           </StyledView>
           {/* 人数 */}
           <StyledView className="flex flex-row items-center">
-            <Icon name={"person"} size={18} color={"#333"} />
-            <StyledText className="text-[#333]">
+            <MaterialIcons name={"person"} size={24} color={"#333"} className="mt-[2px]"/>
+            <StyledText className="text-[#333] text-[16px]">
               {myUid == uid ? myPeopleCount : currentData?.people_count}
             </StyledText>
           </StyledView>

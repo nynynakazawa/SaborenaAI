@@ -14,7 +14,6 @@ import Icon from "react-native-vector-icons/Entypo";
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
-const StyledButton = styled(Button);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const MainImageInput = ({
