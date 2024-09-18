@@ -51,3 +51,4 @@ export type CurrentData = {
   what_now?: string;
   main_image_url?: string;
 };
+

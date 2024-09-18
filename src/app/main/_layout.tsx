@@ -21,6 +21,7 @@ import {
 import { styled } from "nativewind";
 import { View } from "react-native";
 import { RootState } from "../../store/store";
+import { fetchNotices } from "../../utils/fetchNotices";
 
 const StyledView = styled(View);
 
@@ -45,7 +46,7 @@ export default function Layout() {
       return () => unsubscribes.forEach((unsub) => unsub());
     }
   };
-
+  
   // レンダリング時に各ユーザーデータ取得
   useEffect(() => {
     if (isFetchUserData != "false") {
@@ -53,6 +54,7 @@ export default function Layout() {
       monitorCurrentCollection(dispatch);
       fetchLocation(dispatch);
       fetchMyUser(dispatch);
+      fetchNotices(dispatch)
     }
   }, []);
 

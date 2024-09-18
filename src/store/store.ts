@@ -15,6 +15,7 @@ import isGpsReducer from "./isGpsSlice";
 import peopleCountReducer from "./peopleCountSlice";
 import allCurrentDataReducer from "./allCurrentDataSlice";
 import allUserDataReducer from "./allUserDataSlice";
+import noticesReducer from "./noticesSlice";
 
 const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ const store = configureStore({
     peopleCount: peopleCountReducer,
     allCurrentData: allCurrentDataReducer,
     allUserData: allUserDataReducer,
+    notices: noticesReducer,
   },
 });
 

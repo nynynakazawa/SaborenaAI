@@ -65,7 +65,7 @@ const SettingButtonContainer = () => {
         >
           <StyledView className="flex items-center gap-[10px]">
             <FontAwesome name="bell" size={30} color="#333" />
-            <StyledText>おしらせ</StyledText>
+            <StyledText>お知らせ</StyledText>
           </StyledView>
         </StyledTouchableOpacity>
 

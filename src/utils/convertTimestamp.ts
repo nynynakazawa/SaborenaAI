@@ -14,7 +14,7 @@ export const convertTimestamp_yyyymmddhhmm = (timestamp: number): string => {
   const day = date.getDate().toString().padStart(2, "0");
   const hours = date.getHours().toString().padStart(2, "0");
   const minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${year}:${month}:${day}:${hours}:${minutes}`;
+  return `${year}/${month}/${day} ${hours}時${minutes}分`;
 };
 
 // トークの残り時間を計算
