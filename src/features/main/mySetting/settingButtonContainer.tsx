@@ -60,15 +60,27 @@ const SettingButtonContainer = () => {
         </StyledTouchableOpacity>
 
         <StyledTouchableOpacity
+          onPress={() => router.push("/mySetting/noticePage")}
+          className="w-[30%]"
+        >
+          <StyledView className="flex items-center gap-[10px]">
+            <FontAwesome name="bell" size={30} color="#333" />
+            <StyledText>おしらせ</StyledText>
+          </StyledView>
+        </StyledTouchableOpacity>
+
+        {/* 無効 */}
+        <StyledTouchableOpacity
           onPress={() => router.push("/mySetting/premiumPage")}
           className="w-[30%] opacity-0"
           disabled
         >
           <StyledView className="flex items-center gap-[10px]">
-            <FontAwesome name="diamond" size={30} color="#333" />
-            <StyledText>XXX</StyledText>
+            <FontAwesome name="bell" size={30} color="#333" />
+            <StyledText>おしらせ</StyledText>
           </StyledView>
         </StyledTouchableOpacity>
+
       </StyledView>
     </StyledView>
   );
