@@ -13,7 +13,7 @@ const NoticePage = () => {
   return (
     <Container style={{ flex: 1 }}>
       <PageBackHeader
-        routerPage="mySetting/helpPage"
+        routerPage="mySetting/mySettingScreen"
         text="おしらせ"
         isFetchUserProps="false"
       />
