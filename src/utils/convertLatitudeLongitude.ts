@@ -32,7 +32,7 @@ const seedRandom = (seed: number) => {
 // r (200 <= r <= 1000) と Θ (0 <= Θ <= 360) を生成する関数
 const generateRTheta = (date: string, uid: string) => {
   // ステップ 1: 日付とUIDを結合
-  const inputStr = `${uid}`;
+  const inputStr = `${date} + ${uid} + ${date}`;
 
   // ステップ 2: ローリングハッシュを生成
   const hashValue = rollingHash(inputStr, date);
