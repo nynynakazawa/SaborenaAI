@@ -69,11 +69,11 @@ const CreateAccount = ({
   const [isSendingEmail, setIsSendingEmail] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(60);
 
-  // バリデーションチェック
-  function isValiedPassword(password: string) {
-    const pattern = /^[A-Za-z1-9@]{6,}$/;
-    return pattern.test(password);
-  }
+// バリデーションチェック
+function isValiedPassword(password: string) {
+  const pattern = /^[A-Za-z0-9!\"#\$%&'\(\)\*\+,\-\.\/:;<=>\?@\[\\\]\^_`\{\|\}~]{6,}$/;
+  return pattern.test(password);
+}
 
   const isValid: boolean =
     email.trim() != "" &&
@@ -146,7 +146,7 @@ const CreateAccount = ({
       if (auth.currentUser) {
         await sendEmailVerification(auth.currentUser);
         console.log("send email");
-        // setTimeout(() => setIsSendingEmail(false), 60000); // 1分間再送信ボタンを無効にする
+        setTimeout(() => setIsSendingEmail(false), 60 * 1000);
       } else {
         console.log("No user is signed in.");
       }
