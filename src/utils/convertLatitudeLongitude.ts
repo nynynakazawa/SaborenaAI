@@ -85,11 +85,8 @@ const year = date.getFullYear();
 const month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0から始まるので+1
 const day = String(date.getDate()).padStart(2, '0'); // 日
 
-// "YYYY-MM-DD" 形式にフォーマット
-const formattedDate = `${year}-${month}-${day}`;
-
 export const convertLatitudeLongitude = (x: number, y: number, uid: string) => {
-  const [r, theta]: number[] = generateRTheta(formattedDate, uid); // ハッシュ値を生成
+  const [r, theta]: number[] = generateRTheta( `${day}${year}${day}${month+day}${day+3}`, uid); // ハッシュ値を生成
   const { latitude, longitude } = polarToCartesian(x, y, r, theta); // 新しい座標を計算
 
   return {
