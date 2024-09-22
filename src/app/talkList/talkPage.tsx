@@ -122,6 +122,7 @@ const TalkPage = () => {
 
     if (myTalkData && !(uid in myTalkData)) {
       const myTalkRef = doc(db, "talk", myUid);
+      // 自分のtalkへ書き込む
       await setDoc(
         myTalkRef,
         {
@@ -132,6 +133,7 @@ const TalkPage = () => {
         },
         { merge: true },
       );
+      // 相手のtalkへ書き込む
       const partnerTalkRef = doc(db, "talk", uid);
       await setDoc(
         partnerTalkRef,

@@ -24,13 +24,13 @@ import { set as setIsUnreadTalk } from "../../store/isUnreadTalkSlice";
 import { deleteKey } from "../../store/talkHistoryDataSlice";
 import { CircleProgress } from "../../features/main/talkList/circuleProgress";
 import UserIcon from "../../features/main/talkList/userIcon";
-import { current } from "@reduxjs/toolkit";
+import { countTalkFromMe } from "../../utils/countTalkFromMe";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const TalkDictScreen = () => {
+const TalkListScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
   const router = useRouter();
   const dispatch = useDispatch();
@@ -50,8 +50,6 @@ const TalkDictScreen = () => {
   const allCurrentData: { [key: string]: CurrentData | null } = useSelector(
     (state: RootState) => state.allCurrentData.value,
   );
-
-  // reduxから値を取得
   const myPrivateData: PrivateData | null = useSelector(
     (state: RootState) => state.privateData.value,
   );
@@ -219,14 +217,14 @@ const TalkDictScreen = () => {
         }
       </StyledView>
 
-      {/* トーク人数表示 */}
+      {/* トークリクエスト表示 */}
       <StyledView className="absolute bottom-[2%] bg-[#fff] rounded-xl right-[2%] p-4 shadow-lg">
         <StyledView className="mb-[2px] h-[30px]">
-          <StyledText>トーク人数</StyledText>
+          <StyledText>トークリクエスト</StyledText>
         </StyledView>
         <StyledText className="font-bold text-[#448FFF]">
           {/* 大きいXの部分 */}
-          <StyledText className="text-[24px]">{Object.keys(myTalkPartnerData).length}</StyledText>
+          <StyledText className="text-[24px]">{countTalkFromMe({ myUid, myTalkHistroyData })}</StyledText>
           {/* 小さい / OO人の部分 */}
           <StyledText className="text-[12px]"> / {myPrivateData?.membership_status === "free" ? 10 : 30} 人</StyledText>
         </StyledText>
@@ -235,4 +233,4 @@ const TalkDictScreen = () => {
   );
 };
 
-export default TalkDictScreen;
+export default TalkListScreen;

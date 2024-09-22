@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Text } from "react-native";
 import { styled } from "nativewind";
 import Icon from "react-native-vector-icons/Entypo";
 import { useRouter } from "expo-router";
-import { PrivateData, UserData } from "../../types/userDataTypes";
+import { Message, PrivateData, UserData } from "../../types/userDataTypes";
 import Animated, {
   Easing,
   useSharedValue,
@@ -12,6 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
+import { countTalkFromMe } from "../../utils/countTalkFromMe";
 
 const StyledText = styled(Text);
 const StyledView = styled(View);
@@ -29,8 +30,8 @@ const SendMessageButton = ({
   const router = useRouter();
 
   // reduxから値を取得
-  const myTalkPartnerData: { [key: string]: UserData | null } = useSelector(
-    (state: RootState) => state.talkPartnerData.value,
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
   );
   const myPrivateData: PrivateData | null = useSelector(
     (state: RootState) => state.privateData.value,
@@ -38,12 +39,15 @@ const SendMessageButton = ({
   const myUserData: UserData | null = useSelector(
     (state: RootState) => state.userData.value,
   );
+  const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
+    (state: RootState) => state.talkHistoryData.value,
+  );
 
   const [isWarningVisible, setIsWarningVisible] = useState(false);
   
-  // トーク人数が限界に達していないか
+  // トークリクエストが限界に達していないか
   const flag1: boolean =
-    Object.keys(myTalkPartnerData).length <
+    countTalkFromMe({ myUid, myTalkHistroyData }) <
     (myPrivateData?.membership_status === "free" ? 10 : 30);
   // 自分が年齢確認済か
   const flag2 = myUserData?.is_age_verified;
@@ -74,7 +78,7 @@ const SendMessageButton = ({
 
   // 警告メッセージ内容生成
   const warningMessages: string[] = [];
-  if (!flag1) warningMessages.push("トーク人数が上限に達しています。");
+  if (!flag1) warningMessages.push("トークリクストが上限に達しています。");
   if (!flag2) warningMessages.push("あなたの年齢確認が完了していません。");
   if (!flag3) warningMessages.push("相手の年齢確認が完了していません。");
 

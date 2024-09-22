@@ -2,8 +2,9 @@ import React from "react";
 import { Text, View } from "react-native";
 import { styled } from "nativewind";
 import { useSelector } from "react-redux";
-import { PrivateData, UserData } from "../../../types/userDataTypes";
+import { Message, PrivateData, UserData } from "../../../types/userDataTypes";
 import { RootState } from "../../../store/store";
+import { countTalkFromMe } from "../../../utils/countTalkFromMe";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -13,10 +14,12 @@ const AppInfoDisplay = () => {
   const myPrivateData: PrivateData | null = useSelector(
     (state: RootState) => state.privateData.value,
   );
-  const myTalkPartnerData: { [key: string]: UserData | null } = useSelector(
-    (state: RootState) => state.talkPartnerData.value,
+  const myTalkHistroyData: { [key: string]: Message[] | null } = useSelector(
+    (state: RootState) => state.talkHistoryData.value,
   );
-
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   return (
     <StyledView className="flex h-[40px] w-full flex-row justify-between">
       <StyledView className="flex w-[50%] items-center justify-center">
@@ -33,15 +36,16 @@ const AppInfoDisplay = () => {
         )}
       </StyledView>
 
-      {/* トーク人数表示 */}
+      {/* トークリクエスト
+      表示 */}
       <StyledView className="flex w-[50%] items-center justify-center border-l-2 border-[#333]">
         <StyledView className="mb-[12px] h-[30px]">
-          <StyledText>トーク人数</StyledText>
+          <StyledText>トークリクエスト</StyledText>
         </StyledView>
         <StyledText className="font-bold text-[#448FFF]">
           {/* 大きいXの部分 */}
           <StyledText className="text-[24px]">
-            {Object.keys(myTalkPartnerData).length}
+            {countTalkFromMe({ myUid, myTalkHistroyData })}
           </StyledText>
           {/* 小さい / OO人の部分 */}
           <StyledText className="text-[12px]">
