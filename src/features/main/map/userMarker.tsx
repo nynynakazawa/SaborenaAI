@@ -26,13 +26,13 @@ const UserMarker = ({
   const isGps: boolean = useSelector((state: RootState) => state.isGps.value);
   const [isVisibleUserModal, setIsVisibleUserModal] = useState<boolean>(false);
 
-  // State to manage the marker's coordinates
+  // マーカーの座標を管理するためのステート
   const [coords, setCoords] = useState({
     latitude: uid === myUid ? location?.coords.latitude || 0 : currentData?.latitude || 0,
     longitude: uid === myUid ? location?.coords.longitude || 0 : currentData?.longitude || 0,
   });
 
-  // Linearly interpolate between old and new coordinates over 0.3 seconds
+  // 0.3秒かけて旧座標から新座標に線形補間する
   useEffect(() => {
     const newCoords = uid === myUid
       ? {
@@ -44,18 +44,18 @@ const UserMarker = ({
           longitude: currentData?.longitude || 0,
         };
 
-    // If the new coordinates differ, transition smoothly to the new position
+    // 新しい座標が有効な場合、滑らかに移動する
     if (
-      newCoords.latitude !== coords.latitude ||
-      newCoords.longitude !== coords.longitude
+      newCoords.latitude != null && newCoords.longitude != null &&
+      (newCoords.latitude !== coords.latitude || newCoords.longitude !== coords.longitude)
     ) {
-      // Start animation only if coordinates are different
+      // 座標が異なる場合にアニメーションを開始
       const startLatitude = coords.latitude;
       const startLongitude = coords.longitude;
       const endLatitude = newCoords.latitude;
       const endLongitude = newCoords.longitude;
-      const duration = 300; // 0.3 seconds
-      const interval = 10; // Interval time for updating (smoothness)
+      const duration = 300; // 0.3秒
+      const interval = 10; // 更新間隔（滑らかさ）
       const steps = duration / interval;
       let currentStep = 0;
 
@@ -74,15 +74,19 @@ const UserMarker = ({
         if (currentStep < steps) {
           setTimeout(animate, interval);
         } else {
-          // Ensure final position is set after the animation completes
+          // アニメーションが完了したら最終位置を設定
           setCoords(newCoords);
         }
       };
 
       animate();
+    } else if (coords.latitude == null && coords.longitude == null) {
+      // 座標が無効な場合は最終位置を設定
+      setCoords(newCoords);
     }
   }, [location, currentData, uid]);
 
+  // マーカーのフレームカラー設定
   let frameColor;
   if (uid === myUid) {
     frameColor = "bg-[#ffc179]";
@@ -92,6 +96,11 @@ const UserMarker = ({
     frameColor = "bg-[#F479FF]";
   } else {
     frameColor = "bg-[#79FF82]";
+  }
+
+  // 座標が無効な場合はマーカーを表示しない
+  if (coords.latitude == null || coords.longitude == null) {
+    return null; // 座標が無効なときはマーカーをレンダリングしない
   }
 
   return (

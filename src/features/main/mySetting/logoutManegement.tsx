@@ -3,8 +3,12 @@ import { Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "expo-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { set as setMyUid } from "../../../store/myUidSlice";
+import { set as setIsGps } from "../../../store/isGpsSlice"
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { RootState } from "../../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -12,6 +16,9 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const LogoutManegement = () => {
   const router = useRouter();
+  const myUid: string | null = useSelector(
+    (state: RootState) => state.myUid.value,
+  );
   const dispatch = useDispatch();
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
 
@@ -23,6 +30,18 @@ const LogoutManegement = () => {
       router.push("/loginPage");
       // myUidをなくす
       dispatch(setMyUid(null));
+      // 位置共有を消す
+      console.log("🎉send location to null💀");
+      const currentRef = doc(db, "current", myUid ? myUid : "");
+      await setDoc(
+        currentRef,
+        {
+          latitude: null,
+          longitude: null,
+        },
+        { merge: true },
+      );
+      dispatch(setIsGps(false))
     } catch (error) {
       console.error("Logout failed", error);
     }

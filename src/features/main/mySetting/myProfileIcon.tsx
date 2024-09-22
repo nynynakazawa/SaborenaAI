@@ -20,9 +20,6 @@ const MyProfileIcon = ({ isEditable }: ProfileProps) => {
   const myUserData = useSelector((state: RootState) => state.userData.value);
   const router = useRouter();
 
-  useEffect(()=>{
-    console.log(JSON.stringify(myUserData,null,2))
-  },[])
   return (
     <StyledTouchableOpacity
       className="flex h-[200px] items-center"
