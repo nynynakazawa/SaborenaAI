@@ -10,6 +10,7 @@ import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
+const StyledScrollView = styled(ScrollView);
 
 const NoticePage = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
@@ -35,22 +36,32 @@ const NoticePage = () => {
         text="お知らせ"
         isFetchUserProps="false"
       />
-      <StyledView className="h-full w-full bg-[#f2f2f2]">
-        <ScrollView>
+      <StyledScrollView className="bg-[#f2f2f2]">
+        <StyledView className="py-[40px]">
+          {/* // アナウンス */}
           {Object.keys(notices).length > 0 ? (
             Object.keys(notices).map((key, idx) => {
               const notice = notices[key];
               if (!notice) return null; // noticeがnullの場合は何も表示しない
 
               return (
-                <View key={key} className="p-4 m-2 bg-white rounded-lg">
+                <StyledView key={key} className="p-4 m-2 bg-white rounded-lg">
                   <TouchableOpacity
                     onPress={() => toggleExpand(idx)}
                     style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 10 }}
                     activeOpacity={0.2}
                   >
                     {/* 左側にタイトル */}
-                    <StyledText className="font-bold text-lg">{notice.title}</StyledText>
+                    <StyledView className="flex flex-row">
+                      {notice.source === "personal" &&
+                        <StyledText className="mt-2 mr-2 bg-[#e3422e] text-white p-1 rounded-xl text-[14px] leading-[20px]">
+                          重要
+                        </StyledText>
+                      }
+                      <StyledText className="font-bold text-lg">
+                        {notice.title}
+                      </StyledText>
+                    </StyledView>
 
                     {/* 右側にアイコン */}
                     <Icon
@@ -75,14 +86,14 @@ const NoticePage = () => {
                   <StyledText className="mt-2 text-gray-500">
                     {convertTimestamp_yyyymmddhhmm(notice.created_at)}
                   </StyledText>
-                </View>
+                </StyledView>
               );
             })
           ) : (
             <StyledText className="p-4">お知らせはありません。</StyledText>
           )}
-        </ScrollView>
-      </StyledView>
+        </StyledView>
+      </StyledScrollView>
     </Container>
   );
 };

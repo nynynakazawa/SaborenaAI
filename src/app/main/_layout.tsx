@@ -49,12 +49,13 @@ export default function Layout() {
   
   // レンダリング時に各ユーザーデータ取得
   useEffect(() => {
+    const user = auth.currentUser;
     if (isFetchUserData != "false") {
       fetchAllCurrentData(dispatch);
       monitorCurrentCollection(dispatch);
       fetchLocation(dispatch);
       fetchMyUser(dispatch);
-      fetchNotices(dispatch)
+      fetchNotices(dispatch, user?.uid as string)
     }
   }, []);
 

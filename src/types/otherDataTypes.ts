@@ -4,4 +4,5 @@ export type NoticeData = {
   title: string,
   created_at: number,
   contents: string,
+  source: "general" | "personal"
 }
