@@ -9,6 +9,7 @@ import { db } from "../../../firebase";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { RootState } from "../../../store/store";
 import * as Location from "expo-location";
+import { sendLocation } from "../../../utils/sendLocation";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -61,20 +62,6 @@ const ChangeCurrentStatus = () => {
     dispatch(setPeopleCount(newPeopleCount));
   };
 
-  // 位置情報送信
-  const sendLocation = async (uid: string, isGps: boolean) => {
-    console.log("🎉send location");
-    const currentRef = doc(db, "current", uid);
-    await setDoc(
-      currentRef,
-      {
-        latitude: isGps ? location?.coords.latitude : null,
-        longitude: isGps ? location?.coords.longitude : null,
-      },
-      { merge: true },
-    );
-  };
-
   // * 送信ロジック * //
   // peopleCountが10秒間変化がなかったときにだけ送信 (db通信量を減らすため)
   useEffect(() => {
@@ -92,7 +79,7 @@ const ChangeCurrentStatus = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (prevIsGpsRef.current !== isGps && myUid) {
-        sendLocation(myUid, isGps);
+        sendLocation(isGps, myUid, location);
         prevIsGpsRef.current = isGps;
       }
     }, 10 * 1000); // 10秒
@@ -107,10 +94,10 @@ const ChangeCurrentStatus = () => {
   return (
     <StyledView className="absolute right-[6vw] top-[8vh] z-[100] flex h-[16vh] w-[60vw] justify-center rounded-lg bg-white shadow-xl">
       {/* isGps */}
-      <StyledView className="flex h-[50%] flex-row items-center justify-center gap-[20px]">
+      <StyledView className="flex h-[50%] flex-row items-center justify-center gap-[26px]">
         <StyledView className="flex w-[40%] flex-row">
-          <Icon name={"pin-drop"} size={24} color={"#333"} />
-          <StyledText className="text-center text-[16px]">位置公開</StyledText>
+          <Icon name={"pin-drop"} size={32} color={"#333"} />
+          <StyledText className="text-center text-[12px] leading-[24px]">位置公開(曖昧)</StyledText>
         </StyledView>
         <StyledView className="flex w-[26%] items-center">
           <Switch
@@ -124,17 +111,17 @@ const ChangeCurrentStatus = () => {
       </StyledView>
 
       {/* peopleCount */}
-      <StyledView className="flex h-[50%] flex-row items-center justify-center gap-[20px]">
+      <StyledView className="flex h-[50%] flex-row items-center justify-center gap-[26px]">
         <StyledView className="flex w-[40%] flex-row">
-          <Icon name={"person"} size={24} color={"#333"} />
-          <StyledText className="text-[16px]">人数</StyledText>
+          <Icon name={"person"} size={32} color={"#333"} />
+          <StyledText className="text-[12px] leading-[24px]">人数</StyledText>
         </StyledView>
         <StyledTouchableOpacity
           onPress={changePeopleCount}
           activeOpacity={1.0}
           className="w-[26%] translate-y-[6px] border-b-2 border-[#ccc] pb-[6px]"
         >
-          <StyledText className="text-center text-[16px]">
+          <StyledText className="text-center text-[24px]">
             {peopleCount}
           </StyledText>
         </StyledTouchableOpacity>

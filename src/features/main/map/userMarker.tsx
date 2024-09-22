@@ -105,7 +105,11 @@ const UserMarker = ({
 
   return (
     <Marker
-      coordinate={coords}
+      coordinate={
+        uid === myUid
+          ? { latitude: location?.coords.latitude || 0, longitude: location?.coords.longitude || 0 }
+          : coords
+      }
       style={{ width: 52, height: 60, paddingBottom: 40 }}
       onPress={() => setIsVisibleUserModal(!isVisibleUserModal)}
     >

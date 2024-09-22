@@ -9,6 +9,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { fetchLocation } from "../../utils/fetchMyData";
 import { onAuthStateChanged } from "firebase/auth";
 import { set as setMyUid } from "../../store/myUidSlice";
+import { sendLocation } from "../../utils/sendLocation";
 
 const StyledView = styled(View);
 
@@ -23,27 +24,6 @@ const FetchLocation = () => {
   );
   const prevLocationRef = useRef(location);
 
-  // 位置情報送信
-  const sendLocation = async (uid: string, isGps: boolean) => {
-    // ログインしていない場合、以降実行しない
-    if (!myUid) {
-      return;
-    }
-    // 位置情報公開設定がOFFの場合、以降実行しない
-    if (isGps === false) {
-      return;
-    }
-    console.log("🎉send location");
-    const currentRef = doc(db, "current", uid);
-    await setDoc(
-      currentRef,
-      {
-        latitude: location?.coords.latitude,
-        longitude: location?.coords.longitude,
-      },
-      { merge: true },
-    );
-  };
   // 1秒ごとに現在位置取得
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -69,10 +49,10 @@ const FetchLocation = () => {
     const interval = setInterval(() => {
       // 位置が変化している場合
       if (prevLocationRef.current !== location && myUid) {
-        sendLocation(myUid, isGps);
+        sendLocation(isGps, myUid, location);
         prevLocationRef.current = location;
       }
-    }, 10 * 1000); // 10秒
+    }, 3 * 1000); // 10秒
 
     return () => clearInterval(interval);
   }, [location?.coords.latitude, location?.coords.longitude]);
