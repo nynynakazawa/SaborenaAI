@@ -10,16 +10,22 @@ import { set as setLocation } from "../store/locationSlice";
 import { fetchAllTalkPartners } from "./fetchTalkAllPartner";
 import { fetchAllTalkHistory } from "./fetchAllTalkHistory";
 
-// location取得
-export const fetchLocation = async (dispatch: Dispatch) => {
-  let { status } = await Location.requestForegroundPermissionsAsync();
-  if (status !== "granted") {
-    console.log("❌permission to access location was denied");
-    return;
-  }
+let permissionGranted = false;
 
-  let location = await Location.getCurrentPositionAsync({});
-  dispatch(setLocation(location));
+export const fetchLocation = async (dispatch: Dispatch) => {
+  if (!permissionGranted) {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+        console.log("❌permission to access location was denied");
+        // 位置情報の許可が拒否された場合、nullに設定
+        dispatch(setLocation(null));
+      return;
+    }
+    permissionGranted = true;
+
+    let location = await Location.getCurrentPositionAsync({});
+    dispatch(setLocation(location));
+  }
 };
 
 // userData取得

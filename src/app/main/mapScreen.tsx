@@ -1,17 +1,18 @@
-import React from "react";
-import { StyleSheet, View, Platform, ActivityIndicator } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Platform, ActivityIndicator, Text } from "react-native";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import { CurrentData } from "../../types/userDataTypes";
 import { styled } from "nativewind";
 import UserMarker from "../../features/main/map/userMarker";
 import WhatNowInput from "../../features/main/map/whatNowInput";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ChangeCurrentStatus from "../../features/main/map/changeCurrentStatus";
 import { RootState } from "../../store/store";
 
 const StyledView = styled(View);
+const StyledText = styled(Text);
 
 const MapScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
@@ -41,8 +42,8 @@ const MapScreen = () => {
           <MapView
             style={styles.map}
             initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+              latitude: location.coords.latitude || 0, // null の場合 0 にフォールバック
+              longitude: location.coords.longitude || 0, // null の場合 0 にフォールバック
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
@@ -61,6 +62,7 @@ const MapScreen = () => {
         </StyledView>
       ) : (
         <StyledView className="flex h-full items-center justify-center">
+          <StyledText>許可</StyledText>
           <ActivityIndicator size="large" />
         </StyledView>
       )}
@@ -74,4 +76,5 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
+
 export default MapScreen;
