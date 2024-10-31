@@ -24,7 +24,7 @@ const LoginButtonContainer = ({
           onPress={() => router.push("/signUpPage")}
           className="flex h-[60px] w-[66vw] items-center justify-center rounded-full bg-[#fff]"
         >
-          <StyledText className="text-[16px] text-[#E04B36]">
+          <StyledText className="text-[16px] text-[#5294AC]">
             アカウント作成
           </StyledText>
         </StyledTouchableOpacity>

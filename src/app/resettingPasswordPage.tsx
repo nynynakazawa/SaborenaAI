@@ -20,7 +20,7 @@ const ResettingPasswordPage = () => {
         isFetchUserProps="false"
       />
       <ResettingPassword />
-      <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#2f77e3]"></StyledView>
+      <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#00000]"></StyledView>
     </Container>
   );
 };

@@ -97,11 +97,11 @@ const ChangeCurrentStatus = () => {
       <StyledView className="flex h-[50%] flex-row items-center justify-center gap-[26px]">
         <StyledView className="flex w-[40%] flex-row">
           <Icon name={"pin-drop"} size={32} color={"#333"} />
-          <StyledText className="text-center text-[12px] leading-[24px]">位置公開(曖昧)</StyledText>
+          <StyledText className="text-center text-[12px] leading-[32px]">位置公開(あいまい)</StyledText>
         </StyledView>
         <StyledView className="flex w-[26%] items-center">
           <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            trackColor={{ false: "#767577", true: "#5494AD" }}
             thumbColor={isGps ? "#f4f3f4" : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
@@ -114,7 +114,7 @@ const ChangeCurrentStatus = () => {
       <StyledView className="flex h-[50%] flex-row items-center justify-center gap-[26px]">
         <StyledView className="flex w-[40%] flex-row">
           <Icon name={"person"} size={32} color={"#333"} />
-          <StyledText className="text-[12px] leading-[24px]">人数</StyledText>
+          <StyledText className="text-[12px] leading-[32px]">一緒にいる人数</StyledText>
         </StyledView>
         <StyledTouchableOpacity
           onPress={changePeopleCount}

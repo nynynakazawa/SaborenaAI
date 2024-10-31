@@ -87,7 +87,7 @@ const WhatNowInput = () => {
     >
       <StyledView
         className={`mx-auto flex h-full w-[90vw] flex-row items-center justify-center rounded-full bg-white shadow-2xl ${
-          isTextInputFocused ? "border-2 border-blue-500" : ""
+          isTextInputFocused ? "border-2 border-[#A2D4DD]" : ""
         }`}
       >
         <StyledView className="w-[60vw]">
@@ -124,7 +124,7 @@ const WhatNowInput = () => {
           <Icon
             name="send"
             size={34}
-            color="#73BBFD"
+            color="#5494AD"
             className={`translate-y-[2px] ${
               (whatNow.trim() == "" || isSendingWhatNow) && "opacity-30"
             }`}

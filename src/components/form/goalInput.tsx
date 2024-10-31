@@ -70,7 +70,7 @@ const GoalInput = ({
           </Picker>
           <StyledTouchableOpacity
             onPress={toggleModal}
-            className="mt-4 rounded-full bg-[#57d0e0] p-3"
+            className="mt-4 rounded-full bg-[#A2D4DD] p-3"
           >
             <StyledText className="text-center text-xl text-white">
               決定

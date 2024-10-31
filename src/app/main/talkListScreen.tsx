@@ -222,7 +222,7 @@ const TalkListScreen = () => {
         <StyledView className="mb-[2px] h-[30px]">
           <StyledText>トークリクエスト</StyledText>
         </StyledView>
-        <StyledText className="font-bold text-[#448FFF]">
+        <StyledText className="font-bold text-[#5494AD]">
           {/* 大きいXの部分 */}
           <StyledText className="text-[24px]">{countTalkFromMe({ myUid, myTalkHistroyData })}</StyledText>
           {/* 小さい / OO人の部分 */}

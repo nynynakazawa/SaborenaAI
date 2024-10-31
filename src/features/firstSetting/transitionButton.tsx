@@ -25,14 +25,14 @@ const TransitionButton = ({
         {/* prevボタン */}
         <StyledTouchableOpacity
           onPress={() => setScene((prev) => prev - 1)}
-          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#E04B36] ${scene == 1 && "opacity-0"}`}
+          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#5294AC] ${scene == 1 && "opacity-0"}`}
         >
           <StyledText className="text-[16px] text-[#fff]">戻る</StyledText>
         </StyledTouchableOpacity>
 
         <StyledTouchableOpacity
           onPress={handleNext}
-          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#44e25f] ${!isValid && "opacity-30"}`}
+          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#5294AC] ${!isValid && "opacity-30"}`}
           disabled={!isValid}
         >
           <StyledText className="text-[16px] text-[#fff]">次へ</StyledText>

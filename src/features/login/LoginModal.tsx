@@ -173,7 +173,7 @@ const LoginModal = ({
             onPress={() => handleLogin()}
             className={`absolute bottom-[8vh] right-[10vw] flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#fff] ${!(password && email) && "opacity-30"}`}
           >
-            <StyledText className="text-[16px] text-[#E04B36]">
+            <StyledText className="text-[16px] text-[#5294AC]">
               ログイン
             </StyledText>
           </StyledTouchableOpacity>

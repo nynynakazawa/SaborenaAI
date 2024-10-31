@@ -20,7 +20,7 @@ const ProgressBar = ({
       </StyledView>
       <StyledView className="h-[12px] w-[50vw] rounded-full bg-gray-300">
         <StyledView
-          className="h-full rounded-full bg-[#E04B36]"
+          className="h-full rounded-full bg-[#5294AC]"
           style={{ width: `${percentage}%` }}
         />
       </StyledView>

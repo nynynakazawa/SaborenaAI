@@ -38,7 +38,7 @@ const AccountManagement = () => {
               会員情報
             </StyledText>
             {myPrivateData?.membership_status == "free" ? (
-              <StyledText className="max-w-[60%] text-[16px] font-bold text-[#8FE07A]">
+              <StyledText className="max-w-[60%] text-[16px] font-bold text-[#5494AD]">
                 無料会員
               </StyledText>
             ) : (

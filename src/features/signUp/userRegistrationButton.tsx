@@ -111,14 +111,14 @@ const UserRegistationButton = ({
         {/* prevボタン */}
         <StyledTouchableOpacity
           onPress={() => setScene((prev) => prev - 1)}
-          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#E04B36]`}
+          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#5294AC]`}
         >
           <StyledText className="text-[16px] text-[#fff]">戻る</StyledText>
         </StyledTouchableOpacity>
 
         <StyledTouchableOpacity
           onPress={handleRegistration}
-          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#44e25f]`}
+          className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#5294AC]`}
         >
           <StyledText className="text-[16px] text-[#fff]">はじめる</StyledText>
         </StyledTouchableOpacity>
