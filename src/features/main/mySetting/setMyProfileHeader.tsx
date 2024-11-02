@@ -62,7 +62,7 @@ const SetMyProfileHeader = ({
           className="translate-x-[-40px]"
         >
           <StyledText
-            className={`text-[16px] text-[#57d0e0] ${!isChange && "opacity-0"}`}
+            className={`text-[16px] text-[#A2D4DD] ${!isChange && "opacity-0"}`}
           >
             完了
           </StyledText>

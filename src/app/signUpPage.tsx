@@ -142,7 +142,7 @@ const SignupPage = () => {
         </StyledView>
       )}
 
-      <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#E3422F]" />
+      <StyledView className="absolute bottom-0 h-[20px] w-screen bg-[#A5D6DD]" />
     </Container>
   );
 };

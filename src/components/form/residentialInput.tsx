@@ -313,7 +313,7 @@ const ResidentialInput = ({
           </StyledView>
           <StyledTouchableOpacity
             onPress={toggleModal}
-            className="mt-4 rounded-full bg-[#57d0e0] p-3"
+            className="mt-4 rounded-full bg-[#9BD0D8] p-3"
           >
             <StyledText className="text-center text-xl text-white">
               決定

@@ -11,7 +11,7 @@ const LoginBackground = () => {
         source={require("../../../assets/login/109.jpg")}
         className="absolute left-0 top-0 z-[-1000] h-screen w-screen"
       />
-      <StyledView className="z-[-999] h-screen w-screen bg-[#E04B36] opacity-60"></StyledView>
+      <StyledView className="z-[-999] h-screen w-screen bg-[#5294AC] opacity-60"></StyledView>
     </StyledView>
   );
 };

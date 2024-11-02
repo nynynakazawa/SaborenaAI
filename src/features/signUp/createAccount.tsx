@@ -210,9 +210,9 @@ function isValiedPassword(password: string) {
             {/* isOver18 */}
             <BouncyCheckbox
               size={25}
-              fillColor="red"
+              fillColor="#9BD0D8"
               text="18歳以上です"
-              iconStyle={{ borderColor: "red" }}
+              iconStyle={{ borderColor: "#9BD0D8" }}
               textStyle={{ textDecorationLine: "none", fontSize: 14 }}
               isChecked={isOver18}
               onPress={(isChecked: boolean) => setIsOver18(isChecked)}
@@ -221,9 +221,9 @@ function isValiedPassword(password: string) {
             <StyledView className="flex h-[54px]">
               <BouncyCheckbox
                 size={25}
-                fillColor="red"
+                fillColor="#9BD0D8"
                 text="利用規約に同意します"
-                iconStyle={{ borderColor: "red" }}
+                iconStyle={{ borderColor: "#9BD0D8" }}
                 textStyle={{ textDecorationLine: "none", fontSize: 14 }}
                 isChecked={isAgreeTerm}
                 onPress={(isChecked: boolean) => setIsAgreeTerm(isChecked)}
@@ -244,9 +244,9 @@ function isValiedPassword(password: string) {
             <StyledView className="flex h-[54px]">
               <BouncyCheckbox
                 size={25}
-                fillColor="red"
+                fillColor="#9BD0D8"
                 text="プライバシーポリシーに同意します"
-                iconStyle={{ borderColor: "red" }}
+                iconStyle={{ borderColor: "#9BD0D8" }}
                 textStyle={{ textDecorationLine: "none", fontSize: 14 }}
                 isChecked={isAgreePrivacyPolicy}
                 onPress={(isChecked: boolean) =>
@@ -282,7 +282,7 @@ function isValiedPassword(password: string) {
               handleSignUp();
               setIsVisibleWaitingVerificationModal(true);
             }}
-            className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#44e25f] ${!isValid && "opacity-30"}`}
+            className={`flex h-[48px] w-[100px] items-center justify-center rounded-lg bg-[#5294AC] ${!isValid && "opacity-30"}`}
             disabled={!isValid}
           >
             <StyledText className="text-[16px] text-[#fff]">
@@ -323,7 +323,7 @@ function isValiedPassword(password: string) {
               {/* メール再送信ボタン */}
               <StyledTouchableOpacity
                 onPress={() => handleSendEmail()}
-                className={`mb-[12px] rounded-md bg-[#57d0e0] p-[12px] ${isSendingEmail && "opacity-70"}`}
+                className={`mb-[12px] rounded-md bg-[#5294AC] p-[12px] ${isSendingEmail && "opacity-70"}`}
                 disabled={isSendingEmail}
               >
                 <StyledText className={`text-center text-[#fff]`}>
@@ -336,7 +336,7 @@ function isValiedPassword(password: string) {
               {/* リロードボタン */}
               <StyledTouchableOpacity
                 onPress={() => handleConfirm()}
-                className="rounded-md bg-[#44e25f] p-[12px]"
+                className="rounded-md bg-[#9BD0D8] p-[12px]"
               >
                 <StyledText className="text-center text-[#fff]">
                   メールを確認しました

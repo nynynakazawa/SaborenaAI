@@ -41,7 +41,7 @@ const generateRTheta = (date: string, uid: string) => {
   const seed = hashValue % mod; // ハッシュ値をモジュロで制約
 
   // ステップ 3: シード値に基づき乱数生成
-  const randomR = seedRandom(seed) * (1000 - 200) + 200; // rの範囲 [200, 1000] で乱数生成
+  const randomR = seedRandom(seed) * (300 - 100) + 100; // rの範囲 [100, 300] で乱数生成
   const randomTheta = seedRandom(seed + 1) * 360; // Θの範囲 [0, 360] で乱数生成
 
   return [randomR, randomTheta];

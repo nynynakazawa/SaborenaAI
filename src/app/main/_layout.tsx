@@ -74,7 +74,7 @@ export default function Layout() {
             <FontAwesome
               name="map"
               size={26}
-              color={focused ? "#45e645" : "#333"}
+              color={focused ? "#5494AD" : "#333"}
             />
           ),
           headerShown: false,
@@ -89,7 +89,7 @@ export default function Layout() {
               <Entypo
                 name="mail"
                 size={30}
-                color={focused ? "#1a8cd8" : "#333"}
+                color={focused ? "#5494AD" : "#333"}
               />
               {isUnreadTalk && (
                 <StyledView className="[z-10] absolute right-[-6px] h-[12px] w-[12px] rounded-full bg-[#f85e49]"></StyledView>
@@ -113,6 +113,15 @@ export default function Layout() {
           headerTitle: "設定",
           headerStyle: { height: 90 },
           headerTitleStyle: { fontSize: 16 },
+        }}
+      />
+      {/* その他の画面を非表示にする */}
+      <Tabs.Screen
+        name="index"
+        options={{
+          tabBarButton: () => null,
+          unmountOnBlur: true,
+          headerShown: false,
         }}
       />
     </Tabs>

@@ -45,7 +45,7 @@ const SelfIntroductionInput = ({
           {inputFocused && (
             <StyledTouchableOpacity
               onPress={handleSubmit}
-              className="ml-[8px] rounded-full bg-[#57d0e0] p-2"
+              className="ml-[8px] rounded-full bg-[#A2D4DD] p-2"
             >
               <StyledText className="text-[14px] text-white">決定</StyledText>
             </StyledTouchableOpacity>

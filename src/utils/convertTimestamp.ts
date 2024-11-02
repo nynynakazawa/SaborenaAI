@@ -23,7 +23,7 @@ export const getRemainingTime = (
 ): { isValid: boolean; leftTime: string } => {
   const date = new Date();
   const nowTime = date.getTime();
-  // 3時間 - 時間差
+  // 3時間 - P
   const leftTime = 3 * 60 * 60 * 1000 - (nowTime - pastTime);
   const hour = Math.floor(leftTime / (1000 * 60 * 60));
   const minute = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));

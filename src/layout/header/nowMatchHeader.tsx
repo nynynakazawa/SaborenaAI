@@ -14,12 +14,12 @@ const NowMatchHeader = () => {
       <StyledView
         className={`mx-auto flex h-[70px] w-full items-center border-b-[1px] border-[#e8e8e8] bg-[#fff] ${Platform.OS === "ios" && "mt-[50px]"}`}
       >
-        <StyledView className="flex h-full w-[90vw] flex-row items-center">
+        <StyledView className="ml-[170px] flex h-full w-[90vw] flex-row items-center">
           <StyledImage
             source={require("../../../assets/logo/icon.png")}
             className="h-[60px] w-[60px]"
           />
-          <StyledText className="ml-[16px] flex-1 text-[16px] text-[#333]">
+          <StyledText className="flex-1 text-[20px] text-[#333]">
             Now Match
           </StyledText>
         </StyledView>

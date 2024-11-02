@@ -12,7 +12,7 @@ const LoginLogo = () => {
       <StyledView className="absolute top-[26vh] w-screen flex-1 items-center">
         <StyledImage
           source={require("../../../assets/logo/icon.png")}
-          className="mb-[26px] h-[80px] w-[80px]"
+          className="mb-[26px] h-[120px] w-[120px]"
         />
         <StyledText className="text-[18px] font-bold text-white">
           3分で出会えるマッチングアプリ

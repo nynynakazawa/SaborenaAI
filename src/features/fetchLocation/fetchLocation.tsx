@@ -60,4 +60,6 @@ const FetchLocation = () => {
   return <StyledView></StyledView>;
 };
 
+
+
 export default FetchLocation;

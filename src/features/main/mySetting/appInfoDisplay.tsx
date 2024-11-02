@@ -26,7 +26,7 @@ const AppInfoDisplay = () => {
         {/* 会員情報表示 */}
         <StyledText className="mb-[12px] h-[30px]">会員情報</StyledText>
         {myPrivateData?.membership_status == "free" ? (
-          <StyledText className="text-[16px] font-bold text-[#8FE07A]">
+          <StyledText className="text-[16px] font-bold text-[#5294AC]">
             無料会員
           </StyledText>
         ) : (
@@ -42,7 +42,7 @@ const AppInfoDisplay = () => {
         <StyledView className="mb-[12px] h-[30px]">
           <StyledText>トークリクエスト</StyledText>
         </StyledView>
-        <StyledText className="font-bold text-[#448FFF]">
+        <StyledText className="font-bold text-[#5294AC]">
           {/* 大きいXの部分 */}
           <StyledText className="text-[24px]">
             {countTalkFromMe({ myUid, myTalkHistroyData })}

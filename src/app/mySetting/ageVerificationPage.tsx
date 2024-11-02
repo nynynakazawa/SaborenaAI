@@ -106,7 +106,7 @@ const AgeVerificationPage = () => {
           <StyledView className="w-[90vw] flex items-end mr-[80px]">
             <StyledTouchableOpacity
               onPress={handleSubmit}
-              className={`bg-[#57d0e0] px-6 py-2 rounded-full ${!ageVerificationImage && "opacity-70"}`}
+              className={`bg-[#A2D4DD] px-6 py-2 rounded-full ${!ageVerificationImage && "opacity-70"}`}
               activeOpacity={0.6}
               disabled={!ageVerificationImage}
             >

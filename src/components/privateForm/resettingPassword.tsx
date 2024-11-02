@@ -67,7 +67,7 @@ const ResettingPassword = () => {
           <StyledView className="flex w-full items-end">
             <StyledTouchableOpacity
               onPress={handleResetPassword}
-              className={`w-[200px] rounded-md bg-[#57d0e0] p-[12px] ${!email ? "opacity-30" : isSendingEmail && "opacity-60"} `}
+              className={`w-[200px] rounded-md bg-[#A2D4DD] p-[12px] ${!email ? "opacity-30" : isSendingEmail && "opacity-60"} `}
               disabled={isSendingEmail}
             >
               <StyledText className="text-center text-white">
