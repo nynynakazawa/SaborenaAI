@@ -1,5 +1,14 @@
-import React, { useRef } from "react";
-import { StyleSheet, View, Platform, ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import React, { useRef, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Platform,
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Linking,
+} from "react-native";
 import MapView, { Polygon } from "react-native-maps";
 import * as Location from "expo-location";
 import { CurrentData } from "../../types/userDataTypes";
@@ -10,7 +19,7 @@ import { useSelector } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ChangeCurrentStatus from "../../features/main/map/changeCurrentStatus";
 import { RootState } from "../../store/store";
-import { MaterialIcons } from "@expo/vector-icons"; // MaterialIcons を追加
+import { MaterialIcons } from "@expo/vector-icons";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -19,10 +28,10 @@ const MapScreen = () => {
   const Container = Platform.OS === "android" ? SafeAreaView : View;
 
   const location: Location.LocationObject | null = useSelector(
-    (state: RootState) => state.location.value,
+    (state: RootState) => state.location.value
   );
   const allCurrentData: { [key: string]: CurrentData | null } = useSelector(
-    (state: RootState) => state.allCurrentData.value,
+    (state: RootState) => state.allCurrentData.value
   );
 
   // 辞書を配列に変換する
@@ -57,7 +66,38 @@ const MapScreen = () => {
   const circleCoords = getCircleCoordinates(center, radius, numberOfPoints).reverse();
 
   // MapView の参照を作成
-  const mapRef = useRef<MapView>(null); // 追加
+  const mapRef = useRef<MapView>(null);
+
+  // **ここから修正**
+  useEffect(() => {
+    const checkLocationPermission = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+  
+      if (status !== Location.PermissionStatus.GRANTED) {
+        // 許可されていない場合はポップアップを表示
+        Alert.alert(
+          "位置情報の許可",
+          "NowMatchの位置情報の設定を「常に許可」に変更してください。",
+          [
+            {
+              text: "キャンセル",
+              style: "cancel",
+            },
+            {
+              text: "設定を開く",
+              onPress: () => {
+                Linking.openSettings();
+              },
+            },
+          ],
+          { cancelable: false }
+        );
+      }
+    };
+  
+    checkLocationPermission();
+  }, []);
+  // **ここまで修正**
 
   return (
     <Container style={{ flex: 1 }}>
@@ -67,11 +107,11 @@ const MapScreen = () => {
           <ChangeCurrentStatus />
           {/* マップ */}
           <MapView
-            ref={mapRef} // ref を追加
+            ref={mapRef}
             style={styles.map}
             initialRegion={{
-              latitude: location.coords.latitude || 0, // null の場合 0 にフォールバック
-              longitude: location.coords.longitude || 0, // null の場合 0 にフォールバック
+              latitude: location.coords.latitude || 0,
+              longitude: location.coords.longitude || 0,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
@@ -80,9 +120,9 @@ const MapScreen = () => {
             <Polygon
               coordinates={outerCoords}
               holes={[circleCoords]}
-              fillColor="rgba(84, 148, 173, 0.15)" // 半透明の黒でエリア外を暗く
-              strokeColor="rgba(84, 148, 173, 0.55)" // 縁取りの色を黒に指定
-              strokeWidth={1} // 縁取りの線の太さを5ピクセルに指定
+              fillColor="rgba(84, 148, 173, 0.15)"
+              strokeColor="rgba(84, 148, 173, 0.55)"
+              strokeWidth={1}
             />
             {/* 全てのユーザのピンを表示 */}
             {allCurrentDataArray.map((item) => (
@@ -99,10 +139,10 @@ const MapScreen = () => {
                     {
                       latitude: center.latitude,
                       longitude: center.longitude,
-                      latitudeDelta: 0.01, // ズームレベルの調整
+                      latitudeDelta: 0.01,
                       longitudeDelta: 0.01,
                     },
-                    1000 // アニメーションの時間（ミリ秒）
+                    1000
                   );
                 }
               }}
@@ -117,10 +157,10 @@ const MapScreen = () => {
                     {
                       latitude: location.coords.latitude,
                       longitude: location.coords.longitude,
-                      latitudeDelta: 0.01, // ズームレベルの調整
+                      latitudeDelta: 0.01,
                       longitudeDelta: 0.01,
                     },
-                    1000 // アニメーションの時間（ミリ秒）
+                    1000
                   );
                 }
               }}
@@ -182,7 +222,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  shibuyaButton: { // Shibuya ボタンのスタイルを追加
+  shibuyaButton: {
     backgroundColor: "rgba(0, 0, 0, 0.6)",
     padding: 12,
     borderRadius: 30,
@@ -195,7 +235,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     marginRight: 10, // ボタン間のスペース
   },
-  currentLocationButton: { // 現在地に戻るボタンのスタイルを追加
+  currentLocationButton: {
     backgroundColor: "rgba(0, 0, 0, 0.6)",
     padding: 12,
     borderRadius: 30,

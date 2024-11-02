@@ -6,6 +6,9 @@ import { convertLatitudeLongitude } from "./convertLatitudeLongitude";
 // ユーザーが以前エリア内にいたかどうかを追跡
 let wasInShibuya = false;
 
+// エリア内での位置情報送信を管理するタイマーID
+let intervalId: NodeJS.Timeout | null = null;
+
 // ユーザーが指定された地点から半径2km以内にいるかを確認する関数
 function isInShibuya(latitude: number, longitude: number): boolean {
   const centerLat = 35.661725300000015;
@@ -44,13 +47,6 @@ export const sendLocation = async (
   }
 
   const currentRef = doc(db, "current", myUid);
-  let newCoords: {
-    latitude: number | null;
-    longitude: number | null;
-  } = {
-    latitude: null,
-    longitude: null,
-  };
 
   let isInArea = false;
 
@@ -58,40 +54,88 @@ export const sendLocation = async (
   if (location && isGps) {
     // 渋谷エリア内にいるか確認
     isInArea = isInShibuya(location.coords.latitude, location.coords.longitude);
-
-    if (isInArea) {
-      newCoords = await convertLatitudeLongitude(
-        location.coords.latitude,
-        location.coords.longitude,
-        myUid
-      ); // 非同期処理を待つ
-      console.log(location.coords);
-      console.log(newCoords);
-    }
   }
 
   if (isInArea) {
-    // エリア内の場合、位置情報を送信
-    await setDoc(
-      currentRef,
-      {
-        latitude: newCoords.latitude,
-        longitude: newCoords.longitude,
-      },
-      { merge: true }
-    );
-    console.log("🎉 位置情報を送信しました");
-  } else if (wasInShibuya) {
-    // エリア外に出た直後の場合、nullを一度だけ送信
-    await setDoc(
-      currentRef,
-      {
-        latitude: null,
-        longitude: null,
-      },
-      { merge: true }
-    );
-    console.log("🎉 nullの位置情報を送信しました");
+    // 位置情報を送信する関数を定義
+    const sendCurrentLocation = async () => {
+      try {
+        // 現在の位置を取得
+        const newLocation = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.High,
+        });
+
+        // 渋谷エリア内にいるか再確認
+        if (
+          isInShibuya(newLocation.coords.latitude, newLocation.coords.longitude)
+        ) {
+          // 位置をずらす
+          const newCoords = await convertLatitudeLongitude(
+            newLocation.coords.latitude,
+            newLocation.coords.longitude,
+            myUid
+          );
+
+          // 位置情報を送信
+          await setDoc(
+            currentRef,
+            {
+              latitude: newCoords.latitude,
+              longitude: newCoords.longitude,
+            },
+            { merge: true }
+          );
+          console.log("🎉 位置情報を送信しました");
+        } else {
+          // エリア外に出た場合、タイマーをクリア
+          if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = null;
+            console.log("🛑 位置情報送信タイマーを停止しました");
+          }
+          // エリア外の位置情報を送信
+          await setDoc(
+            currentRef,
+            {
+              latitude: null,
+              longitude: null,
+            },
+            { merge: true }
+          );
+          console.log("🎉 エリア外の位置情報を送信しました");
+        }
+      } catch (error) {
+        console.error("位置情報の取得または送信に失敗しました:", error);
+      }
+    };
+
+    // 初回送信
+    await sendCurrentLocation();
+
+    // 10秒ごとに位置情報を送信するタイマーを開始
+    if (!intervalId) {
+      intervalId = setInterval(sendCurrentLocation, 10000); // 10秒ごとに実行
+    }
+  } else {
+    // エリア外に出た場合、タイマーをクリア
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
+      console.log("🛑 位置情報送信タイマーを停止しました");
+    }
+
+    if (wasInShibuya) {
+      // エリア外に出た直後の場合、nullを一度だけ送信
+      await setDoc(
+        currentRef,
+        {
+          latitude: null,
+          longitude: null,
+        },
+        { merge: true }
+      );
+      console.log("🎉 nullの位置情報を送信しました");
+    }
   }
 
   // wasInShibuyaの状態を更新
